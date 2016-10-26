@@ -1,71 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="742b0cec-3e88-4fc5-805d-5b770f81841f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/error/404_page.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.htaccess" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/camagru.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/database.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/setup.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/create.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/animation.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/button.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/color.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/form.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/info.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/layout.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/list.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/modifier.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/navigation.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/reset.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/responsive.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/table.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/core/typography.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/modules/tooltip/main.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/modules/tooltip/modifier.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/modules/treeview/main.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/modulr/modules/treeview/modifier.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/auth.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/chat.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/create.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/create.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/login.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/logout.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/modify.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/modify.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ex04/speak.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/home.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/footer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/gallery.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/header.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/video_stream.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/camera.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/script.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/tmp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log/errors.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modify.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/notfound.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/auth.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/create_acc.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/login.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/logout.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/modify_acc.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/private/passwd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/user_image_upload.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/webcam_image_upload-BACKUP.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php/webcam_image_upload.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/test2.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/verify.php" />
-    </list>
+    <list default="true" id="742b0cec-3e88-4fc5-805d-5b770f81841f" name="Default" comment="" />
     <ignored path="camagru.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -109,8 +45,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1366" />
-    <option name="y" value="18" />
+    <option name="y" value="-750" />
     <option name="width" value="1366" />
     <option name="height" value="750" />
   </component>
@@ -179,15 +114,15 @@
       <option name="presentableId" value="Default" />
       <updated>1477475038197</updated>
       <workItem from="1477475041174" duration="1387000" />
-      <workItem from="1477512818813" duration="97000" />
+      <workItem from="1477512818813" duration="189000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1484000" />
+    <option name="totallyTimeSpent" value="1576000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1366" y="18" width="1366" height="750" extended-state="6" />
+    <frame x="0" y="-750" width="1366" height="750" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24597365" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
