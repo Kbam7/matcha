@@ -1,12 +1,11 @@
 import path from "path";
 import express from "express";
 import React from "react";
-import {Router, Route, IndexRoute, Link, browserHistory} from "react-router";
+import {Router, Route, IndexRoute, browserHistory} from "react-router";
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 //  --- React Router Components ---
 /*--------------------------------------------------------------------------------------------------------------------*/
-
 
 import PageOne from "./modules/PageOne";
 import PageTwo from "./modules/PageTwo";
@@ -14,7 +13,8 @@ import SubPageOne from "./modules/SubPageOne";
 import SubPageTwo from "./modules/SubPageTwo";
 import NotFound from "./modules/NotFound";
 import NotFoundPageTwo from "./modules/NotFoundPageTwo";
-
+import PageLayout from "./modules/PageLayout";
+/*
 class PageLayout extends React.Component {
     render () {
         return (
@@ -40,7 +40,7 @@ class PageLayout extends React.Component {
         );
     }
 }
-
+*/
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 //  --- Routers / Funcs / Files ---

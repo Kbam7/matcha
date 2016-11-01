@@ -1,6 +1,7 @@
 import React from "react";
+import {Link} from "react-router";
 
-export class PageLayout extends React.Component {
+export default class PageLayout extends React.Component {
     render () {
         return (
             <div>
@@ -24,4 +25,4 @@ export class PageLayout extends React.Component {
             </div>
         );
     }
-};
+}
