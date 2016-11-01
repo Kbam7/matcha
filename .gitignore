@@ -7,5 +7,4 @@
 .*.swp
 .*.swo
 .idea
-build/
 node_modules/
