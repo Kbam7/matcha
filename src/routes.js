@@ -6,8 +6,17 @@ import {Router, Route, IndexRoute, Link, browserHistory} from "react-router";
 /*--------------------------------------------------------------------------------------------------------------------*/
 //  --- React Router Components ---
 /*--------------------------------------------------------------------------------------------------------------------*/
-const PageWrapper = React.createClass({
-    render: function () {
+
+
+import PageOne from "./modules/PageOne";
+import PageTwo from "./modules/PageTwo";
+import SubPageOne from "./modules/SubPageOne";
+import SubPageTwo from "./modules/SubPageTwo";
+import NotFound from "./modules/NotFound";
+import NotFoundPageTwo from "./modules/NotFoundPageTwo";
+
+class PageLayout extends React.Component {
+    render () {
         return (
             <div>
                 <h4>{this.props.title} - {this.props.url}</h4>
@@ -30,43 +39,8 @@ const PageWrapper = React.createClass({
             </div>
         );
     }
-});
-const PageOne = React.createClass({
-    render: function () {
-        return <div>PageOne</div>;
-    }
-});
-const PageTwo = React.createClass({
-    render: function () {
-        return (
-            <div>
-                <div>PageTwo</div>
-                <div>{this.props.children}</div>
-            </div>
-        );
-    }
-});
-const SubPageOne = React.createClass({
-    render: function () {
-        return <div>SubPageOne</div>;
-    }
-});
-const SubPageTwo = React.createClass({
-    render: function () {
-        return <div>SubPageTwo</div>;
-    }
-});
+}
 
-const NotFound = React.createClass({
-    render: function () {
-        return <div>404</div>;
-    }
-});
-const NotFoundPageTwo = React.createClass({
-    render: function () {
-        return <div>Page Two 404</div>;
-    }
-});
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 //  --- Routers / Funcs / Files ---
@@ -98,7 +72,7 @@ if (typeof window === 'undefined') {  // Preform only on the server
 /*--------------------------------------------------------------------------------------------------------------------*/
 export default (
     <Router history={browserHistory}>
-        <Route path="/" component={PageWrapper}>
+        <Route path="/" component={PageLayout}>
             <IndexRoute component={PageOne}/>
             <Route path="pageTwo" component={PageTwo}>
                 <Route path="subPageOne" component={SubPageOne}/>
