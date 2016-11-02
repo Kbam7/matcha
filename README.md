@@ -1,14 +1,8 @@
-# React chat app
-
-Source code files for my article series on developing a Slack-style chat app with React.
-
-Following articles have been published so far:
-
-1. [React basics: Building an application prototype](http://codeutopia.net/blog/2016/01/17/learning-react-basics-and-building-a-basic-application-prototype/)
-2. [Getting started with npm and Browserify in a React project](http://codeutopia.net/blog/2016/01/25/getting-started-with-npm-and-browserify-in-a-react-project/)
+# Matcha - A dating app made with Node.js, Express, React and Bootstrap
 
 ## Install
 
 1. Clone repo
-2. Run `npm install`
-3. Run `npm run build` (requires browserify to be installed)
+2. Run `npm install`. This will install dependencies and then run `postinstall`
+    which requires browserify to be installed.
+3. Make sure neo4j is installed and running

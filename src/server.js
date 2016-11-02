@@ -1,63 +1,43 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import express from 'express';
+//import path from 'path';
 import {handleReactRouter} from 'express-react-router';
 
 import routes from './routes';
 
-const Page = React.createClass({
-    getUrl() {
-        return this.props.req.url;
-    },
-    getInnerHTML() {
-        return {__html: this.props.reactHtml};
-    },
-    render() {
-        return (
-            <html>
-            <head>
-                <title>Example Page - {this.getUrl()}</title>
-            </head>
-            <body>
-            <div id="reactContent" dangerouslySetInnerHTML={this.getInnerHTML()}/>
-            <script src="/app.js"></script>
-            </body>
-            </html>
-        );
-    }
-});
 
-const ErrorPage = React.createClass({
-    render() {
-        const {err} = this.props;
-        return (
-            <html>
-            <head>
-                <title>Example Error Page</title>
-            </head>
-            <body>
-            <div id="error">
-                <h1>Error</h1>
-                <h3>{err.name}</h3>
-                <p>
-                    {err.message}
-                </p>
-            </div>
-            </body>
-            </html>
-        );
+/*
+var neo4j = require('node-neo4j');
+var db = new neo4j('http://neo4j:123456@localhost:7474');
+
+db.cypherQuery('CREATE (somebody:Person { name: "kbam7", from: "donno", age: 21 }) RETURN somebody', function(err, result){
+    if(err) {
+        console.log(err);
+        throw err;
     }
+
+    console.log(result);
+    console.log(result.data); // delivers an array of query results
+    console.log(result.columns); // delivers an array of names of objects getting returned
 });
+*/
+
+import Page from './modules/default_pages/Page';
+import ErrorPage from './modules/default_pages/ErrorPage';
 
 // Create Server
 let app = express();
+
+//app.use(express.static(path.join(__dirname, 'public')));
+
 app.use((req, res, next) => {
     const {url, method, params, query} = req;
     console.log(`[${url}]: `, {method, params, query});
     next();
 });
 app.use(
-    handleReactRouter(routes, Page, {title: 'Express React Router Example Site'}, (req) => {
+    handleReactRouter(routes, Page, {title: 'Matcha Dating Website'}, (req) => {
         return {url: req.url};
     })
 );
@@ -73,3 +53,5 @@ app.use((err, req, res, next) => {
 // Start Server
 app.listen(8080);
 console.log('listening on port 8080');
+
+

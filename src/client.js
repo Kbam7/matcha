@@ -11,12 +11,12 @@ render(
     routes,
     window.document.getElementById('reactContent'),
     {
-        title: 'Express React Router Example Site'
+        title: 'Matcha Dating Website'
     },
     () => {
         const url = window.location.pathname;
 
-        document.title = `Example Page - ${url}`;
+        document.title = `Matcha Dating Website - ${url}`;
         return {url};
     }
 );

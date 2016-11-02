@@ -19,10 +19,10 @@ window.React = _react2.default;
 
 // Render react-router to page
 (0, _client.render)(_routes2.default, window.document.getElementById('reactContent'), {
-    title: 'Express React Router Example Site'
+    title: 'Matcha Dating Website'
 }, function () {
     var url = window.location.pathname;
 
-    document.title = "Example Page - " + url;
+    document.title = "Matcha Dating Website - " + url;
     return { url: url };
 });
