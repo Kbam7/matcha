@@ -2,21 +2,12 @@
 <html>
 <head>
     <title>Create Account | Camagru</title>
-<?php include './include/header.php'; ?>
+    <?php include './include/head.php'; ?>
 </head>
 <body>
     <header>
-        <div class="navbar">
-            <a href="index.php" class="brand"><h1>Camagru - <small>Create Account</small></h1></a>
-            <ul class="menu pull-right">
-              <li class="divider"></li>
-              <li class="logout-btn">
-                  <?php if (isset($_SESSION['logged_on_user'])): ?>
-                      <a href="php/logout.php" title="Logout of Account">LOGOUT</a>
-                  <?php endif; ?>
-              </li>
-            </ul>
-        </div>
+        <?php include './include/header.php'; ?>
+        <h1>Matcha - <small>Create Account</small></h1>
     </header>
 
     <div id="error-messages"></div>

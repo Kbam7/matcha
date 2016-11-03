@@ -41,7 +41,8 @@
                 $sql = $conn->prepare("UPDATE `users` SET `active`='1' WHERE email=:email AND hash=:hash AND active='0';");
                 $sql->execute(['email' => $email, 'hash' => $hash]);
                 // success
-                $msg = "<p class=\"success\">Your account was successfully activated!</p><p class=\"success\"><a class=\"btn border border-3 white rounded hover-text-blue text-22\">LOG IN</a></p>";
+                $msg = "<p class=\"success\">Your account was successfully activated!</p><p class=\"success\">
+                            <a href='index.php' class=\"btn border border-3 white rounded hover-text-blue text-22\">LOG IN</a></p>";
             } else {
                 $msg = "<p class=\"danger\">There was an error activating your account!".$sql["email"]."</p>";
             }

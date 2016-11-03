@@ -66,15 +66,18 @@ window.onload = function() {
     if (createUserForm) {
         // Get all input elements
         var inputs = createUserForm.elements;
-        // Add 'blur' event listener
+
+        // Add 'blur' event listener for error messages
         for (var i = 0; i < inputs.length; ++i) {
             var item = inputs[i];
-            if (item.type !== "submit") { // dont add for submit button
+            // dont add for submit button
+            if (item.type !== "submit") {
                 if (item.type === "password") {
                     item.addEventListener('blur', function(e) {
+                        // Check if passwords do not match
                         if ((this.name === "password" && this.value !== createUserForm.elements.namedItem("passwd2").value) ||
                             (this.name === "password2" && this.value !== createUserForm.elements.namedItem("passwd").value)) {
-                            displayError("<p class=\"warning\">Your passwords do not match</p>");
+                            displayError("<p class=\"alert alert-warning\">Your passwords do not match</p>");
                         } else {
                             // remove error messages
                             while (errorDiv.children.length) {
@@ -229,9 +232,9 @@ function createUser(form) {
         var response = JSON.parse(httpRequest.responseText);
 
         if (response.status === true) {
-            displayError(response.statusMsg + " <p class=\"info\">Redirecting to login page . . .</p>");
+            displayError(response.statusMsg + " <p class=\"alert alert-info\">Redirecting to login page . . .</p>");
             setTimeout(function() {
-                window.location = "index.php";
+                window.location = "./index.php";
             }, 3000);
         } else {
             displayError(response.statusMsg);
@@ -244,7 +247,7 @@ function validate_input(input, value, type) {
     var result = true;
 
     if (value === "" && input.required) {
-        displayError("<p class=\"info\">'" + input.name + "' cannot be empty.</p>");
+        displayError("<p class=\"alert alert-info\">'" + input.name + "' cannot be empty.</p>");
         return false;
     }
     if (type === "text") {
@@ -252,26 +255,26 @@ function validate_input(input, value, type) {
         if (input.name === "firstname" || input.name === "lastname") {
             result = /^([A-Z][a-z]+([ ]?[a-z]?['-]?[A-Z][a-z]+)*)$/.test(value);
             if (result === false) {
-                displayError("<p class=\"warning\">'" + input.name + "' is invalid. Please try format is as follows: 'John Doe' or 'John-Doe'.<br />Names need to start with a CAPITAL letter.</p>");
+                displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'John Doe' or 'John-Doe'.<br />Names need to start with a CAPITAL letter.</p>");
                 return false;
             }
         } else if (input.name === "username") {
             result = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,24}$/.test(value);
             if (result === false) {
-                displayError("<p class=\"warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john1' 'John_Doe' or 'John.Doe3'.<br />MAX: 24 Characters</p>");
+                displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john1' 'John_Doe' or 'John.Doe3'.<br />MAX: 24 Characters</p>");
                 return false;
             }
         }
     } else if (type === "email") {
         result = /^([\w\.]+)@([\w\.]+)\.(\w+)/.test(value);
         if (result === false) {
-            displayError("<p class=\"warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john@doe.com'</p>");
+            displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john@doe.com'</p>");
             return false;
         }
     } else if (type === "password") {
         result = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(value);
         if (result === false) {
-            displayError("<p class=\"warning\">'" + input.name + "' is invalid. Password must contain at least 8 characters, and consist of atleast 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters.</p>");
+            displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Password must contain at least 8 characters, and consist of atleast 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters.</p>");
             return false;
         }
     }
@@ -314,7 +317,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
         //        httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(formdata);
     } catch (e) {
-        displayError("<p class=\"info\">ajax send error : " + e);
+        displayError("<p class=\"alert alert-danger\">ajax send error : " + e);
     }
 
     function uploadProgress(event) {
@@ -418,11 +421,11 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
     }
 
     function uploadAborted(event) {
-        displayError("<p class=\"warning\">User aborted file upload or the connection was lost. ERROR : " + event.message + "</p>");
+        displayError("<p class=\"alert alert-warning\">User aborted file upload or the connection was lost. ERROR : " + event.message + "</p>");
     }
 
     function uploadError(event) {
-        displayError("<p class=\"danger\">An error has occured. ERROR : " + event.message + "</p>");
+        displayError("<p class=\"alert alert-danger\">An error has occured. ERROR : " + event.message + "</p>");
     }
 
     function cancelUpload() {
@@ -457,8 +460,8 @@ function displayError(errMsg) {
         errDiv.innerHTML = errMsg;
         var msgs = errDiv.childNodes;
         for (var msg of msgs) {
-            addClass(msg, "scale-in");
-            addClass(msg, "slow");
+            addClass(msg, "animate");
+            addClass(msg, "swing");
         }
     }
 

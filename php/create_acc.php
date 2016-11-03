@@ -42,7 +42,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                 ------------------------
 
                 Please click this link to activate your account:
-                http://localhost:8080/kbamping/camagru/verify.php?email=".$email."&hash=".$uniqueHash."
+                http://localhost:8080/matcha/verify.php?email=".$email."&hash=".$uniqueHash."
 
             "; // Our message above including the link
 

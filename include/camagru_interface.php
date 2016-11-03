@@ -1,35 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION['logged_on_user'])) {
-    ?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Chat Room</title>
-<?php include './include/header.php'; ?>
-  </head>
-  <body>
-    <header>
-        <div class="navbar">
-            <a href="home.php" class="brand"><h1>Camagru - <small>Take a photo, have some fun!</small></h1></a>
-            <ul class="menu pull-right">
-              <li class="divider"></li>
-              <li class="logout-btn">
-                  <?php if (isset($_SESSION['logged_on_user'])): ?>
-                      <a href="php/logout.php" title="Logout of Account">LOGOUT</a>
-                  <?php endif; ?>
-              </li>
-            </ul>
-        </div>
-
-     <!--  <a class="btn border border-3 white rounded hover-text-blue text-22" href="php/logout.php" title="Logout of Account">LOGOUT</a>
-      <h1>Camagru - <small>Take a photo, have some fun!</small></h1> -->
-    </header>
-
-    <div id="error-messages"></div>
-
-    <div class="row home">
-        <section class="col-12" id="imageDisplay">
+<section class="col-12" id="imageDisplay">
             <aside class="col-2 overlays">
                 <form id="overlayForm">
                     <!-- ADD PHP HERE TO POPULATE OVERLAY LIST. Save overlay to DB and allow users to upload more overlays -->
@@ -103,14 +72,3 @@ if (isset($_SESSION['logged_on_user'])) {
 
             </aside>
         </section> <!-- /#imageDisplay_inner -->
-    </div> <!-- ./row -->
-<?php
-    include './include/gallery.php';
-
-    include './include/footer.php';
-} else {
-    $_SESSION['errors'] = array('ERROR -- Please log in before accesing this website');
-    $_SESSION['logged_on_user'] = '';
-    header('Location: index.php');
-}
-?>
