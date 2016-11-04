@@ -12,7 +12,5 @@
 
         <script type="text/javascript" src="/matcha/assets/js/script.js"></script>
         <script type="text/javascript" src="/matcha/assets/js/avatar-blur.js"></script>
-    </body>
 
-    </html>
     ';

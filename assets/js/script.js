@@ -5,193 +5,193 @@ var addClass_timeout, removeError_timeout;
 
 window.onload = function() {
 
+        // some drag event code
+        document.ondragover = function(evt) {
+            evt = evt || window.event;
+            var x = evt.pageX,
+                y = evt.pageY;
 
-    document.ondragover = function(evt) {
-        evt = evt || window.event;
-        var x = evt.pageX,
-            y = evt.pageY;
+            console.log(x, y);
+        }
 
-        console.log(x, y);
-    }
+        // Select Error div for observation
+        var errorDiv = document.getElementById("error-messages");
+        if (errorDiv) {
+            observeErrors(errorDiv);
+        }
 
-    // Select Error div for observation
-    var errorDiv = document.getElementById("error-messages");
-    if (errorDiv) {
-        observeErrors(errorDiv);
-    }
+        /* --- Global events --- */
 
-    /* --- Global events --- */
+        // Add animation to input elements
+        var formInputList = document.querySelectorAll('input[type=text], input[type=password], input[type=email]');
+        for (var i = 0; i < formInputList.length; ++i) {
+            formInputList[i].addEventListener('click', function() {
+                addClass(this.previousElementSibling, "fade-in-up");
+                addClass(this.previousElementSibling, "medium");
+            });
 
-    // Add animation to input elements
-    var formInputList = document.querySelectorAll('input[type=text], input[type=password], input[type=email]');
-    for (var i = 0; i < formInputList.length; ++i) {
-        formInputList[i].addEventListener('click', function() {
-            addClass(this.previousElementSibling, "fade-in-up");
-            addClass(this.previousElementSibling, "medium");
-        });
+            formInputList[i].addEventListener('blur', function() {
+                var item = this;
+                removeClass(item.previousElementSibling, "fade-in-up");
+                addClass(item.previousElementSibling, "fade-out-down");
+                setTimeout(function() {
+                    removeClass(item.previousElementSibling, "fade-out-down");
+                    removeClass(item.previousElementSibling, "medium");
+                }, 750);
+            });
+        }
 
-        formInputList[i].addEventListener('blur', function() {
-            var item = this;
-            removeClass(item.previousElementSibling, "fade-in-up");
-            addClass(item.previousElementSibling, "fade-out-down");
-            setTimeout(function() {
-                removeClass(item.previousElementSibling, "fade-out-down");
-                removeClass(item.previousElementSibling, "medium");
-            }, 750);
-        });
-    }
+        /* --- NON-Global events --- */
 
-    /* --- NON-Global events --- */
+        /*
+            // Events for new user login
+            var loginForm = document.querySelector("#loginForm");
+            if (loginForm) {
+                // Get all input elements
+                var inputs = loginForm.elements;
+                // Add 'blur' event listener
+                for (var i = 0; i < inputs.length; ++i) {
+                    var item = inputs[i];
+                    if (item.type !== "submit") { // dont add for submit button
+                        item.addEventListener('blur', function(e) {
+                            validate_input(this, this.value, this.type);
+                        });
+                    }
+                };
+            }
+        */
 
-    /*
-        // Events for new user login
-        var loginForm = document.querySelector("#loginForm");
-        if (loginForm) {
+        // Events for new user form
+        var createUserForm = document.querySelector("#createUserForm");
+        if (createUserForm) {
             // Get all input elements
-            var inputs = loginForm.elements;
-            // Add 'blur' event listener
+            var inputs = createUserForm.elements;
+
+            // Add 'blur' event listener for error messages
             for (var i = 0; i < inputs.length; ++i) {
                 var item = inputs[i];
-                if (item.type !== "submit") { // dont add for submit button
-                    item.addEventListener('blur', function(e) {
-                        validate_input(this, this.value, this.type);
-                    });
-                }
-            };
-        }
-    */
-
-    // Events for new user form
-    var createUserForm = document.querySelector("#createUserForm");
-    if (createUserForm) {
-        // Get all input elements
-        var inputs = createUserForm.elements;
-
-        // Add 'blur' event listener for error messages
-        for (var i = 0; i < inputs.length; ++i) {
-            var item = inputs[i];
-            // dont add for submit button
-            if (item.type !== "submit") {
-                if (item.type === "password") {
-                    item.addEventListener('blur', function(e) {
-                        // Check if passwords do not match
-                        if ((this.name === "password" && this.value !== createUserForm.elements.namedItem("passwd2").value) ||
-                            (this.name === "password2" && this.value !== createUserForm.elements.namedItem("passwd").value)) {
-                            displayError("<p class=\"alert alert-warning\">Your passwords do not match</p>");
-                        } else {
+                // dont add for submit button
+                if (item.type !== "submit") {
+                    if (item.type === "password") {
+                        item.addEventListener('blur', function(e) {
+                            // Check if passwords do not match
+                            if ((this.name === "password" && this.value !== createUserForm.elements.namedItem("passwd2").value) ||
+                                (this.name === "password2" && this.value !== createUserForm.elements.namedItem("passwd").value)) {
+                                displayError("<p class=\"alert alert-warning\">Your passwords do not match</p>");
+                            } else {
+                                // remove error messages
+                                while (errorDiv.children.length) {
+                                    errorDiv.removeChild(errorDiv.children[0]);
+                                }
+                                validate_input(this, this.value, this.type);
+                            }
+                        });
+                    } else {
+                        item.addEventListener('blur', function(e) {
                             // remove error messages
                             while (errorDiv.children.length) {
                                 errorDiv.removeChild(errorDiv.children[0]);
                             }
                             validate_input(this, this.value, this.type);
-                        }
-                    });
-                } else {
-                    item.addEventListener('blur', function(e) {
-                        // remove error messages
-                        while (errorDiv.children.length) {
-                            errorDiv.removeChild(errorDiv.children[0]);
-                        }
-                        validate_input(this, this.value, this.type);
-                    });
+                        });
+                    }
                 }
-            }
-        };
-        createUserForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            createUser(createUserForm);
-        });
-    }
+            };
+            createUserForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                createUser(createUserForm);
+            });
+        }
 
-    // Event for checking if an overlay is selected before submition
-    var overlayForm = document.querySelector("#overlayForm");
-    if (overlayForm) {
-        for (var i = 0; i < overlayForm.elements.length; ++i) {
-            overlayForm.elements[i].addEventListener('change', function() {
-                var ovly_path = this.value;
+        // Event for checking if an overlay is selected before submition
+        var overlayForm = document.querySelector("#overlayForm");
+        if (overlayForm) {
+            for (var i = 0; i < overlayForm.elements.length; ++i) {
+                overlayForm.elements[i].addEventListener('change', function() {
+                    var ovly_path = this.value;
 
-                // Submit button
-                overlayForm.elements['submit'].disabled = false;
-                overlayForm.elements['submit'].style.cursor = "pointer";
-                overlayForm.elements['submit'].title = "Take the photo";
+                    // Submit button
+                    overlayForm.elements['submit'].disabled = false;
+                    overlayForm.elements['submit'].style.cursor = "pointer";
+                    overlayForm.elements['submit'].title = "Take the photo";
 
-                // overlay preview div
-                if (document.querySelector('#videoStream')) {
-                    superimposeOverlayImage(ovly_path);
-                    window.addEventListener('resize', function() {
+                    // overlay preview div
+                    if (document.querySelector('#videoStream')) {
                         superimposeOverlayImage(ovly_path);
-                    });
-                }
+                        window.addEventListener('resize', function() {
+                            superimposeOverlayImage(ovly_path);
+                        });
+                    }
 
-            });
-        }
-
-        function superimposeOverlayImage(path) {
-            var vs, vs_ovly, w, h;
-
-            vs = document.querySelector('#videoStream');
-            vs_ovly = document.querySelector('.overlayPreview');
-            w = vs.scrollWidth;
-            h = vs.scrollHeight;
-
-            //    w = Math.round(w + (0.1 * w));
-            vs_ovly.style.width = w + "px";
-            vs_ovly.style.height = h + "px";
-            vs_ovly.style.background = "url('" + path + "') no-repeat center";
-        }
-    }
-
-    // Submit event for image upload form
-    var imageUploadForm = document.querySelector("#imageUploadForm");
-    if (imageUploadForm) {
-        imageUploadForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            ajax_user_upload_image("initial_upload", imageUploadForm);
-
-
-            if (overlayForm) {
-
-                overlayForm.removeEventListener('submit', processWebcamPhoto);
-                // Submit event for finalising users upload
-                overlayForm.addEventListener('submit', handleUserUpload);
-
-                function handleUserUpload(e) {
-
-                    e.preventDefault();
-                    ajax_user_upload_image("overwrite_with_new", overlayForm);
-
-
-
-                    // Remove submit event for finalising users upload
-                    overlayForm.removeEventListener('submit', handleUserUpload);
-                    // Set default action back to form
-                    overlayForm.addEventListener('submit', processWebcamPhoto);
-
-                }
+                });
             }
-        });
 
-        document.querySelector('.imageDisplay_inner .imageUploadSection h3')
-            .addEventListener('click', function() {
-                var section = document.querySelector('.imageDisplay_inner .imageUploadSection');
-                if (section.classList.contains('collapsed')) {
-                    removeClass(section, 'collapsed');
-                    addClass(section, 'expanded');
-                } else if (section.classList.contains('expanded')) {
-                    removeClass(section, 'expanded');
-                    addClass(section, 'collapsed');
+            function superimposeOverlayImage(path) {
+                var vs, vs_ovly, w, h;
+
+                vs = document.querySelector('#videoStream');
+                vs_ovly = document.querySelector('.overlayPreview');
+                w = vs.scrollWidth;
+                h = vs.scrollHeight;
+
+                //    w = Math.round(w + (0.1 * w));
+                vs_ovly.style.width = w + "px";
+                vs_ovly.style.height = h + "px";
+                vs_ovly.style.background = "url('" + path + "') no-repeat center";
+            }
+        }
+
+        // Submit event for image upload form
+        var imageUploadForm = document.querySelector("#imageUploadForm");
+        if (imageUploadForm) {
+            imageUploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                ajax_user_upload_image("initial_upload", imageUploadForm);
+
+
+                if (overlayForm) {
+
+                    overlayForm.removeEventListener('submit', processWebcamPhoto);
+                    // Submit event for finalising users upload
+                    overlayForm.addEventListener('submit', handleUserUpload);
+
+                    function handleUserUpload(e) {
+
+                        e.preventDefault();
+                        ajax_user_upload_image("overwrite_with_new", overlayForm);
+
+
+
+                        // Remove submit event for finalising users upload
+                        overlayForm.removeEventListener('submit', handleUserUpload);
+                        // Set default action back to form
+                        overlayForm.addEventListener('submit', processWebcamPhoto);
+
+                    }
                 }
             });
 
+            document.querySelector('.imageDisplay_inner .imageUploadSection h3')
+                .addEventListener('click', function() {
+                    var section = document.querySelector('.imageDisplay_inner .imageUploadSection');
+                    if (section.classList.contains('collapsed')) {
+                        removeClass(section, 'collapsed');
+                        addClass(section, 'expanded');
+                    } else if (section.classList.contains('expanded')) {
+                        removeClass(section, 'expanded');
+                        addClass(section, 'collapsed');
+                    }
+                });
+
+        }
+
+
+
     }
-
-    //  Functionality for camera
-    activateUsersCamera();
-
-}
-
-/* --- FUNCTION DEFINITIONS --- */
+    /*------------------------------------------------------------------------*/
+    /* ---------------------[ FUNCTION DEFINITIONS ]------------------------- */
+    /*------------------------------------------------------------------------*/
 
 // Add class to element
 function addClass(el, className) {
@@ -210,6 +210,27 @@ function removeClass(el, className) {
     }
     return el;
 }
+
+// A lightweight function for ajax POST
+function ajax_post(url, data, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.addEventListener("error", function(event) {
+        console.log("An error has occured. ERROR : " + event.message);
+    });
+    httpRequest.addEventListener("readystatechange", function() {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            callback(httpRequest);
+        }
+    });
+    httpRequest.open("POST", url, true);
+    httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    httpRequest.send(data);
+
+}
+
+
+
+/* ----------------[ FORM FUNCTIONS ]------------------- */
 
 function createUser(form) {
     var fname = encodeURIComponent(document.getElementById("fname").value);
@@ -284,6 +305,72 @@ function validate_input(input, value, type) {
     return (true);
 }
 
+
+
+/* ----------------[ ERROR FUNCTIONS ]------------------- */
+
+// Function to display errors
+function displayError(errMsg) {
+
+    var errDiv = document.getElementById("error-messages");
+    clearTimeout(addClass_timeout);
+    clearTimeout(removeError_timeout);
+    if (errDiv) {
+        errDiv.innerHTML = errMsg;
+        var msgs = errDiv.childNodes;
+        for (var msg of msgs) {
+            addClass(msg, "animate");
+            addClass(msg, "swing");
+        }
+    }
+
+    // Remove html. i.e. Get text only
+    var tmp = document.createElement("div");
+    tmp.innerHTML = errMsg;
+    errMsg = tmp.textContent || tmp.innerText || "No error message found.";
+
+    console.log(errMsg);
+}
+
+function observeErrors(errorDiv) {
+
+    // Vendor specific aliases for 'MutationObserver'
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+    // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            var newNodes = mutation.addedNodes;
+            //        console.log(newNodes);
+            addClass_timeout = setTimeout(function() {
+                for (let i = 0; i < newNodes.length; ++i) {
+                    addClass(newNodes[i], "scale-out");
+                    //    newNodes[i].className += " scale-out";
+                }
+                removeError_timeout = setTimeout(function() {
+                    while (errorDiv.children.length) {
+                        errorDiv.removeChild(errorDiv.children[0]);
+                    }
+                }, 2000);
+            }, 30000);
+        })
+    });
+
+    // configuration of the observer:
+    var config = {
+        attributes: true,
+        childList: true,
+        characterData: true
+    };
+
+    // pass in the target node, as well as the observer options
+    observer.observe(errorDiv, config);
+}
+
+
+
+/* ----------------[ FUNCTION : ajax_user_image_upload() ]------------------- */
+
 // Function for uploading users images
 function ajax_user_upload_image(uploadStatus, uploadForm) {
     var httpRequest = new XMLHttpRequest(),
@@ -291,11 +378,14 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
 
 
 
+    // Adding custom fields to form data
     formdata.append("submit", "1");
     formdata.append("uploadStatus", uploadStatus);
+
+    // Checks which phase of the upload we are in.
     if (uploadStatus === "overwrite_with_new") {
 
-
+        // Get image title and src from form. Overlay has been selected and is in `formdata`
         var childList = document.querySelector(".user-upload-img").childNodes;
         for (var i = 0; i < childList.length; ++i) {
             if (childList[i].nodeName === "IMG" && childList[i].nodeType === 1) {
@@ -305,6 +395,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
         }
     }
 
+    // Setting up listeners for upload process
     httpRequest.upload.addEventListener("progress", uploadProgress);
     httpRequest.upload.addEventListener("loadstart", uploadStarted);
     httpRequest.upload.addEventListener("load", uploadSuccess);
@@ -314,7 +405,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
     document.getElementById("cancelUploadBtn").addEventListener("click", cancelUpload);
 
 
-
+    // Try send the data
     try {
         httpRequest.open("POST", "/matcha/php/user_image_upload.php", true);
         //        httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -323,6 +414,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
         displayError("<p class=\"alert alert-danger\">ajax send error : " + e);
     }
 
+    // Event : Progress update for the image
     function uploadProgress(event) {
 
         if (event.lengthComputable) {
@@ -333,6 +425,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
         }
     }
 
+    // Event : Start of image upload process
     function uploadStarted(event) {
         // display progress bar and cancel button
         addClass(addClass(document.querySelector("#imageUploadForm .image-upload-fields"), "hidden"), "absolute");
@@ -345,6 +438,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
         }
     }
 
+    // Event : Successfully uploaded image
     function uploadSuccess(event) {
 
         httpRequest.onreadystatechange = function() {
@@ -376,7 +470,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
                 userUploadImage.appendChild(newImg);
                 userUploadImage.setAttribute("style", "display: inline-block;");
             };
-        };
+        }; /* END -- displayUserUpload() */
 
         function displayUploadInGallery(response) {
 
@@ -436,77 +530,4 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
     }
 } /* END -- ajax_user_upload_image() */
 
-// A lightweight function for ajax POST
-function ajax_post(url, data, callback) {
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.addEventListener("error", function(event) {
-        console.log("An error has occured. ERROR : " + event.message);
-    });
-    httpRequest.addEventListener("readystatechange", function() {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            callback(httpRequest);
-        }
-    });
-    httpRequest.open("POST", url, true);
-    httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    httpRequest.send(data);
-
-}
-
-// Function to display errors
-function displayError(errMsg) {
-
-    var errDiv = document.getElementById("error-messages");
-    clearTimeout(addClass_timeout);
-    clearTimeout(removeError_timeout);
-    if (errDiv) {
-        errDiv.innerHTML = errMsg;
-        var msgs = errDiv.childNodes;
-        for (var msg of msgs) {
-            addClass(msg, "animate");
-            addClass(msg, "swing");
-        }
-    }
-
-    // Remove html. i.e. Get text only
-    var tmp = document.createElement("div");
-    tmp.innerHTML = errMsg;
-    errMsg = tmp.textContent || tmp.innerText || "No error message found.";
-
-    console.log(errMsg);
-}
-
-function observeErrors(errorDiv) {
-
-    // Vendor specific aliases for 'MutationObserver'
-    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-
-    // create an observer instance
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            var newNodes = mutation.addedNodes;
-            //        console.log(newNodes);
-            addClass_timeout = setTimeout(function() {
-                for (let i = 0; i < newNodes.length; ++i) {
-                    addClass(newNodes[i], "scale-out");
-                    //    newNodes[i].className += " scale-out";
-                }
-                removeError_timeout = setTimeout(function() {
-                    while (errorDiv.children.length) {
-                        errorDiv.removeChild(errorDiv.children[0]);
-                    }
-                }, 2000);
-            }, 30000);
-        })
-    });
-
-    // configuration of the observer:
-    var config = {
-        attributes: true,
-        childList: true,
-        characterData: true
-    };
-
-    // pass in the target node, as well as the observer options
-    observer.observe(errorDiv, config);
-}
+/* ------------------[ END : ajax_user_image_upload() ]---------------------- */

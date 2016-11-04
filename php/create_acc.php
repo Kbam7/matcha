@@ -35,23 +35,19 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
 
             // Create the new user
             $result = $client->run('CREATE (n:User) SET n += {details}',
-                ['details' => [
-
-                                'active' => 0,
-                                'hash' => $uniqueHash,
-                                'firstname' => $fname,
-                                'lastname' => $lname,
-                                'username' => $uname,
-                                'password' => $passwd,
-                                'email' => $email,
+                ['details' => ['active' => 0, 'hash' => $uniqueHash,
+                                'firstname' => $fname, 'lastname' => $lname,
+                                'username' => $uname, 'password' => $passwd,
+                                'email' => $email, 'profile_complete' => 0,
+                                /*   SET these values later by checking if the properties exist for this User
                                 'gender' => '',
                                 'sex_pref' => '',
                                 'bio' => '',
                                 'tags' => '',
-                                'pictures' => {},
+                                'pictures' => '',
                                 'fame' => 0,
-                                'GPS_pos' => {['lat' => 0, 'long' => 0]},
-
+                                'GPS_pos' => '0,0',
+                                */
                 ]]
             );
 
@@ -112,18 +108,16 @@ function validNewUser($client, $uname, $email)
     // Get count of results. If > 0, the user or email address already exists
     $user_ret = $results->get('check_user')->getRecord()->value('count');
     $email_ret = $results->get('check_email')->getRecord()->value('count');
-/*
+
     if ($user_ret) {
         $statusMsg .= '<p class="alert alert-warning">The username "'.$uname.'" is already in use!</p>';
         $flag = false;
     }
+
     if ($email_ret) {
         $statusMsg .= '<p class="alert alert-warning">The email address "'.$email.'" is already in use!</p>';
         $flag = false;
     }
-    if ($flag == false) {
-        break;
-    }
-*/
+
     return $flag;
 }

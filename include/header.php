@@ -20,10 +20,10 @@
                 <ul class="nav navbar-nav">
 
                     <li class="active">
-                        <a href="./index.php">Home</a>
+                        <a href="/matcha/index.php">Home</a>
                         </li>
                         <li>
-                        <a href="./home.php">Dashboard</a>
+                        <a href="/matcha/views/home.php">Dashboard</a>
                     </li>
 
     ';
@@ -35,7 +35,7 @@
                     </li>
                 </ul> <!-- /Left-Nav -->
 
-                <form class="navbar-form navbar-right" id="loginForm" method="post" action="php/login.php">
+                <form class="navbar-form navbar-right" id="loginForm" method="post" action="/matcha/php/login.php">
                     <div class="form-input form-group">
                         <label class="input_label" for="login">Username:</label>
                         <input type="text" class="form-control" name="login" id="user-login" placeholder="Username" maxlength="24" title="Username" required="true" /> <!--  pattern="^[a-zA-Z]\B[a-zA-Z0-9]{4,18}[a-zA-Z0-9]\b$"   pattern="(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_]{3,24}$"   -->
@@ -53,7 +53,7 @@
         echo
         '
                     <li>
-                        <a href="chat.php">Chat</a>
+                        <a href="/matcha/views/chat.php">Chat</a>
                     </li>
                 </ul> <!-- /Left-Nav -->
 
@@ -72,11 +72,11 @@
                       </a>
                       <ul class="dropdown-menu">
 
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="/matcha/views/profile.php">Settings</a></li>
                         <li><a href="#">Report a User</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="logout-btn">
-                            <a href="./php/logout.php" title="Logout of Account">LOGOUT</a>
+                            <a href="/matcha/php/logout.php" title="Logout of Account">LOGOUT</a>
                         </li>
 
                       </ul>

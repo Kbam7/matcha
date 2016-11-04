@@ -1,11 +1,12 @@
 <?php
+
 session_start();
 if (isset($_SESSION['logged_on_user'])) {
-    ?>
+    $user = $_SESSION['logged_on_user']; ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chat Room</title>
+    <title>Matcha | Home</title>
     <?php include '../include/head.php'; ?>
   </head>
   <body>
@@ -14,6 +15,20 @@ if (isset($_SESSION['logged_on_user'])) {
     </header>
 
     <div id="error-messages"></div>
+
+    <?php
+        if ($user['profile_complete'] === 0) {
+            // incomplete profile
+            // display message with link to complete profile
+            echo
+            '
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>your profile is not complete, please complete your profile to stand a better chance at finding someone.</p>
+                    <a class="btn btn-default" href="/matcha/views/profile.php">Profile Settings</a>
+                </div>
+            ';
+        } ?>
 
     <section class="jumbo-intro">
         <div class="jumbotron">
@@ -32,8 +47,14 @@ if (isset($_SESSION['logged_on_user'])) {
         </div> <!-- /.row -->
     </section> <!-- /.container -->
 
+<?php include '../include/footer.php'; ?>
+
+</body>
+
+</html>
+
 <?php
-    include '../include/footer.php';
+
 } else {
     $_SESSION['errors'] = array('Please log in before accessing this website');
     header('Location: ../index.php');
