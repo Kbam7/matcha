@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Modify Account | Camagru</title>
-<?php include './include/header.php'; ?>
+<?php include '../include/header.php'; ?>
 </head>
 <body>
   <header class="global-style">
@@ -28,4 +28,4 @@
     </form>
   </section>
 
-<?php include './include/footer.php'; ?>
+<?php include '../include/footer.php'; ?>

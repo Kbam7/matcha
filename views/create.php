@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>Create Account | Camagru</title>
-    <?php include './include/head.php'; ?>
+    <?php include '../include/head.php'; ?>
 </head>
 <body>
     <header>
-        <?php include './include/header.php'; ?>
+        <?php include '../include/header.php'; ?>
         <h1>Matcha - <small>Create Account</small></h1>
     </header>
 
@@ -48,4 +48,4 @@
         </section>
     </section>
 
-<?php include './include/footer.php'; ?>
+<?php include '../include/footer.php'; ?>

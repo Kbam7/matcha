@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Verify Account | Camagru</title>
-<?php include './include/header.php'; ?>
+<?php include '../include/header.php'; ?>
 </head>
 <body>
     <header>
@@ -21,8 +21,7 @@
 
     <div id="error-messages"></div>
 <?php
-    if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])){
-
+    if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['hash']) && !empty($_GET['hash'])) {
         include 'config/database.php';
 
         // Verify data
@@ -44,18 +43,18 @@
                 $msg = "<p class=\"success\">Your account was successfully activated!</p><p class=\"success\">
                             <a href='index.php' class=\"btn border border-3 white rounded hover-text-blue text-22\">LOG IN</a></p>";
             } else {
-                $msg = "<p class=\"danger\">There was an error activating your account!".$sql["email"]."</p>";
+                $msg = '<p class="danger">There was an error activating your account!'.$sql['email'].'</p>';
             }
         } catch (PDOException $e) {
-            $msg = "<b><u>Error Message :</u></b><br /> ".$e." <br /><br /> <b><u>For error details, check :</u></b><br /> ".dirname(__DIR__)."/log/errors.log</p>";
+            $msg = '<b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</p>';
             error_log($e, 3, dirname(__DIR__).'/log/errors.log');
         }
         $conn = null;
-    }else{
+    } else {
         // Invalid approach
-        $msg =  "<p class=\"warning\">You got here without the right stuff. Please create an account and then click the link in your activation email.</p>";
+        $msg = '<p class="warning">You got here without the right stuff. Please create an account and then click the link in your activation email.</p>';
     }
     echo "<script type=\"text/javascript\">displayError('".$msg."');</script>";
 ?>
 
-<?php include './include/footer.php'; ?>
+<?php include '../include/footer.php'; ?>

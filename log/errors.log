@@ -1,31 +1,161 @@
-PDOException: SQLSTATE[HY000]: General error: 1364 Field 'date' doesn't have a default value in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/webcam_image_upload.php:52
+{}{}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/webcam_image_upload.php(52): PDOStatement->execute(Array)
-#1 {main}PDOException: SQLSTATE[HY000]: General error: 1364 Field 'date' doesn't have a default value in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/webcam_image_upload.php:52
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(42): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/webcam_image_upload.php(52): PDOStatement->execute(Array)
-#1 {main}PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'path' in 'field list' in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/webcam_image_upload.php:53
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(52): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/webcam_image_upload.php(53): PDOStatement->execute(Array)
-#1 {main}PDOException: invalid data source name in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/user_image_upload.php:53
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/user_image_upload.php(53): PDO->__construct(';dbname=camagru', NULL, NULL)
-#1 {main}PDOException: invalid data source name in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/user_image_upload.php:79
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/user_image_upload.php(79): PDO->__construct(';dbname=camagru', NULL, NULL)
-#1 {main}PDOException: invalid data source name in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/user_image_upload.php:78
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/camagru/php/user_image_upload.php(78): PDO->__construct(';dbname=camagru', NULL, NULL)
-#1 {main}exception 'PDOException' with message 'SQLSTATE[HY000] [1049] Unknown database 'camagru'' in /goinfre/kbamping/MAMP/apache2/htdocs/kbamping/camagru/php/create_acc.php:18
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /goinfre/kbamping/MAMP/apache2/htdocs/kbamping/camagru/php/create_acc.php(18): PDO->__construct('mysql:host=127....', 'root', '123456')
-#1 {main}exception 'PDOException' with message 'SQLSTATE[HY000] [1049] Unknown database 'camagru'' in /goinfre/kbamping/MAMP/apache2/htdocs/kbamping/camagru/php/create_acc.php:18
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /goinfre/kbamping/MAMP/apache2/htdocs/kbamping/camagru/php/create_acc.php(18): PDO->__construct('mysql:host=127....', 'root', '123456')
-#1 {main}exception 'PDOException' with message 'SQLSTATE[HY000] [1049] Unknown database 'camagru'' in /goinfre/kbamping/MAMP/apache2/htdocs/kbamping/camagru/php/create_acc.php:18
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /goinfre/kbamping/MAMP/apache2/htdocs/kbamping/camagru/php/create_acc.php(18): PDO->__construct('mysql:host=127....', 'root', '123456')
-#1 {main}PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'hash' in 'field list' in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php:26
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
 Stack trace:
-#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(26): PDOStatement->execute(Array)
-#1 {main}
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Property values can only be of primitive types or arrays thereof in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('CREATE (n:User)...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('CREATE (n:User)...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/create_acc.php(55): GraphAware\Neo4j\Client\Client->run('CREATE (n:User)...', Array)
+#6 {main}

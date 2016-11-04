@@ -31,7 +31,7 @@
         echo
         '
                     <li>
-                        <a href="./create.php">Register</a>
+                        <a href="/matcha/views/create.php">Register</a>
                     </li>
                 </ul> <!-- /Left-Nav -->
 

@@ -227,15 +227,18 @@ function createUser(form) {
 
     //    validate_input(form);
 
-    ajax_post("php/create_acc.php", data, function(httpRequest) {
+    ajax_post("/matcha/php/create_acc.php", data, function(httpRequest) {
         //        displayError(httpRequest.responseText);
         var response = JSON.parse(httpRequest.responseText);
 
         if (response.status === true) {
             displayError(response.statusMsg + " <p class=\"alert alert-info\">Redirecting to login page . . .</p>");
-            setTimeout(function() {
-                window.location = "./index.php";
-            }, 3000);
+            console.log(response.record);
+            debugger;
+            /*
+                        setTimeout(function() {
+                            window.location = "/matcha/index.php";
+                        }, 10000);*/
         } else {
             displayError(response.statusMsg);
         }
@@ -313,7 +316,7 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
 
 
     try {
-        httpRequest.open("POST", "php/user_image_upload.php", true);
+        httpRequest.open("POST", "/matcha/php/user_image_upload.php", true);
         //        httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(formdata);
     } catch (e) {

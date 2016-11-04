@@ -6,11 +6,11 @@ if (isset($_SESSION['logged_on_user'])) {
 <html>
   <head>
     <title>Chat Room</title>
-    <?php include './include/head.php'; ?>
+    <?php include '../include/head.php'; ?>
   </head>
   <body>
     <header>
-        <?php include './include/header.php'; ?>
+        <?php include '../include/header.php'; ?>
     </header>
 
     <div id="error-messages"></div>
@@ -27,15 +27,15 @@ if (isset($_SESSION['logged_on_user'])) {
     <section class="container">
         <div class="row">
 
-            <?php include './include/gallery.php'; ?>
+            <?php include '../include/gallery.php'; ?>
 
         </div> <!-- /.row -->
     </section> <!-- /.container -->
 
 <?php
-    include './include/footer.php';
+    include '../include/footer.php';
 } else {
     $_SESSION['errors'] = array('Please log in before accessing this website');
-    header('Location: index.php');
+    header('Location: ../index.php');
 }
 ?>
