@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Create Account | Camagru</title>
+    <title>Create Account | Matcha</title>
     <?php include '../include/head.php'; ?>
 </head>
 <body>
@@ -14,7 +14,7 @@
 
     <section class="row account-management-page">
         <section class="col-12">
-            <form id="createUserForm" method="post" enctype="application/x-www-form-urlencoded">
+            <form id="createUserForm" class="animate_label" method="post" enctype="application/x-www-form-urlencoded">
                 <div class="col-6 gutter-right-10 form-input">
                     <label class="input_label" for="firstname">Firstname: <span class="require">*</span></label>
                     <input type="text" name="firstname" id="fname" value="" placeholder="Firstname" maxlength="32" autocomplete="true" required="true" />
@@ -49,6 +49,8 @@
     </section>
 
 <?php include '../include/footer.php'; ?>
+
+<script type="text/javascript" src="/matcha/assets/js/create_acc.js"></script>
 
 </body>
 

@@ -35,7 +35,7 @@
                     </li>
                 </ul> <!-- /Left-Nav -->
 
-                <form class="navbar-form navbar-right" id="loginForm" method="post" action="/matcha/php/login.php">
+                <form class="navbar-form navbar-right animate_label" id="loginForm" method="post" action="/matcha/php/login.php">
                     <div class="form-input form-group">
                         <label class="input_label" for="login">Username:</label>
                         <input type="text" class="form-control" name="login" id="user-login" placeholder="Username" maxlength="24" title="Username" required="true" /> <!--  pattern="^[a-zA-Z]\B[a-zA-Z0-9]{4,18}[a-zA-Z0-9]\b$"   pattern="(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_]{3,24}$"   -->
@@ -65,15 +65,15 @@
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
+                    <li><a href="/matcha/views/profile.php">Profile</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         Profile <span class="caret"></span>
                       </a>
                       <ul class="dropdown-menu">
-
-                        <li><a href="/matcha/views/profile.php">Settings</a></li>
-                        <li><a href="#">Report a User</a></li>
+                        <li><a href="/matcha/views/profile_settings.php">Edit Profile</a></li>
+                        <li><a href="/matcha/views/account.php">Account Settings</a></li>
+                        <li><a href="/matcha/views/account.php#reportUser">Report a User</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="logout-btn">
                             <a href="/matcha/php/logout.php" title="Logout of Account">LOGOUT</a>

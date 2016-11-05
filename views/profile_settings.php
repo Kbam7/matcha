@@ -1,112 +1,21 @@
 <?php
 session_start();
 if (isset($_SESSION['logged_on_user'])) {
-    $user = $_SESSION['logged_on_user']; ?>
+    $user = $_SESSION['logged_on_user'];
+    $tmp = explode(',', $user['sex_pref']);
+    $sp = 0;
+    if (in_array('men', $tmp, true)) {
+        $sp = 1;
+    }
+    if (in_array('women', $tmp, true)) {
+        $sp = ($sp ? 2 : 0);
+    } ?>
 <!DOCTYPE html>
 <html>
   <head>
     <title>Matcha | Profile</title>
     <?php include '../include/head.php'; ?>
-    <style>
-        /* USER PROFILE PAGE */
-        .card {
-            margin-top: 20px;
-            padding: 30px;
-            background-color: rgba(214, 224, 226, 0.2);
-            -webkit-border-top-left-radius:5px;
-            -moz-border-top-left-radius:5px;
-            border-top-left-radius:5px;
-            -webkit-border-top-right-radius:5px;
-            -moz-border-top-right-radius:5px;
-            border-top-right-radius:5px;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        .card.hovercard {
-            position: relative;
-            padding-top: 0;
-            overflow: hidden;
-            text-align: center;
-            background-color: #fff;
-            background-color: rgba(255, 255, 255, 1);
-        }
-        .card.hovercard .card-background {
-            height: 130px;
-        }
-        .card-background img {
-            -webkit-filter: blur(25px);
-            -moz-filter: blur(25px);
-            -o-filter: blur(25px);
-            -ms-filter: blur(25px);
-            filter: blur(25px);
-            margin-left: -100px;
-            margin-top: -200px;
-            min-width: 130%;
-        }
-        .card.hovercard .useravatar {
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-        }
-        .card.hovercard .useravatar img {
-            width: 100px;
-            height: 100px;
-            max-width: 100px;
-            max-height: 100px;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.5);
-        }
-        .card.hovercard .card-info {
-            position: absolute;
-            bottom: 14px;
-            left: 0;
-            right: 0;
-        }
-        .card.hovercard .card-info .card-title {
-            padding:0 5px;
-            font-size: 20px;
-            line-height: 1;
-            color: #262626;
-            background-color: rgba(255, 255, 255, 0.1);
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
-        }
-        .card.hovercard .card-info {
-            overflow: hidden;
-            font-size: 12px;
-            line-height: 20px;
-            color: #737373;
-            text-overflow: ellipsis;
-        }
-        .card-info dl.dl-horizontal {
-            max-width: 120px;
-            margin: auto;
-        }
-        .card-info dl dt {
-            width: 40px;
-        }
-        .card-info dl dd {
-            margin: auto;
-        }
-        .card.hovercard .bottom {
-            padding: 0 20px;
-            margin-bottom: 17px;
-        }
-        .btn-pref .btn {
-            -webkit-border-radius:0 !important;
-        }
-
-        #map {
-          height: 100%;
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="/matcha/assets/css/profile.css" />
   </head>
   <body>
     <header>
@@ -159,35 +68,142 @@ if (isset($_SESSION['logged_on_user'])) {
 
                         <h3>Bio</h3>
 
-                        <dl class="dl-horizontal">
-                            <dt>Tags</dt>
-                            <dd><?php echo $user['tags'] ?></dd>
-                          <dt>About me</dt>
-                          <dd><?php echo $user['bio'] ?><?php print_r($user); ?></dd>
-                        </dl>
+                        <form id="edit_bio_form" class="form-horizontal">
+                          <div class="form-group">
+                            <label for="edit_tags" class="col-sm-2 control-label">Tags :</label>
+                            <div class="col-sm-10">
+                                <?php echo $user['tags'] ?>
+                                <input type="text" class="form-control" name="tags" id="edit_tags" value="" placeholder="Enter new tag" maxlength="24" autocomplete="true" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="edit_bio" class="col-sm-2 control-label">Bio :</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" name="bio" id="edit_bio" rows="5">
+                                    <?php echo $user['bio'] ?><?php print_r($user); ?>
+                              </textarea>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                              <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                          </div>
+                        </form>
 
                     </div>
                     <div class="tab-pane fade in" id="tab2">
                         <h3>Details</h3>
 
-                        <dl class="dl-horizontal">
-                            <dt>First Name</dt>
-                            <dd><?php echo $user['firstname'] ?></dd>
-                            <dt>Last Name</dt>
-                            <dd><?php echo $user['lastname'] ?></dd>
-                            <dt>Gender</dt>
-                            <dd><?php echo $user['gender'] ?></dd>
-                            <dt>Interested in</dt>
-                            <dd><?php echo $user['sex_pref'] ?></dd>
-                            <hr />
-                            <dt>Location : </dt>
-                            <dd><?php echo $user['GPS_pos'] ?></dd>
-                            <p><button onclick="geoFindMe()">Show my location</button></p>
-                            <div id="out"></div>
-                        </dl>
+                        <form id="edit_details_form" class="form-horizontal">
+                            <div class="form-group">
+                              <label for="edit_firstname" class="col-sm-4 control-label">First Name :</label>
+                              <div class="col-sm-6">
+                                  <input type="text" class="form-control" name="firstname" id="edit_firstname" value="<?php echo $user['firstname'] ?>" maxlength="32" autocomplete="true" />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_lastname" class="col-sm-4 control-label">Last Name :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="lastname" id="edit_lastname" value="<?php echo $user['lastname'] ?>" maxlength="32" autocomplete="true" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_username" class="col-sm-4 control-label">User Name :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="username" id="edit_username" value="<?php echo $user['username'] ?>" maxlength="32" autocomplete="true" />
+                                </div>
+                            </div>
+
+                            <hr  />
+
+                            <div class="form-group">
+                                <label for="edit_gender" class="col-sm-4 control-label">Gender :</label>
+                                <div class="col-sm-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gender" id="gender_male" value="male"
+
+                                        <?php
+                                            if ($user['gender'] === 'male') {
+                                                echo 'checked="true" ';
+                                            } ?>
+
+                                         />
+                                        Male
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gender" id="gender_female" value="female"
+
+                                            <?php
+                                                if ($user['gender'] === 'female') {
+                                                    echo 'checked="true" ';
+                                                } ?>
+
+                                         />
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="interested" class="col-sm-4 control-label">Interested in :</label>
+                                <div class="col-sm-6">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="male_interest" name="sex_pref"  value="men"
+                                            <?php
+                                                if ($sp > 0) {
+                                                    echo 'checked="true" ';
+                                                } ?>
+                                         />
+                                        Men
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="female_interest" name="sex_pref" value="women"
+                                            <?php
+                                                if ($sp === 0 || $sp === 2) {
+                                                    echo 'checked="true" ';
+                                                } ?>
+                                        />
+                                        Women
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <hr  />
+
+                            <div class="form-group">
+                                <label for="edit_location" class="col-sm-4 control-label">Location :</label>
+                                <div class="col-sm-6">
+                                    <div class="col-sm-10">
+                                        <label for="edit_latitude" class="col-sm-4 control-label">Latitude</label>
+                                        <input type="text" class="form-control" name="latitude" id="edit_latitude" placeholder="<?php echo $user['latitude'] ?>" autocomplete="true" />
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <label for="edit_longitude" class="col-sm-4 control-label">Longitude</label>
+                                        <input type="text" class="form-control" name="longitude" id="edit_longitude" placeholder="<?php echo $user['longitude'] ?>" autocomplete="true" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" style="text-align: center; margin-top: 20px;">
+                                    <button type="button" class="btn btn-info btn-lg" onclick="geoFindMe()">Get location</button>
+                                    <div id="out"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                            </div>
+                        </form>
 
                     </div>
                     <div class="tab-pane fade in" id="tab3">
+                        <button type="button" onclick="uploadNewImage()" class="pull-right">
+                            <span class="fa fa-plus-square-o fa-2x"></span>
+                            <span class="hidden-xs"><small> New Image</small></span>
+                        </button>
                       <h3><?php echo $user['firstname'] ?>'s Photos</h3>
                       <?php echo 'get pics string from db, split it to get paths then, using each path, display each of the images here.' ?>
                     </div>
@@ -201,6 +217,8 @@ if (isset($_SESSION['logged_on_user'])) {
 
     <?php include '../include/footer.php'; ?>
 
+    <script type="text/javascript" src="/matcha/assets/js/profile_settings.js"></script>
+
     <script type="text/javascript">
 
     // Button effect for profile page
@@ -211,36 +229,6 @@ if (isset($_SESSION['logged_on_user'])) {
             $(this).removeClass("btn-default").addClass("btn-primary");
         });
     });
-
-    // For GPS location
-    function geoFindMe() {
-        var output = document.getElementById("out");
-
-        if (!navigator.geolocation){
-            output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-            return;
-        }
-
-        function success(position) {
-            var latitude  = position.coords.latitude;
-            var longitude = position.coords.longitude;
-
-            output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
-
-            var img = new Image();
-            img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
-
-            output.appendChild(img);
-        };
-
-        function error() {
-            output.innerHTML = "Unable to retrieve your location";
-        };
-
-        output.innerHTML = "<p>Locating…</p>";
-
-        navigator.geolocation.getCurrentPosition(success, error);
-    }
 
     </script>
 

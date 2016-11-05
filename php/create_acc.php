@@ -39,13 +39,13 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                                 'firstname' => $fname, 'lastname' => $lname,
                                 'username' => $uname, 'password' => $passwd,
                                 'email' => $email, 'profile_complete' => 0,
+                                'fame' => 0,
                                 /*   SET these values later by checking if the properties exist for this User
                                 'gender' => '',
                                 'sex_pref' => '',
                                 'bio' => '',
                                 'tags' => '',
                                 'pictures' => '',
-                                'fame' => 0,
                                 'GPS_pos' => '0,0',
                                 */
                 ]]

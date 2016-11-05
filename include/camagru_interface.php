@@ -1,5 +1,5 @@
 <section class="col-12" id="imageDisplay">
-            <aside class="col-2 overlays">
+            <aside class="col-sm-5 overlays">
                 <form id="overlayForm">
                     <!-- ADD PHP HERE TO POPULATE OVERLAY LIST. Save overlay to DB and allow users to upload more overlays -->
                     <div class="form-input">
@@ -7,30 +7,30 @@
                     </div>
                     <div class="overlay_images">
                         <div class="form-input">
-                            <label class="overlay_label" for="overlay_1"><img src="img/overlays/glasses.png" alt="Glasses" /></label>
-                            <input type="radio" name="overlay" id="overlay_1" value="img/overlays/glasses.png" required="true" />
+                            <label class="overlay_label" for="overlay_1"><img src="/matcha/assets/img/overlays/glasses.png" alt="Glasses" /></label>
+                            <input type="radio" name="overlay" id="overlay_1" value="/matcha/assets/img/overlays/glasses.png" required="true" />
                         </div>
                         <div class="form-input">
-                            <label class="overlay_label" for="overlay_2"><img src="img/overlays/whiskers.png" alt="Whiskers" /></label>
-                            <input type="radio" name="overlay" id="overlay_2" value="img/overlays/whiskers.png" required="true" />
+                            <label class="overlay_label" for="overlay_2"><img src="/matcha/assets/img/overlays/whiskers.png" alt="Whiskers" /></label>
+                            <input type="radio" name="overlay" id="overlay_2" value="/matcha/assets/img/overlays/whiskers.png" required="true" />
                         </div>
                         <div class="form-input">
-                            <label class="overlay_label" for="overlay_3"><img src="img/overlays/unicorn.png" alt="Unicorn" /></label>
-                            <input type="radio" name="overlay" id="overlay_3" value="img/overlays/unicorn.png" required="true" />
+                            <label class="overlay_label" for="overlay_3"><img src="/matcha/assets/img/overlays/unicorn.png" alt="Unicorn" /></label>
+                            <input type="radio" name="overlay" id="overlay_3" value="/matcha/assets/img/overlays/unicorn.png" required="true" />
                         </div>
                         <div class="form-input">
-                            <label class="overlay_label" for="overlay_4"><img src="img/overlays/text/kewl.png" alt="Kewl Text" /></label>
+                            <label class="overlay_label" for="overlay_4"><img src="/matcha/assets/img/overlays/text/kewl.png" alt="Kewl Text" /></label>
                             <input type="radio" name="overlay" id="overlay_4" value="img/overlays/text/kewl.png" required="true" />
                         </div>
                         <div class="form-input">
-                            <label class="overlay_label" for="overlay_5"><img src="img/overlays/text/uhno.png" alt="Uh No Text" /></label>
-                            <input type="radio" name="overlay" id="overlay_5" value="img/overlays/text/uhno.png" required="true" />
+                            <label class="overlay_label" for="overlay_5"><img src="/matcha/assets/img/overlays/text/uhno.png" alt="Uh No Text" /></label>
+                            <input type="radio" name="overlay" id="overlay_5" value="/matcha/assets/img/overlays/text/uhno.png" required="true" />
                         </div>
                     </div>
 
                 </form> <!-- /#overlayForm -->
             </aside> <!-- /.overlays -->
-            <div class="col-5 imageDisplay_inner">
+            <div class="col-sm-5 imageDisplay_inner">
                 <div class="col-12">
                     <div class="user-upload-img"></div>
 
@@ -41,7 +41,7 @@
                     <canvas id="canvas"></canvas>
                 </div>
                 <hr class="clearfix" />
-                <div class="col-12 imageUploadSection collapsed">
+                <div class="col-sm-12 imageUploadSection collapsed">
                     <h3>Upload an Image</h3>
                     <form id="imageUploadForm" method="post" enctype="multipart/form-data">
                         <progress class="during-upload" id="progress" max="100" value="0">
@@ -67,7 +67,7 @@
                 </div>
                 <hr class="clearfix" />
             </div> <!-- /.imageDisplay_inner -->
-            <aside id="newGallery" class="col-5">
+            <aside id="newGallery" class="col-sm-12">
                 <h3>Your Uploads</h3>
 
             </aside>

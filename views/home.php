@@ -14,8 +14,6 @@ if (isset($_SESSION['logged_on_user'])) {
         <?php include '../include/header.php'; ?>
     </header>
 
-    <div id="error-messages"></div>
-
     <?php
         if ($user['profile_complete'] === 0) {
             // incomplete profile
@@ -29,6 +27,8 @@ if (isset($_SESSION['logged_on_user'])) {
                 </div>
             ';
         } ?>
+
+    <div id="error-messages"></div>
 
     <section class="jumbo-intro">
         <div class="jumbotron">

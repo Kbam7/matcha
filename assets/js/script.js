@@ -5,7 +5,13 @@ var addClass_timeout, removeError_timeout;
 
 window.onload = function() {
 
-        // some drag event code
+        /*------------------------------------------------------------------------*/
+        /* ---------------------[ EVENT LISTENERS ]------------------------- */
+        /*------------------------------------------------------------------------*/
+
+        /* --- Global events --- */
+
+        // some drag event code, could be usefull
         document.ondragover = function(evt) {
             evt = evt || window.event;
             var x = evt.pageX,
@@ -20,25 +26,28 @@ window.onload = function() {
             observeErrors(errorDiv);
         }
 
-        /* --- Global events --- */
-
         // Add animation to input elements
-        var formInputList = document.querySelectorAll('input[type=text], input[type=password], input[type=email]');
-        for (var i = 0; i < formInputList.length; ++i) {
-            formInputList[i].addEventListener('click', function() {
-                addClass(this.previousElementSibling, "fade-in-up");
-                addClass(this.previousElementSibling, "medium");
-            });
+        var formList = document.querySelectorAll('form.animate_label');
+        for (var j = 0; j < formList.length; ++j) {
+            var formInputList = formList[j].querySelectorAll('input[type=text], input[type=password], input[type=email]');
+            for (var i = 0; i < formInputList.length; ++i) {
+                formInputList[i].addEventListener('click', function() {
+                    debugger;
+                    addClass(this.previousElementSibling, "fade-in-up");
+                    addClass(this.previousElementSibling, "medium");
+                });
 
-            formInputList[i].addEventListener('blur', function() {
-                var item = this;
-                removeClass(item.previousElementSibling, "fade-in-up");
-                addClass(item.previousElementSibling, "fade-out-down");
-                setTimeout(function() {
-                    removeClass(item.previousElementSibling, "fade-out-down");
-                    removeClass(item.previousElementSibling, "medium");
-                }, 750);
-            });
+                formInputList[i].addEventListener('blur', function() {
+                    var item = this;
+                    debugger;
+                    removeClass(item.previousElementSibling, "fade-in-up");
+                    addClass(item.previousElementSibling, "fade-out-down");
+                    setTimeout(function() {
+                        removeClass(item.previousElementSibling, "fade-out-down");
+                        removeClass(item.previousElementSibling, "medium");
+                    }, 750);
+                });
+            }
         }
 
         /* --- NON-Global events --- */
@@ -60,48 +69,6 @@ window.onload = function() {
                 };
             }
         */
-
-        // Events for new user form
-        var createUserForm = document.querySelector("#createUserForm");
-        if (createUserForm) {
-            // Get all input elements
-            var inputs = createUserForm.elements;
-
-            // Add 'blur' event listener for error messages
-            for (var i = 0; i < inputs.length; ++i) {
-                var item = inputs[i];
-                // dont add for submit button
-                if (item.type !== "submit") {
-                    if (item.type === "password") {
-                        item.addEventListener('blur', function(e) {
-                            // Check if passwords do not match
-                            if ((this.name === "password" && this.value !== createUserForm.elements.namedItem("passwd2").value) ||
-                                (this.name === "password2" && this.value !== createUserForm.elements.namedItem("passwd").value)) {
-                                displayError("<p class=\"alert alert-warning\">Your passwords do not match</p>");
-                            } else {
-                                // remove error messages
-                                while (errorDiv.children.length) {
-                                    errorDiv.removeChild(errorDiv.children[0]);
-                                }
-                                validate_input(this, this.value, this.type);
-                            }
-                        });
-                    } else {
-                        item.addEventListener('blur', function(e) {
-                            // remove error messages
-                            while (errorDiv.children.length) {
-                                errorDiv.removeChild(errorDiv.children[0]);
-                            }
-                            validate_input(this, this.value, this.type);
-                        });
-                    }
-                }
-            };
-            createUserForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                createUser(createUserForm);
-            });
-        }
 
         // Event for checking if an overlay is selected before submition
         var overlayForm = document.querySelector("#overlayForm");
@@ -232,39 +199,6 @@ function ajax_post(url, data, callback) {
 
 /* ----------------[ FORM FUNCTIONS ]------------------- */
 
-function createUser(form) {
-    var fname = encodeURIComponent(document.getElementById("fname").value);
-    var lname = encodeURIComponent(document.getElementById("lname").value);
-    var uname = encodeURIComponent(document.getElementById("uname").value);
-    var email = encodeURIComponent(document.getElementById("email").value);
-    var passwd = encodeURIComponent(document.getElementById("passwd").value);
-
-    var data = "submit=1" +
-        "&fname=" + fname +
-        "&lname=" + lname +
-        "&uname=" + uname +
-        "&email=" + email +
-        "&passwd=" + passwd;
-
-    //    validate_input(form);
-
-    ajax_post("/matcha/php/create_acc.php", data, function(httpRequest) {
-        //        displayError(httpRequest.responseText);
-        var response = JSON.parse(httpRequest.responseText);
-
-        if (response.status === true) {
-            displayError(response.statusMsg + " <p class=\"alert alert-info\">Redirecting to login page . . .</p>");
-            console.log(response.record);
-            debugger;
-            /*
-                        setTimeout(function() {
-                            window.location = "/matcha/index.php";
-                        }, 10000);*/
-        } else {
-            displayError(response.statusMsg);
-        }
-    });
-}
 
 // Form validation
 function validate_input(input, value, type) {
