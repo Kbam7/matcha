@@ -20,7 +20,7 @@ function auth($login, $passwd)
                     ->build();
 
         $result = $client->run('MATCH (u:User) WHERE ((u.username={login}) OR (u.email={login})) AND u.password={passwd}'
-                                .'RETURN u AS user, count(u) AS n_users;',
+                                .'RETURN ID(u) AS id, u AS user, count(u) AS n_users;',
                                 ['login' => $login, 'passwd' => $passwd]);
 
         if ($record = $result->getRecord()) {
@@ -28,6 +28,7 @@ function auth($login, $passwd)
 
             if ($n_users === 1) {
                 $user = $record->get('user')->values();
+                $user['uid'] = $record->get('id');
             } else {
                 $user = null;
                 $_SESSION['errors'] = array('Duplicate accounts detected. Access Denied!');

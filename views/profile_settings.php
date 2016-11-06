@@ -1,9 +1,13 @@
 <?php
 session_start();
 if (isset($_SESSION['logged_on_user'])) {
+    // get user
     $user = $_SESSION['logged_on_user'];
+
+    // get current sex_pref in order to preselect the checkbox
     $tmp = explode(',', $user['sex_pref']);
-    $sp = 0;
+    $sp = -1;
+
     if (in_array('men', $tmp, true)) {
         $sp = 1;
     }
@@ -149,7 +153,7 @@ if (isset($_SESSION['logged_on_user'])) {
                                 <label for="interested" class="col-sm-4 control-label">Interested in :</label>
                                 <div class="col-sm-6">
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" id="male_interest" name="sex_pref"  value="men"
+                                        <input type="checkbox" id="male_interest" name="sex_pref_m"  value="men"
                                             <?php
                                                 if ($sp > 0) {
                                                     echo 'checked="true" ';
@@ -158,13 +162,13 @@ if (isset($_SESSION['logged_on_user'])) {
                                         Men
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" id="female_interest" name="sex_pref" value="women"
+                                        <input type="checkbox" id="female_interest" name="sex_pref_f" value="women"
                                             <?php
                                                 if ($sp === 0 || $sp === 2) {
                                                     echo 'checked="true" ';
                                                 } ?>
                                         />
-                                        Women
+                                        Women <?php echo $sp ?>
                                     </label>
 
                                 </div>
@@ -200,12 +204,12 @@ if (isset($_SESSION['logged_on_user'])) {
 
                     </div>
                     <div class="tab-pane fade in" id="tab3">
-                        <button type="button" onclick="uploadNewImage()" class="pull-right">
+                        <a href="/matcha/views/camera_guru.php" class="btn btn-default btn-md pull-right">
                             <span class="fa fa-plus-square-o fa-2x"></span>
                             <span class="hidden-xs"><small> New Image</small></span>
-                        </button>
-                      <h3><?php echo $user['firstname'] ?>'s Photos</h3>
-                      <?php echo 'get pics string from db, split it to get paths then, using each path, display each of the images here.' ?>
+                        </a>
+                        <h3><?php echo $user['firstname'] ?>'s Photos</h3>
+                        <?php echo 'get pics string from db, split it to get paths then, using each path, display each of the images here.' ?>
                     </div>
                   </div>
                 </div>

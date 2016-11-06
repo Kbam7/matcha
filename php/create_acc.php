@@ -41,6 +41,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                                 'email' => $email, 'profile_complete' => 0,
                                 'fame' => 0,
                                 /*   SET these values later by checking if the properties exist for this User
+                                'uid' => '',
                                 'gender' => '',
                                 'sex_pref' => '',
                                 'bio' => '',

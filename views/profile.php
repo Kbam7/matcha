@@ -81,16 +81,22 @@ if (isset($_SESSION['logged_on_user'])) {
                             <dt>Interested in</dt>
                             <dd><?php echo $user['sex_pref'] ?></dd>
                             <hr />
-                            <dt>Location : </dt>
-                            <dd><?php echo $user['GPS_pos'] ?></dd>
-                            <p><button onclick="geoFindMe()">Show my location</button></p>
-                            <div id="out"></div>
+                            <dt><u>Location</u></dt>
+                            <dd> </dd>
+                            <dt><small>Latitude : </small></dt>
+                            <dd><small><?php echo $user['latitude'] ?></small></dd>
+                            <dt><small>Longitude : </small></dt>
+                            <dd><small><?php echo $user['longitude'] ?></small></dd>
                         </dl>
 
                     </div>
                     <div class="tab-pane fade in" id="tab3">
-                      <h3><?php echo $user['firstname'] ?>'s Photos</h3>
-                      <?php echo 'get pics string from db, split it to get paths then, using each path, display each of the images here.' ?>
+                        <a href="/matcha/views/camera_guru.php" class="btn btn-default btn-md pull-right">
+                            <span class="fa fa-plus-square-o fa-2x"></span>
+                            <span class="hidden-xs"><small> New Image</small></span>
+                        </a>
+                        <h3><?php echo $user['firstname'] ?>'s Photos</h3>
+                        <?php echo 'get pics string from db, split it to get paths then, using each path, display each of the images here.' ?>
                     </div>
                   </div>
                 </div>

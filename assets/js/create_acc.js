@@ -3,6 +3,7 @@ var createUserForm = document.querySelector("#createUserForm");
 if (createUserForm) {
     // Get all input elements
     var inputs = createUserForm.elements;
+    var errorDiv = document.getElementById("error-messages");
 
     // Add 'blur' event listener for error messages
     for (var i = 0; i < inputs.length; ++i) {

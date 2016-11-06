@@ -9,4 +9,10 @@ Stack trace:
 #4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
 #5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/auth.php(20): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
 #6 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/login.php(13): auth('kylebamping7@gm...', '0529489a0c6223c...')
-#7 {main}
+#7 {main}PDOException: invalid data source name in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/webcam_image_upload.php:62
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/webcam_image_upload.php(62): PDO->__construct(';dbname=camagru', NULL, NULL)
+#1 {main}PDOException: invalid data source name in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/webcam_image_upload.php:62
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/webcam_image_upload.php(62): PDO->__construct(';dbname=camagru', NULL, NULL)
+#1 {main}

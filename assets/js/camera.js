@@ -2,6 +2,9 @@
 
 var video, canvas, width, height;
 
+// Start camera
+activateUsersCamera();
+
 function activateUsersCamera() {
 
     video = document.querySelector('#videoStream');
@@ -100,7 +103,7 @@ function ajax_upload_webcam_image(imgData) {
     document.getElementById("cancelUploadBtn").addEventListener("click", cancelUpload);
 
     try {
-        httpRequest.open("POST", "php/webcam_image_upload.php", true);
+        httpRequest.open("POST", "/matcha/php/webcam_image_upload.php", true);
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(data);
     } catch (e) {
@@ -136,9 +139,9 @@ function ajax_upload_webcam_image(imgData) {
                     var newImg = document.createElement("img");
                     var gallery = document.getElementById("newGallery");
                     if (gallery && newImg) {
-                        newImg.setAttribute('src', response.newFile);
-                        newImg.setAttribute('alt', response.imgTitle);
-                        newImg.setAttribute('title', response.imgTitle);
+                        newImg.setAttribute('src', response.image.path);
+                        newImg.setAttribute('alt', response.image.title);
+                        newImg.setAttribute('title', response.image.title);
                         newImg.className = "gallery-img";
                         gallery.appendChild(newImg);
                     }
