@@ -64,6 +64,7 @@ function activateUsersCamera() {
 
 }
 
+
 function processWebcamPhoto(e) {
     e.preventDefault();
 
@@ -75,6 +76,7 @@ function processWebcamPhoto(e) {
     var data = canvas.toDataURL('image/png');
     ajax_upload_webcam_image(data);
 }
+
 
 // Function for uploading webcam images
 function ajax_upload_webcam_image(imgData) {
@@ -139,7 +141,7 @@ function ajax_upload_webcam_image(imgData) {
                     var newImg = document.createElement("img");
                     var gallery = document.getElementById("newGallery");
                     if (gallery && newImg) {
-                        newImg.setAttribute('src', response.image.path);
+                        newImg.setAttribute('src', '/matcha/assets/uploads/'.response.image.filename);
                         newImg.setAttribute('alt', response.image.title);
                         newImg.setAttribute('title', response.image.title);
                         newImg.className = "gallery-img";

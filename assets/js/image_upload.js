@@ -44,7 +44,6 @@ if (imageUploadForm) {
 
         ajax_user_upload_image("initial_upload", imageUploadForm);
 
-
         if (overlayForm) {
 
             overlayForm.removeEventListener('submit', processWebcamPhoto);
@@ -81,7 +80,6 @@ if (imageUploadForm) {
 
 }
 
-
 /* ----------------[ FUNCTION : ajax_user_image_upload() ]------------------- */
 
 // Function for uploading users images
@@ -102,6 +100,10 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
         var childList = document.querySelector(".user-upload-img").childNodes;
         for (var i = 0; i < childList.length; ++i) {
             if (childList[i].nodeName === "IMG" && childList[i].nodeType === 1) {
+                console.log(childList[i].title);
+                console.log(childList[i].src);
+                debugger;
+
                 formdata.append("imgTitle", childList[i].title);
                 formdata.append("imgSrc", childList[i].src);
             }
@@ -186,9 +188,6 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
         }; /* END -- displayUserUpload() */
 
         function displayUploadInGallery(response) {
-
-
-
             // hide user-upload-img
             var userUploadImage = document.querySelector(".user-upload-img");
             userUploadImage.removeAttribute("style");
@@ -204,11 +203,13 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
             var gallery = document.getElementById("newGallery");
             if (gallery && newImg) {
                 setTimeout(function() {
+                    console.log(response);
+                    debugger;
                     newImg.className = "gallery-img fade-in-left slow";
                     gallery.appendChild(newImg);
-                    newImg.setAttribute('src', response.newFile += "?" + new Date().getTime()); // adds '?{current_timestamp}' to thr images src to force it to refresh.
-                    newImg.setAttribute('alt', response.imgTitle);
-                    newImg.setAttribute('title', response.imgTitle);
+                    newImg.setAttribute('src', '/matcha/assets/uploads/' + response.image.filename + "?" + new Date().getTime()); // adds '?{current_timestamp}' to thr images src to force it to refresh.
+                    newImg.setAttribute('alt', response.image.title);
+                    newImg.setAttribute('title', response.image.title);
                 }, 2000);
             }
         }

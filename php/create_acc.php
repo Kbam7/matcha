@@ -2,8 +2,6 @@
 
 session_start();
 
-//include '../config/database.php';
-
 require_once '../vendor/autoload.php';
 
 use GraphAware\Neo4j\Client\ClientBuilder;
@@ -17,18 +15,8 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
         $uname = $_POST['uname'];
         $email = $_POST['email'];
         $passwd = hash('whirlpool', $_POST['passwd']);
-/*
-        $dbname = 'camagru';
-        $conn = new PDO("$DB_DSN;dbname=$dbname", $DB_USER, $DB_PASSWORD);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = $conn->prepare('INSERT INTO `users` (`hash`, `firstname`, `lastname`, `username`, `email`, `password`) VALUES (:hash, :fname, :lname, :uname, :email, :passwd);');
-            $sql->execute(['hash' => $uniqueHash, 'fname' => $fname, 'lname' => $lname, 'uname' => $uname, 'email' => $email, 'passwd' => $passwd]);
-*/
-
-        $client = ClientBuilder::create()
-            ->addConnection('default', 'http://neo4j:123456@localhost:7474')
-            ->build();
+        $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
 
         if (validNewUser($client, $uname, $email) == true) {
             $uniqueHash = md5(uniqid());
@@ -39,17 +27,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                                 'firstname' => $fname, 'lastname' => $lname,
                                 'username' => $uname, 'password' => $passwd,
                                 'email' => $email, 'profile_complete' => 0,
-                                'fame' => 0,
-                                /*   SET these values later by checking if the properties exist for this User
-                                'uid' => '',
-                                'gender' => '',
-                                'sex_pref' => '',
-                                'bio' => '',
-                                'tags' => '',
-                                'pictures' => '',
-                                'GPS_pos' => '0,0',
-                                */
-                ]]
+                                'fame' => 0, ]]
             );
 
             // send email to user

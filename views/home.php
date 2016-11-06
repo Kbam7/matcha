@@ -22,7 +22,9 @@ if (isset($_SESSION['logged_on_user'])) {
             '
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <p>your profile is not complete, please complete your profile to stand a better chance at finding someone.</p>
+                    <h4>Hey there '.$user['firstname'].',</h4>
+                    <p>Welcome to Matcha! Here you will find everything your heart desires.<br />But first,
+                    your profile is not complete, complete your profile to stand a better chance at finding someone you will like.</p>
                     <a class="btn btn-default" href="/matcha/views/profile.php">Profile Settings</a>
                 </div>
             ';

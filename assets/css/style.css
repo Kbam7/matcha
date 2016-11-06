@@ -53,9 +53,10 @@ h1 small {
 }
 
 input[type=file] {
-    border: 4px solid #fff;
-    height: 40px;
-    color : #ccc;
+    max-width: 100%;
+    border   : 4px solid #fff;
+    height   : 40px;
+    color    : #ccc;
 }
 
 input[type=file]:focus,
@@ -139,6 +140,7 @@ section#imageDisplay {
 .imageDisplay_inner {
     display    : flex;
     flex-flow  : column nowrap;
+    overflow   : hidden;
     align-items: center;
     max-width  : 680px;
     min-height : 480px;
@@ -211,8 +213,8 @@ div.imageDisplay_inner .user-upload-img {
 }
 
 .imageDisplay_inner .imageUploadSection.expanded {
-    max-height: inherit;
-    min-height: inherit;
+    max-height: 270px;
+    min-height: 270px;
     overflow  : inherit;
 }
 
@@ -496,7 +498,7 @@ footer p {
 @media screen and (min-width: 420px) {
     .imageDisplay_inner div,
     .imageDisplay_inner form {
-        max-width: 80%;
+        max-width: 90%;
         margin   : 5px auto 0;
     }
 }

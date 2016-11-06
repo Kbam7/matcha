@@ -48,27 +48,7 @@ window.onload = function() {
         }
     }
 
-    /* --- NON-Global events --- */
-
-    /*
-        // Events for new user login
-        var loginForm = document.querySelector("#loginForm");
-        if (loginForm) {
-            // Get all input elements
-            var inputs = loginForm.elements;
-            // Add 'blur' event listener
-            for (var i = 0; i < inputs.length; ++i) {
-                var item = inputs[i];
-                if (item.type !== "submit") { // dont add for submit button
-                    item.addEventListener('blur', function(e) {
-                        validate_input(this, this.value, this.type);
-                    });
-                }
-            };
-        }
-    */
 }
-
 
 /*------------------------------------------------------------------------*/
 /* ---------------------[ FUNCTION DEFINITIONS ]------------------------- */
