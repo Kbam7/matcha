@@ -17,28 +17,35 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
     }
 
     $title = 'No Title Given';
+    $desc = 'No Description Given';
 
     if (isset($_POST['imgTitle'])) {
         $title = $_POST['imgTitle'];
     }
-    if ($_POST['uploadStatus'] === 'initial_upload') {
-        $imageFileType = pathinfo($_FILES['userfile']['name'], PATHINFO_EXTENSION);
-        $dir = '../assets/uploads/';
-        $file = $dir.uniqid().'.'.$imageFileType;
+    if (isset($_POST['imgDesc'])) {
+        $desc = $_POST['imgDesc'];
+    }
 
+//    if ($_POST['uploadStatus'] === 'initial_upload') {
+        $dir = '../assets/uploads/';
+        $file = $dir.uniqid().'.png';
+
+        // Check if file returns size
         $check = getimagesize($_FILES['userfile']['tmp_name']);
         if ($check === false) {
             $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Select a valid image to upload. <br />E.G:   JPG, JPEG, PNG or GIF');
             die(json_encode($response));
         }
 
-        // Check if directory exists
+        // Check if directory exists already
         if (!file_exists($dir)) {
             if (!mkdir($dir, 0777)) {
                 $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory " '.$dir.' "</p>');
                 die(json_encode($response));
             }
         }
+
+        // Check if file exists already
         if (file_exists($file)) {
             $response = array('status' => false, 'statusMsg' => "<p class=\"alert alert-warning\">The file you want to upload already exists. '".$file."'</p>");
             die(json_encode($response));
@@ -60,17 +67,63 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
             die(json_encode($response));
         }
 
-    //        if (move_uploaded_file($_FILES['userfile']['tmp_name'], $file)) {
-    //        $newImg = imagecreatefromstring(file_get_contents($_FILES['userfile']['tmp_name']));
-    //        $newImg = imagescale(imagecreatefromstring(file_get_contents($_FILES['userfile']['tmp_name'])), 640);
 
-            if (imagepng(imagescale(imagecreatefromstring(file_get_contents($_FILES['userfile']['tmp_name'])), 640), $file)) {
-                $statusMsg = '<p class="alert alert-info">Image uploaded. Now select an overlay!</p>';
+        // Check for overlay
+        $overlay = null;
+        if (isset($_POST['overlay']) && file_exists($_POST['overlay'])) {
+            if (!($overlay = imagecreatefrompng($_POST['overlay']))) {
+                $overlay = null;
+            } elseif (!(imagealphablending($overlay, true) && imagesavealpha($overlay, true))) {
+                    $overlay = null;
+            }
+        } elseif (isset($_POST['overlay']){
+            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Cannot find the selected overlay. Image not uploaded.</p>');
+            die(json_encode($response));
+        }
+
+
+            // Save the image
+            if (save_image($overlay, $_FILES['userfile']['tmp_name'], $file)) {
+                // Successfully resized and saved image
+
+                // Save to database
+                try {
+                    $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
+
+                    $stack = $client->stack();
+
+                    // Create new image and relationship for user
+                    $stack->push('MATCH (u:User {username:{uname}})'
+                                .'MERGE (u)-[:UPLOADED {timestamp:{time}}]->'
+                                            .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}, thumbnail:{tn}})'
+                                .'RETURN img',
+                                ['uname' => $user['username'], 'time' => time(), 'title' => $title,
+                                    'desc' => $desc, 'filename' => basename($file), 'tn' => 'tn_'.basename($file)],
+                                'new_img');
+
+                    $results = $client->runStack($stack);
+
+                    $record = $results->get('new_img')->getRecord();
+                    $img = $record->get('img')->values();
+
+                    $statusMsg .= '<p class="alert alert-success">New image uploaded.</p>';
+                    $response = array('status' => true, 'statusMsg' => $statusMsg, 'image' => $img);
+                } catch (Exception $e) {
+                    $statusMsg .= '<p class="alert alert-danger"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</p>';
+                    $response = array('status' => false, 'statusMsg' => $statusMsg);
+                    error_log($e, 3, dirname(__DIR__).'/log/errors.log');
+                }
+
+
+                $statusMsg = '<p class="alert alert-info">Image uploaded.</p>';
                 $response = array('status' => true, 'statusMsg' => $statusMsg, 'newFile' => '/matcha/assets/uploads/'.basename($file), 'imgTitle' => $title);
             } else {
                 $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Oops! There was an error resizing and saving the file..</p>');
             }
-    }/* --- END OF INITIAL_UPLOAD --- */
+
+
+//    }/* --- END OF INITIAL_UPLOAD --- */
+/*
         elseif ($_POST['uploadStatus'] === 'overwrite_with_new') {
             $user = $_SESSION['logged_on_user'];
 
@@ -143,11 +196,18 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
         } else {
             $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Unrecognised uploadStatus message</p>');
         }
+*/
 } else {
     $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Could not find data sent via POST method</p>');
 }
-    echo json_encode($response);
+echo json_encode($response);
 
+
+/*----------------------------------------*/
+/*---------[FUNCTION DEFINITIONS]---------*/
+/*----------------------------------------*/
+
+// Gets number of images currently uploaded by user
 function user_image_count()
 {
     $user = $_SESSION['logged_on_user'];
@@ -175,19 +235,78 @@ function user_image_count()
     }
 }
 
-/*
-function makeImageObj($url, $fileType)
-{
-    $imgObj = null;
+// Resizes and Saves new image as well as thumbnails
+function save_image($overlay, $src, $destination){
+    // Set default padding for images
+    $padd_x = 0;
+    $padd_y = 0;
 
-    if ($fileType === 'jpg' || $fileType === 'jpeg') {
-        $imgObj = imagecreatefromjpeg($url);
-    } elseif ($fileType === 'png') {
-        $imgObj = imagecreatefrompng($url);
-    } elseif ($fileType === 'gif') {
-        $imgObj = imagecreatefromgif($url);
+    // Create blank image object
+    $blank_img = imagecreatetruecolor(640, 480);
+    // Make the background transparent
+    $transparent_blk = imagecolorallocatealpha($blank_img, 0, 0, 0, 127);
+    imagecolortransparent($blank_img, $transparent_blk);
+
+    // Get image dimensions
+    $img_info = list('width' => $width, 'height' => $height) = getimagesize($src);
+    $new_img = imagecreatefromstring(file_get_contents($src));
+
+    // If width greater than 640px, scale image to 640 width
+    if ($img_info['width'] > 640) {
+        $new_img = imagescale($new_img, 640);
     }
 
-    return $imgObj;
+    // Check if x padding needed
+    if ($img_info['width'] < 640) {
+        $padd_x = round((640 - $img_info['width']) / 2);
+    }
+    // Check if y padding needed
+    if ($img_info['height'] < 480) {
+        $padd_y = round((480 - $img_info['height']) / 2);
+    }
+
+    // Get updated dimensions
+    $img_info = list('width' => $width, 'height' => $height) = getimagesize($new_img);
+
+    // Copy image to blank canvas
+    if (!imagecopy($blank_img, $new_img, $padd_x, $padd_y, 0, 0, $img_info['width'], $img_info['height'])){
+        return false;
+    }
+
+    // Apply overlay if defined
+    if ($overlay !== null){
+        if (!imagecopy($blank_img, $overlay, 0, 0, 0, 0, 640, 480)) {
+            return false;
+        }
+    }
+
+    // Save image as png
+    if (!imagepng($blank_img, $destination)){
+        return false;
+    }
+
+    // Make thumbnails
+
+    // Scale image to 100 width
+    $new_img = imagescale($blank_img, 100);
+
+    // Create blank image object
+    $blank_img = imagecreatetruecolor(100, 100);
+    // Make the background transparent
+    $transparent_blk = imagecolorallocatealpha($blank_img, 0, 0, 0, 127);
+    imagecolortransparent($blank_img, $transparent_blk);
+
+    // Copy image to blank canvas
+    if (!imagecopy($blank_img, $new_img, 0, 0, 0, 0, 100, 100)){
+        return false;
+    }
+
+    $tn_destination = '../assets/uploads/thumbnails/tn_' + basename($destination);
+
+    // Save thumbnail image as png
+    if (!imagepng($blank_img, $tn_destination)){
+        return false;
+    }
+
+    return true;
 }
-*/

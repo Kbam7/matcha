@@ -6,6 +6,8 @@ if (isset($_SESSION['logged_on_user'])) {
 
     // get current sex_pref in order to preselect the checkbox
     $tmp = explode(',', $user['sex_pref']);
+
+    // Sexual Preference  |  -1:none, 0:female, 1:male, 2:both
     $sp = -1;
 
     if (in_array('men', $tmp, true)) {
@@ -38,7 +40,7 @@ if (isset($_SESSION['logged_on_user'])) {
                         <!-- http://lorempixel.com/850/280/people/9/ -->
                     </div>
                     <div class="useravatar">
-                        <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                        <img alt="<?php echo $user[''] ?>" src="http://lorempixel.com/100/100/people/9/">
                     </div>
                     <div class="card-info">
                         <span class="card-title"><?php echo $user['firstname'].' '.$user['lastname']; ?></span>
@@ -50,17 +52,17 @@ if (isset($_SESSION['logged_on_user'])) {
                 </div>
                 <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
                     <div class="btn-group" role="group">
-                        <button type="button" id="favorites" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                        <button type="button" id="favorites" class="btn btn-primary" href="#bio_settings_tab" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
                             <div class="hidden-xs">Bio</div>
                         </button>
                     </div>
                     <div class="btn-group" role="group">
-                        <button type="button" id="stars" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <button type="button" id="stars" class="btn btn-default" href="#details_settings_tab" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                             <div class="hidden-xs">Details</div>
                         </button>
                     </div>
                     <div class="btn-group" role="group">
-                        <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <button type="button" id="following" class="btn btn-default" href="#pics_settings_tab" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                             <div class="hidden-xs">Pictures</div>
                         </button>
                     </div>
@@ -68,7 +70,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
                 <div class="well">
                   <div class="tab-content">
-                    <div class="tab-pane fade in active" id="tab1">
+                    <div class="tab-pane fade in active" id="bio_settings_tab">
 
                         <h3>Bio</h3>
 
@@ -96,7 +98,7 @@ if (isset($_SESSION['logged_on_user'])) {
                         </form>
 
                     </div>
-                    <div class="tab-pane fade in" id="tab2">
+                    <div class="tab-pane fade in" id="details_settings_tab">
                         <h3>Details</h3>
 
                         <form id="edit_details_form" class="form-horizontal">
@@ -168,7 +170,7 @@ if (isset($_SESSION['logged_on_user'])) {
                                                     echo 'checked="true" ';
                                                 } ?>
                                         />
-                                        Women <?php echo $sp ?>
+                                        Women
                                     </label>
 
                                 </div>
@@ -203,13 +205,19 @@ if (isset($_SESSION['logged_on_user'])) {
                         </form>
 
                     </div>
-                    <div class="tab-pane fade in" id="tab3">
+                    <div class="tab-pane fade in" id="pics_settings_tab">
                         <a href="/matcha/views/camera_guru.php" class="btn btn-default btn-md pull-right">
                             <span class="fa fa-plus-square-o fa-2x"></span>
                             <span class="hidden-xs"><small> New Image</small></span>
                         </a>
                         <h3><?php echo $user['firstname'] ?>'s Photos</h3>
-                        <?php echo 'get pics string from db, split it to get paths then, using each path, display each of the images here.' ?>
+                        <aside id="profile_settings_gallery" class="col-md-12">
+                            <h3>Your Uploads</h3>
+<!-- include gallery -->
+<?php include '../include/displayUserGallery.php';
+    displayUserGallery($user['username']); ?>
+                            <div class="clearfix"></div>
+                        </aside>
                     </div>
                   </div>
                 </div>

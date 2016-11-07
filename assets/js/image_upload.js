@@ -42,28 +42,31 @@ if (imageUploadForm) {
     imageUploadForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        ajax_user_upload_image("initial_upload", imageUploadForm);
+        ajax_user_upload_image( /*"initial_upload", */ imageUploadForm);
+        /*
+                if (overlayForm) {
 
-        if (overlayForm) {
+                    overlayForm.removeEventListener('submit', processWebcamPhoto);
+                    // Submit event for finalising users upload
+                    overlayForm.addEventListener('submit', handleUserUpload);
 
-            overlayForm.removeEventListener('submit', processWebcamPhoto);
-            // Submit event for finalising users upload
-            overlayForm.addEventListener('submit', handleUserUpload);
+                    function handleUserUpload(e) {
 
-            function handleUserUpload(e) {
-
-                e.preventDefault();
-                ajax_user_upload_image("overwrite_with_new", overlayForm);
+                        e.preventDefault();
+                        ajax_user_upload_image("overwrite_with_new", overlayForm);
 
 
 
-                // Remove submit event for finalising users upload
-                overlayForm.removeEventListener('submit', handleUserUpload);
-                // Set default action back to form
-                overlayForm.addEventListener('submit', processWebcamPhoto);
+                        // Remove submit event for finalising users upload
+                        overlayForm.removeEventListener('submit', handleUserUpload);
+                        // Set default action back to form
+                        overlayForm.addEventListener('submit', processWebcamPhoto);
 
-            }
-        }
+                    }
+                }
+
+        */
+
     });
 
     document.querySelector('.imageDisplay_inner .imageUploadSection h3')
@@ -83,33 +86,31 @@ if (imageUploadForm) {
 /* ----------------[ FUNCTION : ajax_user_image_upload() ]------------------- */
 
 // Function for uploading users images
-function ajax_user_upload_image(uploadStatus, uploadForm) {
+function ajax_user_upload_image( /*uploadStatus, */ uploadForm) {
     var httpRequest = new XMLHttpRequest(),
         formdata = new FormData(uploadForm);
 
-
-
     // Adding custom fields to form data
     formdata.append("submit", "1");
-    formdata.append("uploadStatus", uploadStatus);
+    //    formdata.append("uploadStatus", uploadStatus);
+    /*
+        // Checks which phase of the upload we are in.
+        if (uploadStatus === "overwrite_with_new") {
 
-    // Checks which phase of the upload we are in.
-    if (uploadStatus === "overwrite_with_new") {
+            // Get image title and src from form. Overlay has been selected and is in `formdata`
+            var childList = document.querySelector(".user-upload-img").childNodes;
+            for (var i = 0; i < childList.length; ++i) {
+                if (childList[i].nodeName === "IMG" && childList[i].nodeType === 1) {
+                    console.log(childList[i].title);
+                    console.log(childList[i].src);
+                    debugger;
 
-        // Get image title and src from form. Overlay has been selected and is in `formdata`
-        var childList = document.querySelector(".user-upload-img").childNodes;
-        for (var i = 0; i < childList.length; ++i) {
-            if (childList[i].nodeName === "IMG" && childList[i].nodeType === 1) {
-                console.log(childList[i].title);
-                console.log(childList[i].src);
-                debugger;
-
-                formdata.append("imgTitle", childList[i].title);
-                formdata.append("imgSrc", childList[i].src);
+                    formdata.append("imgTitle", childList[i].title);
+                    formdata.append("imgSrc", childList[i].src);
+                }
             }
         }
-    }
-
+    */
     // Setting up listeners for upload process
     httpRequest.upload.addEventListener("progress", uploadProgress);
     httpRequest.upload.addEventListener("loadstart", uploadStarted);
@@ -123,7 +124,6 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
     // Try send the data
     try {
         httpRequest.open("POST", "/matcha/php/user_image_upload.php", true);
-        //        httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(formdata);
     } catch (e) {
         displayError("<p class=\"alert alert-danger\">ajax send error : " + e);
@@ -161,33 +161,36 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
                 var response = JSON.parse(httpRequest.responseText);
                 displayError(response.statusMsg);
                 if (response.status === true) {
-                    if (uploadStatus === "initial_upload") {
+
+                    /*if (uploadStatus === "initial_upload") {
                         displayUserUpload(response); // Display the users uploaded image
                     } else if (uploadStatus === "overwrite_with_new") {
                         displayUploadInGallery(response); // Display image in gallery
-                    }
+                    }*/
+                    displayUploadInGallery(response);
                 }
             };
         }; /* END -- httpRequest.onreadystatechange */
+        /*
+                function displayUserUpload(response) {
+                    var newImg = document.createElement("img");
+                    var userUploadImage = document.querySelector(".user-upload-img");
+                    if (userUploadImage && newImg) {
+                        //document.querySelector("#videoStream").className += " hidden absolute";
 
-        function displayUserUpload(response) {
-            var newImg = document.createElement("img");
-            var userUploadImage = document.querySelector(".user-upload-img");
-            if (userUploadImage && newImg) {
-                //document.querySelector("#videoStream").className += " hidden absolute";
+                        // Adding classes using addClass() as a parameter
+                        addClass(addClass(document.querySelector("#videoStream"), "hidden"), "absolute");
 
-                // Adding classes using addClass() as a parameter
-                addClass(addClass(document.querySelector("#videoStream"), "hidden"), "absolute");
-
-                newImg.setAttribute('src', response.newFile);
-                newImg.setAttribute('alt', response.imgTitle);
-                newImg.setAttribute('title', response.imgTitle);
-                userUploadImage.appendChild(newImg);
-                userUploadImage.setAttribute("style", "display: inline-block;");
-            };
-        }; /* END -- displayUserUpload() */
+                        newImg.setAttribute('src', response.newFile);
+                        newImg.setAttribute('alt', response.imgTitle);
+                        newImg.setAttribute('title', response.imgTitle);
+                        userUploadImage.appendChild(newImg);
+                        userUploadImage.setAttribute("style", "display: inline-block;");
+                    };
+                }; /* END -- displayUserUpload() */
 
         function displayUploadInGallery(response) {
+            /*
             // hide user-upload-img
             var userUploadImage = document.querySelector(".user-upload-img");
             userUploadImage.removeAttribute("style");
@@ -197,20 +200,18 @@ function ajax_user_upload_image(uploadStatus, uploadForm) {
 
             // bring back video stream
             removeClass(removeClass(document.querySelector("#videoStream"), "hidden"), "absolute");
-
+*/
             // Display image in gallery
             var newImg = document.createElement("img");
             var gallery = document.getElementById("newGallery");
             if (gallery && newImg) {
                 setTimeout(function() {
-                    console.log(response);
-                    debugger;
-                    newImg.className = "gallery-img fade-in-left slow";
-                    gallery.appendChild(newImg);
                     newImg.setAttribute('src', '/matcha/assets/uploads/' + response.image.filename + "?" + new Date().getTime()); // adds '?{current_timestamp}' to thr images src to force it to refresh.
                     newImg.setAttribute('alt', response.image.title);
                     newImg.setAttribute('title', response.image.title);
-                }, 2000);
+                    newImg.className = "gallery-img fade-in-left slow";
+                    gallery.appendChild(newImg);
+                }, 1000);
             }
         }
     } /* END -- uploadSuccess() */

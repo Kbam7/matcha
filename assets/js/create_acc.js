@@ -68,11 +68,9 @@ function createUser(form) {
         if (response.status === true) {
             displayError(response.statusMsg + " <p class=\"alert alert-info\">Redirecting to login page . . .</p>");
             console.log(response.record);
-            debugger;
-            /*
-                        setTimeout(function() {
-                            window.location = "/matcha/index.php";
-                        }, 10000);*/
+            setTimeout(function() {
+                window.location = "/matcha/index.php";
+            }, 5000);
         } else {
             displayError(response.statusMsg);
         }

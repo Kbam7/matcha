@@ -57,6 +57,7 @@ input[type=file] {
     border   : 4px solid #fff;
     height   : 40px;
     color    : #ccc;
+    margin   : auto;
 }
 
 input[type=file]:focus,
@@ -69,7 +70,7 @@ section.jumbo-intro {
     max-width: 1366px;
     margin   : 90px auto auto;
 }
-/* --- Home User Gallery Items --- */
+/* --- Dashboard User Gallery Items --- */
 /* ------------------------------- */
 .src-image {
     display: none;
@@ -112,6 +113,12 @@ section.jumbo-intro {
     border-radius        : 50%;
     border               : 5px solid rgba(0,0,30,0.8);
 }
+/* --- User gallery Display --- */
+/* ---------------------------- */
+#pics_settings_tab,
+#pics_view_tab {
+    min-height: 750px;
+}
 /* --- Overlays for image upload --- */
 /* --------------------------------- */
 .overlays {
@@ -133,8 +140,9 @@ section.jumbo-intro {
 /* -------------------- */
 /*.imageDisplay_inner form {}*/
 section#imageDisplay {
-    display  : flex;
-    flex-flow: column nowrap;
+    display      : flex;
+    margin-bottom: 20%;
+    flex-flow    : column nowrap;
 }
 
 .imageDisplay_inner {
@@ -150,6 +158,7 @@ section#imageDisplay {
 
 .imageDisplay_inner div,
 .imageDisplay_inner form {
+    text-align : left;
     max-width  : 98%;
     margin     : auto;
     flex-grow  : 1;
@@ -163,7 +172,7 @@ section#imageDisplay {
     max-width       : 110%;
     background-color: rgba(0, 0, 0, 0.4);
     background-size : contain !important;
-    z-index         : 99999;
+    z-index         : 999;
     margin          : auto;
     /*border: 1px solid #f00;*/
 }
@@ -213,8 +222,8 @@ div.imageDisplay_inner .user-upload-img {
 }
 
 .imageDisplay_inner .imageUploadSection.expanded {
-    max-height: 270px;
-    min-height: 270px;
+    max-height: 370px;
+    min-height: 370px;
     overflow  : inherit;
 }
 
@@ -531,10 +540,5 @@ footer p {
 
     #newGallery {
         max-width: 280px;
-    }
-}
-@media screen and (min-width: 1024px) {
-    #videoStream {
-        width: 110%;
     }
 }

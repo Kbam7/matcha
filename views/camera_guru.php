@@ -83,14 +83,18 @@ if (isset($_SESSION['logged_on_user'])) {
 
                     <div class="image-upload-fields">
                         <p>Select image to upload:</p>
-                        <div class="form-input">
+                        <div class="form-group">
                             <input type="file" name="userfile" id="file" required="true" />
                         </div>
-                        <div class="form-input">
-                            <label class="input_label" for="userUpload_ImgTitle">Image Title:</label>
+                        <div class="form-group">
+                            <label for="userUpload_ImgTitle" class="control-label">Image Title:</label>
                             <input type="text" name="imgTitle" id="userUpload_ImgTitle" placeholder="Image Title:" required="true" />
                         </div>
-                        <div class="form-input">
+                        <div class="form-group">
+                          <label for="userUpload_ImgDesc" class="control-label">Image Description :</label>
+                          <textarea class="form-control" name="imgDesc" id="userUpload_ImgDesc" placeholder="Image description here" rows="3" ></textarea>
+                        </div>
+                        <div class="form-group">
                             <input class="btn border border-3 white rounded hover-text-blue text-22" type="submit" name="submit" value="Upload Image" />
                         </div>
                     </div>
@@ -105,28 +109,9 @@ if (isset($_SESSION['logged_on_user'])) {
             <h3>Your Uploads</h3>
             <!-- include gallery -->
 <?php include '../include/displayUserGallery.php';
-    displayUserGallery($user['username']); ?>
+    displayCamagruUserGallery($user['username']); ?>
         </aside>
     </section> <!-- /#imageDisplay_inner -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <?php include '../include/footer.php'; ?>
 

@@ -141,11 +141,15 @@ function ajax_upload_webcam_image(imgData) {
                     var newImg = document.createElement("img");
                     var gallery = document.getElementById("newGallery");
                     if (gallery && newImg) {
-                        newImg.setAttribute('src', '/matcha/assets/uploads/'.response.image.filename);
-                        newImg.setAttribute('alt', response.image.title);
-                        newImg.setAttribute('title', response.image.title);
-                        newImg.className = "gallery-img";
-                        gallery.appendChild(newImg);
+                        setTimeout(function() {
+                            console.log(response);
+                            debugger;
+                            newImg.setAttribute('src', '/matcha/assets/uploads/' + response.image.filename + "?" + new Date().getTime()); // adds '?{current_timestamp}' to thr images src to force it to refresh.
+                            newImg.setAttribute('alt', response.image.title);
+                            newImg.setAttribute('title', response.image.title);
+                            newImg.className = "gallery-img fade-in-left slow";
+                            gallery.appendChild(newImg);
+                        }, 1000);
                     }
                 }
             };
