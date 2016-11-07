@@ -10,6 +10,11 @@
   - **Mac**: MAMP
   - **Linux**: LAMP
 
+- You will need `composer.phar` to manage the php packages for Matcha. If its not in the root directory,
+  - [Download Composer](https://getcomposer.org/download/) - See 'Manual Download' section for the precompiled `composer.phar`
+  - Put it in the root directory of Matcha
+  - Run `php composer.phar install`
+  
 ## Config changes: 
 **Neo4j Config file:**
 `neo4j.conf`
