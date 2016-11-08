@@ -70,8 +70,8 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
         die(json_encode($response));
     }
 
-        // Check for overlay
-        $overlay = null;
+    // Check for overlay
+    $overlay = null;
     if (isset($_POST['overlay']) && file_exists($_POST['overlay'])) {
         $overlay = imagecreatefrompng($_POST['overlay']);
         if (!$overlay) {
@@ -237,20 +237,20 @@ function save_image($overlay, $src, $destination)
     }
 
     // Scale image to 100 width
-    $new_img = imagescale($blank_img, 100);
+    $new_img = imagescale($blank_img, 320);
 
     // Cleanup
     imagedestroy($blank_img);
 
     // Create blank image object
-    $blank_img = imagecreatetruecolor(100, 100);
+    $blank_img = imagecreatetruecolor(320, 240);
 
     // Make the background transparent
     $transparent_blk = imagecolorallocatealpha($blank_img, 0, 0, 0, 127);
     imagecolortransparent($blank_img, $transparent_blk);
 
     // Copy image to blank canvas
-    if (!imagecopy($blank_img, $new_img, 0, 0, 0, 0, 100, 100)) {
+    if (!imagecopy($blank_img, $new_img, 0, 0, 0, 0, 320, 240)) {
         return false;
     }
 
