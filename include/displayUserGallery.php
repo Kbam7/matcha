@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 // retrieve `:Image :UPLOADED` by `User` LIMIT 5
 require_once '../vendor/autoload.php';
 

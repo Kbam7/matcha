@@ -5,6 +5,8 @@ session_start();
 require_once '../vendor/autoload.php';
 use GraphAware\Neo4j\Client\ClientBuilder;
 
+$statusMsg = '';
+
 if (!isset($_SESSION['logged_on_user'])) {
     $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Please log in to upload an image.</p>');
     die(json_encode($response));
@@ -26,61 +28,61 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
         $desc = $_POST['imgDesc'];
     }
 
-//    if ($_POST['uploadStatus'] === 'initial_upload') {
-        $dir = '../assets/uploads/';
-        $file = $dir.uniqid().'.png';
+    $dir = '../assets/uploads/';
+    $file = $dir.uniqid().'.png';
 
-        // Check if file returns size
-        $check = getimagesize($_FILES['userfile']['tmp_name']);
-        if ($check === false) {
-            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Select a valid image to upload. <br />E.G:   JPG, JPEG, PNG or GIF');
+    // Check if file returns size
+    $img_info = getimagesize($_FILES['userfile']['tmp_name']);
+    if ($img_info === false) {
+        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Select a valid image to upload. <br />E.G:   JPG, JPEG, PNG or GIF');
+        die(json_encode($response));
+    }
+
+    $imageFileType = pathinfo($_FILES['userfile']['name'], PATHINFO_EXTENSION);
+
+    // Check if directory exists already
+    if (!file_exists($dir)) {
+        if (!mkdir($dir, 0777)) {
+            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory " '.$dir.' "</p>');
             die(json_encode($response));
         }
+    }
 
-        // Check if directory exists already
-        if (!file_exists($dir)) {
-            if (!mkdir($dir, 0777)) {
-                $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory " '.$dir.' "</p>');
-                die(json_encode($response));
-            }
-        }
+    // Check if file exists already
+    if (file_exists($file)) {
+        $response = array('status' => false, 'statusMsg' => "<p class=\"alert alert-warning\">The file you want to upload already exists. '".$file."'</p>");
+        die(json_encode($response));
+    }
 
-        // Check if file exists already
-        if (file_exists($file)) {
-            $response = array('status' => false, 'statusMsg' => "<p class=\"alert alert-warning\">The file you want to upload already exists. '".$file."'</p>");
-            die(json_encode($response));
-        }
+    // Check file size not bigger than 10mb or 0 bytes
+    if ($_FILES['userfile']['size'] > 10000000) {
+        $response = array('status' => false, 'statusMsg' => "<p class=\"alert alert-warning\">Your file is too large. Maximum size of '10mb' allowed.</p>");
+        die(json_encode($response));
+    } elseif ($_FILES['userfile']['size'] == 0) {
+        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Your file has no size. Please select a valid image.</p>');
+        die(json_encode($response));
+    }
 
-        // Check file size not bigger than 10mb or 0 bytes
-        if ($_FILES['userfile']['size'] > 10000000) {
-            $response = array('status' => false, 'statusMsg' => "<p class=\"alert alert-warning\">Your file is too large. Maximum size of '10mb' allowed.</p>");
-            die(json_encode($response));
-        } elseif ($_FILES['userfile']['size'] == 0) {
-            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Your file has no size. Please select a valid image.</p>');
-            die(json_encode($response));
-        }
-
-        // Allow certain file formats
-        if ($uploadOk && $imageFileType != 'jpg' && $imageFileType != 'png' &&
-          $imageFileType != 'jpeg' && $imageFileType != 'gif') {
-            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Only JPG, JPEG, PNG & GIF files are allowed.</p>');
-            die(json_encode($response));
-        }
-
+    // Allow certain file formats
+    if ($imageFileType != 'jpg' && $imageFileType != 'png' &&
+      $imageFileType != 'jpeg' && $imageFileType != 'gif') {
+        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Only JPG, JPEG, PNG & GIF files are allowed.</p>');
+        die(json_encode($response));
+    }
 
         // Check for overlay
         $overlay = null;
-        if (isset($_POST['overlay']) && file_exists($_POST['overlay'])) {
-            if (!($overlay = imagecreatefrompng($_POST['overlay']))) {
-                $overlay = null;
-            } elseif (!(imagealphablending($overlay, true) && imagesavealpha($overlay, true))) {
-                    $overlay = null;
-            }
-        } elseif (isset($_POST['overlay']){
-            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Cannot find the selected overlay. Image not uploaded.</p>');
-            die(json_encode($response));
+    if (isset($_POST['overlay']) && file_exists($_POST['overlay'])) {
+        $overlay = imagecreatefrompng($_POST['overlay']);
+        if (!$overlay) {
+            $overlay = null;
+        } elseif (!(imagealphablending($overlay, true) && imagesavealpha($overlay, true))) {
+            $overlay = null;
         }
-
+    } elseif (isset($_POST['overlay'])) {
+        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Cannot find the selected overlay. Image not uploaded.</p>');
+        die(json_encode($response));
+    }
 
             // Save the image
             if (save_image($overlay, $_FILES['userfile']['tmp_name'], $file)) {
@@ -98,7 +100,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
                                             .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}, thumbnail:{tn}})'
                                 .'RETURN img',
                                 ['uname' => $user['username'], 'time' => time(), 'title' => $title,
-                                    'desc' => $desc, 'filename' => basename($file), 'tn' => 'tn_'.basename($file)],
+                                    'desc' => $desc, 'filename' => basename($file), 'tn' => 'tn_'.basename($file), ],
                                 'new_img');
 
                     $results = $client->runStack($stack);
@@ -114,94 +116,16 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
                     error_log($e, 3, dirname(__DIR__).'/log/errors.log');
                 }
 
-
                 $statusMsg = '<p class="alert alert-info">Image uploaded.</p>';
                 $response = array('status' => true, 'statusMsg' => $statusMsg, 'newFile' => '/matcha/assets/uploads/'.basename($file), 'imgTitle' => $title);
             } else {
-                $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Oops! There was an error resizing and saving the file..</p>');
+                $statusMsg .= '<p class="alert alert-warning">Oops! There was an error resizing and saving the file..</p>';
+                $response = array('status' => false, 'statusMsg' => $statusMsg);
             }
-
-
-//    }/* --- END OF INITIAL_UPLOAD --- */
-/*
-        elseif ($_POST['uploadStatus'] === 'overwrite_with_new') {
-            $user = $_SESSION['logged_on_user'];
-
-            if (isset($_POST['imgSrc']) && isset($_POST['overlay'])) {
-                $file = $_POST['imgSrc'];
-                if ($overlay = imagecreatefrompng($_POST['overlay'])) {
-                    if ($im = imagecreatefrompng($file)) {
-                        if (imagealphablending($im, true) && imagesavealpha($im, true)) {
-                            if (imagealphablending($overlay, true) && imagesavealpha($overlay, true)) {
-                                if (imagecopy($im, $overlay, 0, 0, 0, 0, 640, 480)) {
-                                    if (imagepng($im, '../assets/uploads/'.basename($file))) {
-                                        try {
-                                            $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
-
-                                            $stack = $client->stack();
-
-                                            // Create new image and relationship for user
-                                            $stack->push('MATCH (u:User {username:{uname}})'
-                                                        .'MERGE (u)-[:UPLOADED {timestamp:{time}}]->'
-                                                                    .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}})'
-                                                        .'RETURN img',
-                                                        ['uname' => $user['username'], 'time' => time(), 'title' => '<Add title here>',
-                                                            'desc' => '<Add description here>', 'filename' => basename($file), ],
-                                                        'new_img');
-
-                                            $results = $client->runStack($stack);
-
-                                            $record = $results->get('new_img')->getRecord();
-                                            $img = $record->get('img')->values();
-
-                                            $statusMsg .= '<p class="alert alert-success">New image uploaded.</p>';
-
-                                            // Returns the title and path to the new image to be displayed on the front end
-                                            $response = array('status' => true, 'statusMsg' => $statusMsg, 'image' => $img);
-                                        } catch (Exception $e) {
-                                            $statusMsg .= '<p class="alert alert-danger"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</p>';
-                                            $response = array('status' => false, 'statusMsg' => $statusMsg);
-                                            error_log($e, 3, dirname(__DIR__).'/log/errors.log');
-                                        }
-                                        $conn = null;
-                                    } else {
-                                        $statusMsg .= '<p class="alert alert-danger">Could not save the image after merging. Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                                        $response = array('status' => false, 'statusMsg' => $statusMsg);
-                                    }
-                                } else {
-                                    $statusMsg .= '<p class="alert alert-danger">Could not copy images(merging problem). Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                                    $response = array('status' => false, 'statusMsg' => $statusMsg);
-                                }
-                            } else {
-                                $statusMsg .= '<p class="alert alert-danger">Could not set blend alpha or save alpha for overlay image. Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                                $response = array('status' => false, 'statusMsg' => $statusMsg);
-                            }
-                        } else {
-                            $statusMsg .= '<p class="alert alert-danger">Could not set blend alpha or save alpha for webcam image. Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                            $response = array('status' => false, 'statusMsg' => $statusMsg);
-                        }
-                        imagedestroy($im);
-                        imagedestroy($overlay);
-                    } else {
-                        $statusMsg .= '<p class="alert alert-danger">Could not create the image object from base64 data(webcam image). Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                        $response = array('status' => false, 'statusMsg' => $statusMsg);
-                    }
-                } else {
-                    $statusMsg .= '<p class="alert alert-danger">Could not create the image object from overlay image. Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                    $response = array('status' => false, 'statusMsg' => $statusMsg);
-                }
-            } else {
-                $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Could not find image or overlay image. Your image was not sucessfully added!</p>');
-            }
-        } else {
-            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Unrecognised uploadStatus message</p>');
-        }
-*/
 } else {
     $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Could not find data sent via POST method</p>');
 }
 echo json_encode($response);
-
 
 /*----------------------------------------*/
 /*---------[FUNCTION DEFINITIONS]---------*/
@@ -236,7 +160,10 @@ function user_image_count()
 }
 
 // Resizes and Saves new image as well as thumbnails
-function save_image($overlay, $src, $destination){
+function save_image($overlay, $src, $destination)
+{
+    global $statusMsg;
+
     // Set default padding for images
     $padd_x = 0;
     $padd_y = 0;
@@ -248,65 +175,93 @@ function save_image($overlay, $src, $destination){
     imagecolortransparent($blank_img, $transparent_blk);
 
     // Get image dimensions
-    $img_info = list('width' => $width, 'height' => $height) = getimagesize($src);
+    $img_info = list($width, $height) = getimagesize($src);
     $new_img = imagecreatefromstring(file_get_contents($src));
 
     // If width greater than 640px, scale image to 640 width
-    if ($img_info['width'] > 640) {
+    if ($img_info[0] > 640) {
         $new_img = imagescale($new_img, 640);
     }
 
     // Check if x padding needed
-    if ($img_info['width'] < 640) {
-        $padd_x = round((640 - $img_info['width']) / 2);
+    if ($img_info[0] < 640) {
+        $padd_x = round((640 - $img_info[0]) / 2);
     }
     // Check if y padding needed
-    if ($img_info['height'] < 480) {
-        $padd_y = round((480 - $img_info['height']) / 2);
+    if ($img_info[0] < 480) {
+        $padd_y = round((480 - $img_info[1]) / 2);
     }
 
     // Get updated dimensions
-    $img_info = list('width' => $width, 'height' => $height) = getimagesize($new_img);
+    $img_info = list($width, $height) = getimagesize($src);
 
     // Copy image to blank canvas
-    if (!imagecopy($blank_img, $new_img, $padd_x, $padd_y, 0, 0, $img_info['width'], $img_info['height'])){
+    if (!imagecopy($blank_img, $new_img, $padd_x, $padd_y, 0, 0, $img_info[0], $img_info[1])) {
         return false;
     }
 
     // Apply overlay if defined
-    if ($overlay !== null){
+    if ($overlay !== null) {
         if (!imagecopy($blank_img, $overlay, 0, 0, 0, 0, 640, 480)) {
             return false;
         }
     }
 
     // Save image as png
-    if (!imagepng($blank_img, $destination)){
+    if (!imagepng($blank_img, $destination)) {
         return false;
     }
 
-    // Make thumbnails
+    // Cleanup
+    imagedestroy($new_img);
+
+    // CREATE THUMBNAIL
+    $dir = '../assets/uploads/thumbnails/';
+    $tn_file = $dir.'tn_'.basename($destination);
+
+    // Check if directory exists already
+    if (!file_exists($dir)) {
+        if (!mkdir($dir, 0777)) {
+            $statusMsg .= '<p class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory "'.$dir.'"</p>';
+            $response = array('status' => false, 'statusMsg' => $statusMsg);
+
+            return false;
+        }
+    }
+    // Check if file exists already
+    if (file_exists($tn_file)) {
+        $statusMsg .= '<p class="alert alert-warning">The file you want to upload already exists. "'.$tn_file.'"</p>';
+        $response = array('status' => false, 'statusMsg' => $statusMsg);
+
+        return false;
+    }
 
     // Scale image to 100 width
     $new_img = imagescale($blank_img, 100);
 
+    // Cleanup
+    imagedestroy($blank_img);
+
     // Create blank image object
     $blank_img = imagecreatetruecolor(100, 100);
+
     // Make the background transparent
     $transparent_blk = imagecolorallocatealpha($blank_img, 0, 0, 0, 127);
     imagecolortransparent($blank_img, $transparent_blk);
 
     // Copy image to blank canvas
-    if (!imagecopy($blank_img, $new_img, 0, 0, 0, 0, 100, 100)){
+    if (!imagecopy($blank_img, $new_img, 0, 0, 0, 0, 100, 100)) {
         return false;
     }
-
-    $tn_destination = '../assets/uploads/thumbnails/tn_' + basename($destination);
 
     // Save thumbnail image as png
-    if (!imagepng($blank_img, $tn_destination)){
+    if (!imagepng($blank_img, $tn_file)) {
         return false;
     }
+
+    // Cleanup
+    imagedestroy($new_img);
+    imagedestroy($blank_img);
 
     return true;
 }

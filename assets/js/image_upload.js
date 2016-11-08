@@ -92,6 +92,7 @@ function ajax_user_upload_image( /*uploadStatus, */ uploadForm) {
 
     // Adding custom fields to form data
     formdata.append("submit", "1");
+
     //    formdata.append("uploadStatus", uploadStatus);
     /*
         // Checks which phase of the upload we are in.
