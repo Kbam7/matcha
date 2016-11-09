@@ -4,6 +4,15 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+function displayProfilePicture($a_user)
+{
+    if (isset($a_user['profile_pic'])) {
+        echo '/matcha/assets/uploads/thumbnails/'.$a_user['profile_pic'];
+    } else {
+        echo '../assets/img/default_pp.png';
+    }
+}
+
 if (isset($_SESSION['logged_on_user'])) {
     // get user
     $user = $_SESSION['logged_on_user'];
@@ -40,11 +49,11 @@ if (isset($_SESSION['logged_on_user'])) {
             <div class="col-lg-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-offset-0">
                 <div class="card hovercard">
                     <div class="card-background">
-                        <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
+                        <img src="<?php displayProfilePicture($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
                         <!-- http://lorempixel.com/850/280/people/9/ -->
                     </div>
                     <div class="useravatar">
-                        <img alt="<?php echo $user[''] ?>" src="<?php /*$user['profile_pic']*/ ?>">
+                        <img src="<?php displayProfilePicture($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
                     </div>
                     <div class="card-info">
                         <span class="card-title"><?php echo $user['firstname'].' '.$user['lastname']; ?></span>
@@ -216,7 +225,7 @@ if (isset($_SESSION['logged_on_user'])) {
                         <aside id="profile_settings_gallery" class="col-md-12">
                             <h3>Your Uploads</h3>
 <!-- include gallery -->
-<?php include '../include/displayUserGallery.php';
+<?php include '../php/displayUserGallery.php';
     displayUserGallery($user['username']); ?>
                             <div class="clearfix"></div>
                         </aside>

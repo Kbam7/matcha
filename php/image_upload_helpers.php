@@ -98,6 +98,7 @@ function save_image($overlay, $src, $destination)
         if (!mkdir($dir, 0777)) {
             $statusMsg .= '<p class="alert alert-danger">Unable to create directory for image thumbnails. Cannot save your image.<br />Please make sure you have rights for the directory "'.$dir.'"</p>';
             $response = array('status' => false, 'statusMsg' => $statusMsg);
+
             return false;
         }
     }
@@ -105,6 +106,7 @@ function save_image($overlay, $src, $destination)
     if (file_exists($tn_file)) {
         $statusMsg .= '<p class="alert alert-warning">The file you want to upload already exists. "'.$tn_file.'"</p>';
         $response = array('status' => false, 'statusMsg' => $statusMsg);
+
         return false;
     }
 
@@ -128,6 +130,8 @@ function save_image($overlay, $src, $destination)
 
     // Save thumbnail image as png
     if (!imagepng($blank_img, $tn_file)) {
+        unlink($destination);
+
         return false;
     }
 

@@ -139,7 +139,7 @@ function ajax_upload_webcam_image(imgData) {
                 displayError(response.statusMsg);
                 if (response.status === true) {
                     var data = 'displayGallery=1&username=' + response.username;
-                    ajax_post('/matcha/include/displayUserGallery.php', data, function(httpResponse) {
+                    ajax_post('/matcha/php/displayUserGallery.php', data, function(httpResponse) {
                         var gallery = document.getElementById("newGallery");
                         if (gallery) {
                             gallery.innerHTML = httpResponse.responseText;

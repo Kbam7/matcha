@@ -107,16 +107,33 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
             // Create new image and relationship for user and return the image object
             $stack->push('MATCH (u:User {username:{uname}})'
                         .'MERGE (u)-[:UPLOADED {timestamp:{time}}]->'
-                                    .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}, thumbnail:{tn}})'
-                        .'RETURN img',
+                            .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}, thumbnail:{tn}})',
                         ['uname' => $user['username'], 'time' => time(), 'title' => $title,
                             'desc' => $desc, 'filename' => basename($file), 'tn' => 'tn_'.basename($file), ],
+                        'create_img');
+
+            // save first image as profile picture
+            if (user_image_count() === 0) {
+                $stack->push('MATCH (u:User {username:{uname}})-[:UPLOADED]->(img:Image {filename:{filename}})'
+                            .' SET u.profile_pic = img.thumbnail',
+                            ['uname' => $user['username'], 'filename' => basename($file)],
+                            'set_pp');
+            }
+
+            $stack->push('MATCH (u:User {username:{uname}})-[:UPLOADED]->(img:Image {filename:{filename}})'
+                        .'RETURN img, u as user',
+                        ['uname' => $user['username'], 'filename' => basename($file)],
                         'new_img');
 
             $results = $client->runStack($stack);
 
             $record = $results->get('new_img')->getRecord();
             $img = $record->get('img')->values();
+            // Incase profile pictue is updated
+            $updated_user = $record->get('user')->values();
+
+            // Update session
+            $_SESSION['logged_on_user'] = $updated_user;
 
             $statusMsg .= '<p class="alert alert-success">New image uploaded.</p>';
             $response = array('status' => true, 'statusMsg' => $statusMsg, 'image' => $img, 'username' => $user['username']);
@@ -130,7 +147,9 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
         $response = array('status' => false, 'statusMsg' => $statusMsg);
     }
     // Destroy overlay image object
-    imagedestroy($overlay);
+    if ($overlay) {
+        imagedestroy($overlay);
+    }
 } else {
     $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Could not find data sent via POST method</p>');
 }

@@ -61,13 +61,16 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         }
 
         // GENDER
-        if (isset($_POST['gender']) && strlen($_POST['gender']) && $_POST['gender'] !== $user['gender']) {
-            $stack->push('MATCH (u:User {username: {uname}}) SET u.gender = {new_gender};',
-                                ['uname' => $user['username'], 'new_gender' => $_POST['gender']], 's_gender');
-            $statusMsg .= '<p class="alert alert-success">Gender updated.</p>';
+        if (isset($_POST['gender']) && strlen($_POST['gender'])) {
+            if (isset($user['gender']) && $_POST['gender'] !== $user['gender']) {
+                $stack->push('MATCH (u:User {username: {uname}}) SET u.gender = {new_gender};',
+                        ['uname' => $user['username'], 'new_gender' => $_POST['gender']], 's_gender');
+                $statusMsg .= '<p class="alert alert-success">Gender updated.</p>';
+            }
         }
 
         // SEXUAL PREFERENCE - LOGIC
+            $curr = [];
             // Check if there is already a value for the users sex_pref
             if (isset($user['sex_pref'])) {
                 // Creates array with sexual preference
@@ -85,15 +88,15 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
                 $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
             }
 
-            if (isset($_POST['sex_pref_f']) && !in_array('women', $curr, true)) {
-                // Add it to the array
+        if (isset($_POST['sex_pref_f']) && !in_array('women', $curr, true)) {
+            // Add it to the array
                     array_push($curr, 'women');
-                $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
-            } elseif (!isset($_POST['sex_pref_f']) && in_array('women', $curr, true)) {
-                // remove it from array
+            $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
+        } elseif (!isset($_POST['sex_pref_f']) && in_array('women', $curr, true)) {
+            // remove it from array
                 array_splice($curr, array_search('women', $curr), 1);
-                $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
-            }
+            $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
+        }
 
             // Check if we need to implode the array or if we just have one value
             if (in_array('men', $curr, true) && in_array('women', $curr, true)) {
@@ -168,7 +171,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         $fields_to_check = array('gender', 'sex_pref', 'latitude', 'longitude', 'bio', 'profile_pic');
         $flag = 1;
         foreach ($fields_to_check as $key) {
-            if (!array_key_exists($key, $user)){
+            if (!array_key_exists($key, $user)) {
                 $flag = 0;
             }
         }

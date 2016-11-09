@@ -30,6 +30,7 @@ if (isset($_SESSION['logged_on_user'])) {
                     <a class="btn btn-default" href="/matcha/views/profile.php">Profile Settings</a>
                 </div>
     <?php
+
         } ?>
 
     <div id="error-messages"></div>
@@ -117,7 +118,7 @@ if (isset($_SESSION['logged_on_user'])) {
                         <aside id="profile_gallery" class="col-md-12">
                             <h3>Your Uploads</h3>
                     <!-- include gallery -->
-                    <?php include '../include/displayUserGallery.php';
+                    <?php include '../php/displayUserGallery.php';
     displayUserGallery($user['username']); ?>
                             <div class="clearfix"></div>
                         </aside>

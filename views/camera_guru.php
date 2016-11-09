@@ -111,7 +111,7 @@ if (isset($_SESSION['logged_on_user'])) {
         <aside id="newGallery" class="col-md-8">
             <h3>Your Uploads</h3>
             <!-- include gallery -->
-<?php include '../include/displayUserGallery.php';
+<?php include '../php/displayUserGallery.php';
     displayCamagruUserGallery($user['username']); ?>
         </aside>
     </section> <!-- /#imageDisplay_inner -->

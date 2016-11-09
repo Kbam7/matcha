@@ -46,13 +46,16 @@
 }
 
 .card.hovercard .useravatar img {
-    width                : 100px;
-    height               : 100px;
-    max-width            : 100px;
-    max-height           : 100px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius   : 50%;
-    border-radius        : 50%;
+    width                : 160px;
+    height               : 140px;
+    max-width            : 160px;
+    max-height           : 140px;
+    float                : left;
+    margin-left          : 3%;
+    margin-top           : -5px;
+    -webkit-border-radius: 10%;
+    -moz-border-radius   : 10%;
+    border-radius        : 10%;
     border               : 5px solid rgba(255, 255, 255, 0.5);
 }
 

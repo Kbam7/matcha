@@ -92,16 +92,32 @@ if (isset($_POST['submit']) && isset($_POST['image'])) {
             // Create new image and relationship for user and return the image object
             $stack->push('MATCH (u:User {username:{uname}})'
                         .'MERGE (u)-[:UPLOADED {timestamp:{time}}]->'
-                                    .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}, thumbnail:{tn}})'
-                        .'RETURN img',
+                            .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}, thumbnail:{tn}})',
                         ['uname' => $user['username'], 'time' => time(), 'title' => $title,
-                            'desc' => $desc, 'filename' => basename($file), 'tn' => 'tn_'.basename($file) ],
+                            'desc' => $desc, 'filename' => basename($file), 'tn' => 'tn_'.basename($file), ],
+                        'create_img');
+
+            // save first image as profile picture
+            if (user_image_count() === 0) {
+                $stack->push('MATCH (u:User {username:{uname}})-[:UPLOADED]->(img:Image {filename:{filename}})'
+                            .' SET u.profile_pic = img.thumbnail',
+                            ['uname' => $user['username'], 'filename' => basename($file)],
+                            'set_pp');
+            }
+
+            $stack->push('MATCH (u:User {username:{uname}})-[:UPLOADED]->(img:Image {filename:{filename}})'
+                        .'RETURN img, u as user',
+                        ['uname' => $user['username'], 'filename' => basename($file)],
                         'new_img');
 
             $results = $client->runStack($stack);
 
             $record = $results->get('new_img')->getRecord();
             $img = $record->get('img')->values();
+            $updated_user = $record->get('user')->values();
+
+            // Update session
+            $_SESSION['logged_on_user'] = $updated_user;
 
             $statusMsg .= '<p class="alert alert-success">New image uploaded.</p>';
             $response = array('status' => true, 'statusMsg' => $statusMsg, 'image' => $img, 'username' => $user['username']);
@@ -116,82 +132,11 @@ if (isset($_POST['submit']) && isset($_POST['image'])) {
     }
 
     // Destroy overlay image object
-    if ($overlay){
+    if ($overlay) {
         imagedestroy($overlay);
     }
     // remove temp image
     unlink(dirname(__DIR__).'/assets/uploads/tmp_base64img.png');
-
-/*
-    // Get overlay image path from $_POST
-    if ($overlay = imagecreatefrompng($_POST['overlay'])) {
-
-        // Create image obj from base64 decoded data
-        if ($im = imagecreatefromstring($data)) {
-
-            // Alpha layer setup for overlay and image
-            if (imagealphablending($im, true) && imagesavealpha($im, true)) {
-                if (imagealphablending($overlay, true) && imagesavealpha($overlay, true)) {
-
-                    // Copy overlay onto image staring from top left corner to bottom right corners
-                    if (imagecopy($im, $overlay, 0, 0, 0, 0, 640, 480)) {
-
-                        // Save the merged image object as a png image
-                        if (imagepng($im, $file)) {
-
-                            // Connect to DB, add image details to DB
-                            try {
-                                $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
-
-                                $stack = $client->stack();
-
-                                    // Create new image and relationship for user
-                                    $stack->push('MATCH (u:User {username:{uname}})'
-                                                .'MERGE (u)-[:UPLOADED {timestamp:{time}}]->'
-                                                            .'(img:Image {timestamp:{time}, title:{title}, description:{desc}, filename:{filename}})'
-                                                .'RETURN img',
-                                                ['uname' => $user['username'], 'time' => time(), 'title' => $title, 'desc' => $img_desc, 'filename' => basename($file)],
-                                                'new_img');
-
-                                $results = $client->runStack($stack);
-
-                                $record = $results->get('new_img')->getRecord();
-                                $img = $record->get('img')->values();
-
-                                $statusMsg .= '<p class="alert alert-success">New image uploaded.</p>';
-                                $response = array('status' => true, 'statusMsg' => $statusMsg, 'image' => $img, 'username' => $user['username']);
-                            } catch (PDOException $e) {
-                                $statusMsg .= '<p class="alert alert-danger"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</p>';
-                                $response = array('status' => false, 'statusMsg' => $statusMsg);
-                                error_log($e, 3, dirname(__DIR__).'/log/errors.log');
-                            }
-                            $conn = null;
-                        } else {
-                            $statusMsg .= '<p class="alert alert-danger">Could not save the image after merging. Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                            $response = array('status' => false, 'statusMsg' => $statusMsg);
-                        }
-                    } else {
-                        $statusMsg .= '<p class="alert alert-danger">Could not copy images(merging problem). Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                        $response = array('status' => false, 'statusMsg' => $statusMsg);
-                    }
-                } else {
-                    $statusMsg .= '<p class="alert alert-danger">Could not set blend alpha or save alpha for overlay image. Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                    $response = array('status' => false, 'statusMsg' => $statusMsg);
-                }
-            } else {
-                $statusMsg .= '<p class="alert alert-danger">Could not set blend alpha or save alpha for webcam image. Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-                $response = array('status' => false, 'statusMsg' => $statusMsg);
-            }
-            imagedestroy($im);
-            imagedestroy($overlay);
-        } else {
-            $statusMsg .= '<p class="alert alert-danger">Could not create the image object from base64 data(webcam image). Please try again.<br />If the problem persists, please contact the site administrator.</p>';
-            $response = array('status' => false, 'statusMsg' => $statusMsg);
-        }
-    } else {
-        $statusMsg .= '<p class="alert alert-danger">Could not create the image object from overlay image. Please try again.<br />If the problem persists, please contact the site administrator. -- '.$_POST['overlay'].'</p>';
-        $response = array('status' => false, 'statusMsg' => $statusMsg);
-    }*/
 } else {
     $statusMsg .= '<p class="alert alert-danger">The form data was not received. Something weird has happened. . .</p>';
     $response = array('status' => false, 'statusMsg' => $statusMsg);

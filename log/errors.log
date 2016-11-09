@@ -15,4 +15,60 @@ Stack trace:
 #1 {main}PDOException: invalid data source name in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/webcam_image_upload.php:62
 Stack trace:
 #0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/webcam_image_upload.php(62): PDO->__construct(';dbname=camagru', NULL, NULL)
-#1 {main}
+#1 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Expected a Node, Relationship or Path, but got a String in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(58): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Expected a Node, Relationship or Path, but got a String in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(58): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Expected a Node, Relationship or Path, but got a String in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(54): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Expected a Node, Relationship or Path, but got a String in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(56): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Expected a Node, Relationship or Path, but got a String in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(54): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Expected a Node, Relationship or Path, but got a String in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(54): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
+#6 {main}GraphAware\Neo4j\Client\Exception\Neo4jException: Expected a Node, Relationship or Path, but got a String in /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
+#4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
+#5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(54): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
+#6 {main}
