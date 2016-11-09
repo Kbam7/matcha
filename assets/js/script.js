@@ -50,25 +50,9 @@ window.onload = function() {
 
     // Event for deleting images
     var deleteButtons = document.querySelectorAll(".delete_image_btn");
-    for (var j = 0; j < deleteButtons.length; ++j) {
-        deleteButtons[j].addEventListener('click', function() {
-            var img = this.id;
-            if (window.confirm("Are you sure you want to delete this image?")) {
-                var data = 'confirmed=1&img=' + img;
-                ajax_post('/matcha/php/delete_image.php', data, function(httpRequest) {
-                    var response = JSON.parse(httpRequest.responseText);
-
-                    displayError(response.statusMsg);
-                    if (response.status === true) {
-                        // remove image from DOM
-                        debugger;
-                        document.querySelector('#img_' + img).className += " hidden";
-                    }
-                });
-            }
-        });
+    if (deleteButtons) {
+        setupDeleteImageEvents(deleteButtons);
     }
-
 
 }
 
@@ -111,6 +95,28 @@ function ajax_post(url, data, callback) {
 
 }
 
+// Add events for delete buttons
+function setupDeleteImageEvents(deleteButtons) {
+    for (var j = 0; j < deleteButtons.length; ++j) {
+        deleteButtons[j].addEventListener('click', promptAndDelete);
+    }
+
+    function promptAndDelete(e) {
+        var img = e.currentTarget.id;
+        if (window.confirm("Are you sure you want to delete this image?")) {
+            var data = 'confirmed=1&img=' + img;
+            ajax_post('/matcha/php/delete_image.php', data, function(httpRequest) {
+                var response = JSON.parse(httpRequest.responseText);
+                displayError(response.statusMsg);
+                if (response.status === true) {
+                    // remove image from DOM
+                    document.querySelector('#img_' + img).remove();
+
+                }
+            });
+        }
+    }
+}
 
 
 /* ----------------[ FORM FUNCTIONS ]------------------- */

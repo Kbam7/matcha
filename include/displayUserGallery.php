@@ -1,10 +1,21 @@
 <?php
 
-// retrieve `:Image :UPLOADED` by `User` LIMIT 5
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once '../vendor/autoload.php';
 
 use GraphAware\Neo4j\Client\ClientBuilder;
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['displayGallery']) && isset($_POST['username'])){
+    if ($_POST['displayGallery'] === '1'){
+        displayCamagruUserGallery($_POST['username']);
+    } elseif ($_POST['displayGallery'] === '2'){
+        displayUserGallery($_POST['username']);
+    }
+}
 // Displays users gallery on Camagru page
 function displayCamagruUserGallery($username)
 {

@@ -1,5 +1,9 @@
 <?php
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (isset($_SESSION['logged_on_user'])) {
     // get user
     $user = $_SESSION['logged_on_user'];
@@ -14,7 +18,7 @@ if (isset($_SESSION['logged_on_user'])) {
         $sp = 1;
     }
     if (in_array('women', $tmp, true)) {
-        $sp = ($sp ? 2 : 0);
+        $sp = ($sp > 0 ? 2 : 0);
     } ?>
 <!DOCTYPE html>
 <html>
@@ -40,7 +44,7 @@ if (isset($_SESSION['logged_on_user'])) {
                         <!-- http://lorempixel.com/850/280/people/9/ -->
                     </div>
                     <div class="useravatar">
-                        <img alt="<?php echo $user[''] ?>" src="http://lorempixel.com/100/100/people/9/">
+                        <img alt="<?php echo $user[''] ?>" src="<?php /*$user['profile_pic']*/ ?>">
                     </div>
                     <div class="card-info">
                         <span class="card-title"><?php echo $user['firstname'].' '.$user['lastname']; ?></span>
@@ -85,9 +89,7 @@ if (isset($_SESSION['logged_on_user'])) {
                           <div class="form-group">
                             <label for="edit_bio" class="col-sm-2 control-label">Bio :</label>
                             <div class="col-sm-10">
-                              <textarea class="form-control" name="bio" id="edit_bio" rows="5">
-                                    <?php echo $user['bio'] ?><?php print_r($user); ?>
-                              </textarea>
+                              <textarea class="form-control" name="bio" id="edit_bio" rows="5"><?php echo $user['bio'] ?></textarea>
                             </div>
                           </div>
                           <div class="form-group">

@@ -1,5 +1,8 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (isset($_SESSION['logged_on_user'])) {
     $user = $_SESSION['logged_on_user']; ?>
 <!DOCTYPE html>
@@ -18,16 +21,15 @@ if (isset($_SESSION['logged_on_user'])) {
         if ($user['profile_complete'] === 0) {
             // incomplete profile
             // display message with link to complete profile
-            echo
-            '
+    ?>
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <h4>Hey there '.$user['firstname'].',</h4>
+                    <h4>Hey there <?php echo $user['firstname'] ?>,</h4>
                     <p>Welcome to Matcha! Here you will find everything your heart desires.<br />But first,
                     your profile is not complete, complete your profile to stand a better chance at finding someone you will like.</p>
                     <a class="btn btn-default" href="/matcha/views/profile.php">Profile Settings</a>
                 </div>
-            ';
+    <?php
         } ?>
 
     <div id="error-messages"></div>

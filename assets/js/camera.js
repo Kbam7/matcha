@@ -52,6 +52,8 @@ function activateUsersCamera() {
 
         // Vendor specific aliases for 'window.URL'
         window.URL = (window.URL || window.mozURL || window.webkitURL)
+
+        // Make stream into URl
         video.src = window.URL.createObjectURL(stream);
 
         // Taking a photo
@@ -85,14 +87,13 @@ function ajax_upload_webcam_image(imgData) {
         overlay;
 
     overlay = document.querySelector('input[name="overlay"]:checked');
-
-    if (!overlay) {
-        displayError("<p class=\"warning\">No overlay found! Please make sure you have seleced an overlay.</p>");
-        return; // no overlay found
+    if (overlay) {
+        overlay = '&overlay=' + overlay.value;
+    } else {
+        overlay = "";
     }
 
-    overlay = overlay.value;
-    data = "submit=1&image=" + imgData + "&overlay=" + overlay;
+    data = "submit=1&image=" + imgData + overlay;
 
     httpRequest = new XMLHttpRequest();
 
@@ -137,20 +138,14 @@ function ajax_upload_webcam_image(imgData) {
                 var response = JSON.parse(httpRequest.responseText);
                 displayError(response.statusMsg);
                 if (response.status === true) {
-                    // Display image in gallery
-                    var newImg = document.createElement("img");
-                    var gallery = document.getElementById("newGallery");
-                    if (gallery && newImg) {
-                        setTimeout(function() {
-                            console.log(response);
-                            debugger;
-                            newImg.setAttribute('src', '/matcha/assets/uploads/' + response.image.filename + "?" + new Date().getTime()); // adds '?{current_timestamp}' to thr images src to force it to refresh.
-                            newImg.setAttribute('alt', response.image.title);
-                            newImg.setAttribute('title', response.image.title);
-                            newImg.className = "gallery-img fade-in-left slow";
-                            gallery.appendChild(newImg);
-                        }, 1000);
-                    }
+                    var data = 'displayGallery=1&username=' + response.username;
+                    ajax_post('/matcha/include/displayUserGallery.php', data, function(httpResponse) {
+                        var gallery = document.getElementById("newGallery");
+                        if (gallery) {
+                            gallery.innerHTML = httpResponse.responseText;
+                            setupDeleteImageEvents(document.querySelectorAll(".delete_image_btn"));
+                        }
+                    });
                 }
             };
         }
@@ -166,10 +161,12 @@ function ajax_upload_webcam_image(imgData) {
                 item.removeAttribute("style");
             }
         }
+        /*
         var overlayForm = document.forms["overlayForm"];
         overlayForm.elements['submit'].setAttribute('disabled', true);
         overlayForm.elements['submit'].style.cursor = "auto";
         overlayForm.elements['submit'].title = "First Select an overlay image. . .";
+        */
     }
 
     function uploadAborted(event) {

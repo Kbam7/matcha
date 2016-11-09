@@ -4,12 +4,6 @@ if (overlayForm) {
     for (var i = 0; i < overlayForm.elements.length; ++i) {
         overlayForm.elements[i].addEventListener('change', function() {
             var ovly_path = this.value;
-
-            // Submit button
-            overlayForm.elements['submit'].disabled = false;
-            overlayForm.elements['submit'].style.cursor = "pointer";
-            overlayForm.elements['submit'].title = "Take the photo";
-
             // overlay preview div
             if (document.querySelector('#videoStream')) {
                 superimposeOverlayImage(ovly_path);
@@ -29,7 +23,6 @@ if (overlayForm) {
         w = vs.scrollWidth;
         h = vs.scrollHeight;
 
-        //    w = Math.round(w + (0.1 * w));
         vs_ovly.style.width = w + "px";
         vs_ovly.style.height = h + "px";
         vs_ovly.style.background = "url('" + path + "') no-repeat center";
@@ -41,32 +34,7 @@ var imageUploadForm = document.querySelector("#imageUploadForm");
 if (imageUploadForm) {
     imageUploadForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
-        ajax_user_upload_image( /*"initial_upload", */ imageUploadForm);
-        /*
-                if (overlayForm) {
-
-                    overlayForm.removeEventListener('submit', processWebcamPhoto);
-                    // Submit event for finalising users upload
-                    overlayForm.addEventListener('submit', handleUserUpload);
-
-                    function handleUserUpload(e) {
-
-                        e.preventDefault();
-                        ajax_user_upload_image("overwrite_with_new", overlayForm);
-
-
-
-                        // Remove submit event for finalising users upload
-                        overlayForm.removeEventListener('submit', handleUserUpload);
-                        // Set default action back to form
-                        overlayForm.addEventListener('submit', processWebcamPhoto);
-
-                    }
-                }
-
-        */
-
+        ajax_user_upload_image(imageUploadForm);
     });
 
     document.querySelector('.imageDisplay_inner .imageUploadSection h3')
@@ -86,32 +54,13 @@ if (imageUploadForm) {
 /* ----------------[ FUNCTION : ajax_user_image_upload() ]------------------- */
 
 // Function for uploading users images
-function ajax_user_upload_image( /*uploadStatus, */ uploadForm) {
+function ajax_user_upload_image(uploadForm) {
     var httpRequest = new XMLHttpRequest(),
         formdata = new FormData(uploadForm);
 
     // Adding custom fields to form data
     formdata.append("submit", "1");
 
-    //    formdata.append("uploadStatus", uploadStatus);
-    /*
-        // Checks which phase of the upload we are in.
-        if (uploadStatus === "overwrite_with_new") {
-
-            // Get image title and src from form. Overlay has been selected and is in `formdata`
-            var childList = document.querySelector(".user-upload-img").childNodes;
-            for (var i = 0; i < childList.length; ++i) {
-                if (childList[i].nodeName === "IMG" && childList[i].nodeType === 1) {
-                    console.log(childList[i].title);
-                    console.log(childList[i].src);
-                    debugger;
-
-                    formdata.append("imgTitle", childList[i].title);
-                    formdata.append("imgSrc", childList[i].src);
-                }
-            }
-        }
-    */
     // Setting up listeners for upload process
     httpRequest.upload.addEventListener("progress", uploadProgress);
     httpRequest.upload.addEventListener("loadstart", uploadStarted);
@@ -156,65 +105,23 @@ function ajax_user_upload_image( /*uploadStatus, */ uploadForm) {
 
     // Event : Successfully uploaded image
     function uploadSuccess(event) {
-
         httpRequest.onreadystatechange = function() {
             if (httpRequest.readyState == 4 && httpRequest.status == 200) {
                 var response = JSON.parse(httpRequest.responseText);
                 displayError(response.statusMsg);
                 if (response.status === true) {
+                    var data = 'displayGallery=1&username=' + response.username;
+                    ajax_post('/matcha/include/displayUserGallery.php', data, function(httpResponse) {
+                        var gallery = document.getElementById("newGallery");
+                        if (gallery) {
+                            gallery.innerHTML = httpResponse.responseText;
+                            setupDeleteImageEvents(document.querySelectorAll(".delete_image_btn"));
+                        }
+                    });
 
-                    /*if (uploadStatus === "initial_upload") {
-                        displayUserUpload(response); // Display the users uploaded image
-                    } else if (uploadStatus === "overwrite_with_new") {
-                        displayUploadInGallery(response); // Display image in gallery
-                    }*/
-                    displayUploadInGallery(response);
                 }
             };
         }; /* END -- httpRequest.onreadystatechange */
-        /*
-                function displayUserUpload(response) {
-                    var newImg = document.createElement("img");
-                    var userUploadImage = document.querySelector(".user-upload-img");
-                    if (userUploadImage && newImg) {
-                        //document.querySelector("#videoStream").className += " hidden absolute";
-
-                        // Adding classes using addClass() as a parameter
-                        addClass(addClass(document.querySelector("#videoStream"), "hidden"), "absolute");
-
-                        newImg.setAttribute('src', response.newFile);
-                        newImg.setAttribute('alt', response.imgTitle);
-                        newImg.setAttribute('title', response.imgTitle);
-                        userUploadImage.appendChild(newImg);
-                        userUploadImage.setAttribute("style", "display: inline-block;");
-                    };
-                }; /* END -- displayUserUpload() */
-
-        function displayUploadInGallery(response) {
-            /*
-            // hide user-upload-img
-            var userUploadImage = document.querySelector(".user-upload-img");
-            userUploadImage.removeAttribute("style");
-            while (userUploadImage.children.length) {
-                userUploadImage.removeChild(userUploadImage.children[0]);
-            }
-
-            // bring back video stream
-            removeClass(removeClass(document.querySelector("#videoStream"), "hidden"), "absolute");
-*/
-            // Display image in gallery
-            var newImg = document.createElement("img");
-            var gallery = document.getElementById("newGallery");
-            if (gallery && newImg) {
-                setTimeout(function() {
-                    newImg.setAttribute('src', '/matcha/assets/uploads/' + response.image.filename + "?" + new Date().getTime()); // adds '?{current_timestamp}' to thr images src to force it to refresh.
-                    newImg.setAttribute('alt', response.image.title);
-                    newImg.setAttribute('title', response.image.title);
-                    newImg.className = "gallery-img fade-in-left slow";
-                    gallery.appendChild(newImg);
-                }, 1000);
-            }
-        }
     } /* END -- uploadSuccess() */
 
     function uploadFinished(event) {

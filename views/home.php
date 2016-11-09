@@ -1,6 +1,9 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (isset($_SESSION['logged_on_user'])) {
     $user = $_SESSION['logged_on_user']; ?>
 <!DOCTYPE html>

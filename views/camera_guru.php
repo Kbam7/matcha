@@ -1,6 +1,9 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (isset($_SESSION['logged_on_user'])) {
     $user = $_SESSION['logged_on_user']; ?>
 <!DOCTYPE html>
@@ -37,28 +40,28 @@ if (isset($_SESSION['logged_on_user'])) {
             <form id="overlayForm">
                 <!-- ADD PHP HERE TO POPULATE OVERLAY LIST. Save overlay to DB and allow users to upload more overlays -->
                 <div class="form-input">
-                    <input class="success" type="submit" name="submit" title="First Select an overlay image. . ." value="Take Photo" disabled="true"/>
+                    <input class="success" type="submit" name="submit" title="Take Photo" value="Take Photo" />
                 </div>
                 <div class="overlay_images">
                     <div class="form-input">
-                        <label class="overlay_label" for="overlay_1"><img src="/matcha/assets/img/overlays/glasses.png" alt="Glasses" /></label>
-                        <input type="radio" name="overlay" id="overlay_1" value="../assets/img/overlays/glasses.png" required="true" />
+                        <label class="overlay_label" for="overlay_1"><img src="/matcha/assets/img/overlays/text/uhno.png" title="Uh No" alt="Uh No Text" /></label>
+                        <input type="radio" name="overlay" id="overlay_1" value="../assets/img/overlays/text/uhno.png" />
                     </div>
                     <div class="form-input">
-                        <label class="overlay_label" for="overlay_2"><img src="/matcha/assets/img/overlays/whiskers.png" alt="Whiskers" /></label>
-                        <input type="radio" name="overlay" id="overlay_2" value="../assets/img/overlays/whiskers.png" required="true" />
+                        <label class="overlay_label" for="overlay_2"><img src="/matcha/assets/img/overlays/whiskers.png" title="Whiskers" alt="Whiskers" /></label>
+                        <input type="radio" name="overlay" id="overlay_2" value="../assets/img/overlays/whiskers.png" />
                     </div>
                     <div class="form-input">
-                        <label class="overlay_label" for="overlay_3"><img src="/matcha/assets/img/overlays/unicorn.png" alt="Unicorn" /></label>
-                        <input type="radio" name="overlay" id="overlay_3" value="../assets/img/overlays/unicorn.png" required="true" />
+                        <label class="overlay_label" for="overlay_3"><img src="/matcha/assets/img/overlays/unicorn.png" title="Unicorn" alt="Unicorn" /></label>
+                        <input type="radio" name="overlay" id="overlay_3" value="../assets/img/overlays/unicorn.png" />
                     </div>
                     <div class="form-input">
-                        <label class="overlay_label" for="overlay_4"><img src="/matcha/assets/img/overlays/text/kewl.png" alt="Kewl Text" /></label>
-                        <input type="radio" name="overlay" id="overlay_4" value="../assets/img/overlays/text/kewl.png" required="true" />
+                        <label class="overlay_label" for="overlay_4"><img src="/matcha/assets/img/overlays/text/kewl.png" title="Kewl" alt="Kewl Text" /></label>
+                        <input type="radio" name="overlay" id="overlay_4" value="../assets/img/overlays/text/kewl.png" />
                     </div>
                     <div class="form-input">
-                        <label class="overlay_label" for="overlay_5"><img src="/matcha/assets/img/overlays/text/uhno.png" alt="Uh No Text" /></label>
-                        <input type="radio" name="overlay" id="overlay_5" value="../assets/img/overlays/text/uhno.png" required="true" />
+                        <label class="overlay_label" for="overlay_5"><img src="/matcha/assets/img/overlays/glasses.png" title="Glasses" alt="Glasses" /></label>
+                        <input type="radio" name="overlay" id="overlay_5" value="../assets/img/overlays/glasses.png" />
                     </div>
                 </div>
 

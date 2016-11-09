@@ -26,8 +26,6 @@ function updateProfile(form) {
         var input = inputs[i];
         // if input field has a value, encode it and add it to the data string
         if (input.value && input.value.length > 0) {
-
-            debugger;
             // Initial value
             var val = "";
             // If its type checkbox or radio and its :checked then get the value. Else ignore it
