@@ -121,7 +121,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         }
 
         // TAGS
-        if (isset($_POST['tags']) && strlen($_POST['tags'])) {
+        if (isset($_POST['tags']) && strlen($_POST['tags']) && $_POST['tags'] !== $user['tags']) {
             $stack->push('MATCH (u:User {username: {uname}}) SET u.tags = {new_tags};',
                                 ['uname' => $user['username'], 'new_tags' => $_POST['tags']], 's_tags');
             $statusMsg .= '<p class="alert alert-success">Tags updated.</p>';

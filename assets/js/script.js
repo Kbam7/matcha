@@ -145,6 +145,7 @@ function validate_input(input, value, type) {
                 return false;
             }
         }
+
     } else if (type === "email") {
         result = /^([\w\.]+)@([\w\.]+)\.(\w+)/.test(value);
         if (result === false) {

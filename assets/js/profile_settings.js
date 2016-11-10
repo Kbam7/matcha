@@ -21,9 +21,34 @@ function updateProfile(form) {
     var inputs = form.elements;
 
     // Build data string
-    var data = "submit=1&";
+    var data = "";
+
+    // Go through all inputs
     for (var i = 0; i < inputs.length; ++i) {
         var input = inputs[i];
+
+        debugger;
+
+        // Check tags for an update
+        if (input.name === "tags") {
+            // get all child elements (<span>) and get the inner html, then make a CSV with each tag text.
+            // Compare the CSV with the current `$user['tags']` value
+            // There must be a CSV value with all the users tags saved in the user node and then
+            // create a relationship between the User and the Tag node
+            var tags = document.querySelector('#tags_list').children;
+            var string = "";
+            for (var j = 0; j < tags.length; ++j) {
+                if (tags[j].nodeName === "SPAN") {
+                    if (string === "") {
+                        string = tags[j].innerText;
+                    } else {
+                        string += ',' + tags[j].innerText;
+                    }
+                }
+            }
+            input.value = string;
+        }
+
         // if input field has a value, encode it and add it to the data string
         if (input.value && input.value.length > 0) {
             // Initial value
@@ -32,18 +57,20 @@ function updateProfile(form) {
             if (input.type === 'radio' || input.type === 'checkbox') {
                 if (input.checked) {
                     val = encodeURIComponent(input.value);
-                    data += input.name + "=" + val;
-                    if ((i + 1) < inputs.length) {
-                        data += "&";
+                    if (data === "") {
+                        data = "submit=1&" + input.name + "=" + val;
+                    } else {
+                        data += "&" + input.name + "=" + val;
                     }
                     console.log('found input(' + input.type + ':checked) with value : ' + val);
                 }
             } else {
                 if (validate_input(input, input.value, input.type)) {
                     val = encodeURIComponent(input.value);
-                    data += input.name + "=" + val;
-                    if ((i + 1) < inputs.length) {
-                        data += "&";
+                    if (data === "") {
+                        data = "submit=1&" + input.name + "=" + val;
+                    } else {
+                        data += "&" + input.name + "=" + val;
                     }
                 }
                 console.log('found input(' + input.type + ') with value : ' + val);

@@ -36,13 +36,13 @@ if (isset($_SESSION['logged_on_user'])) {
     <?php include '../include/head.php'; ?>
     <link rel="stylesheet" href="/matcha/assets/css/profile.css" />
     <style>
-        #tags_list{
+        #tags_div{
         float:left;
         border:1px solid #ccc;
         padding:5px;
         font-family:Arial;
         }
-        #tags_list > span{
+        #tags_div > span{
         cursor:pointer;
         display:block;
         float:left;
@@ -52,10 +52,10 @@ if (isset($_SESSION['logged_on_user'])) {
         padding-right:25px;
         margin:4px;
         }
-        #tags_list > span:hover{
+        #tags_div > span:hover{
         opacity:0.7;
         }
-        #tags_list > span:after{
+        #tags_div > span:after{
         position:absolute;
         content:"×";
         border:1px solid;
@@ -63,7 +63,7 @@ if (isset($_SESSION['logged_on_user'])) {
         margin-left:3px;
         font-size:11px;
         }
-        #tags_list > input{
+        #tags_div > input{
         background:#eee;
         border:0;
         margin:4px;
@@ -126,19 +126,18 @@ if (isset($_SESSION['logged_on_user'])) {
                         <form id="edit_bio_form" class="form-horizontal">
                           <div class="form-group">
                             <label for="edit_tags" class="col-sm-2 control-label">Tags :</label>
-                            <div class="col-sm-10" id="tags_list">
+                            <div id="tags_div" class="col-sm-10">
+                                <?php //echo $user['tags'] ?>
                                 <span>php</span>
                                 <span>c++</span>
                                 <span>jquery</span>
-                                <input type="text" class="form-control" name="tags_input" id="edit_tags" value="" placeholder="Add a tag" onkeydown="return !(event.keyCode==13)" />
-                                <input type="hidden" id="tags_value" name="tags" />
+                                <input type="text" class="form-control" name="tags" id="edit_tags" value="" placeholder="Enter new tag" autocomplete="true" onkeydown="return !(event.keyCode==13)" />
                             </div>
                           </div>
                           <div class="form-group">
-                            <label for="edit_bio" class="col-sm-2 control-label">Bio : </label>
+                            <label for="edit_bio" class="col-sm-2 control-label">Bio :</label>
                             <div class="col-sm-10">
-                              <textarea class="form-control" name="bio" id="edit_bio" rows="5" maxlength="300"><?php echo $user['bio'] ?></textarea>
-                              <span class="label label-primary">MAX: 300 Characters ( <small><span id="bio_length">x</span> / 300</small> )</span>
+                              <textarea class="form-control" name="bio" id="edit_bio" rows="5"><?php echo $user['bio'] ?></textarea>
                             </div>
                           </div>
                           <div class="form-group">
@@ -146,7 +145,9 @@ if (isset($_SESSION['logged_on_user'])) {
                               <button type="submit" class="btn btn-success">Save</button>
                             </div>
                           </div>
+                          <div class="form-group">
                         </form>
+
 
                     </div>
                     <div class="tab-pane fade in" id="details_settings_tab">
@@ -292,7 +293,7 @@ if (isset($_SESSION['logged_on_user'])) {
             $(this).removeClass("btn-default").addClass("btn-primary");
         });
 
-      $("#tags_list input").on({
+      $("#tags_div input").on({
         focusout : function() {
           var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig,''); // allowed characters
           if(txt) $("<span/>", {text:txt.toLowerCase(), insertBefore:this});
@@ -300,24 +301,15 @@ if (isset($_SESSION['logged_on_user'])) {
         },
         keyup : function(ev) {
           // if: comma|enter (delimit more keyCodes with | pipe)
-          if(/(188|13)/.test(ev.which)) $(this).focusout();
+          if(/(188)/.test(ev.which)) $(this).focusout();
         }
       });
-      $('#tags_list').on('click', 'span', function() {
+      $('#tags_div').on('click', 'span', function() {
         if(confirm("Remove "+ $(this).text() +"?")) $(this).remove();
       });
 
-      // For updating length of biography
-    $( "#edit_bio" ).keyup(function() {
-        $("#bio_length").value = $( "#edit_bio" ).value.length;
     });
 
-    });
-/*
-    function updateBioLength(e) {
-        debugger;
-    }
-*/
     </script>
 
 
