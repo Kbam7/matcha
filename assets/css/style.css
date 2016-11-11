@@ -1,16 +1,6 @@
 /* css styles */
 
 
-/* --- TEMP STYLES - remove for production --- */
-
-#imageDisplay, #newGallery, .overlays {
-    /*    border: 1px solid #f00;*/
-}
-
-
-/* --- END TEMP STYLES - remove for production --- */
-
-
 /* --- Global Styling --- */
 
 body {
@@ -39,19 +29,6 @@ h1 {
     text-transform: uppercase;
 }
 
-.logout-btn {
-    height: 100%;
-}
-
-.logout-btn a {
-    height: 100%;
-    border: 3px solid #0462f9;
-    font-weight: 600;
-    background-color: #0462f9;
-    color: #fff;
-    border-bottom: 1px dashed #fff;
-}
-
 h1 small {
     color: #0462f9;
     text-transform: capitalize;
@@ -78,9 +55,6 @@ section.jumbo-intro {
 
 
 /* --- Dashboard User Gallery Items --- */
-
-
-/* ------------------------------- */
 
 .src-image {
     display: none;
@@ -125,10 +99,49 @@ section.jumbo-intro {
 }
 
 
+/* --- Styling for Tags --- */
+
+#tags_list {
+    /*float: left;*/
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-family: Arial;
+}
+
+#tags_list>span {
+    cursor: pointer;
+    display: block;
+    float: left;
+    color: #fff;
+    background: #789;
+    padding: 5px;
+    padding-right: 25px;
+    margin: 4px;
+}
+
+#tags_list>span:hover {
+    opacity: 0.7;
+}
+
+#tags_list>span:after {
+    position: absolute;
+    content: "×";
+    border: 1px solid;
+    padding: 2px 5px;
+    margin-left: 3px;
+    font-size: 11px;
+}
+
+#tags_list>input {
+    background: #eee;
+    border: 0;
+    margin: 4px;
+    padding: 7px;
+    width: auto;
+}
+
+
 /* --- User gallery Display --- */
-
-
-/* ---------------------------- */
 
 #pics_settings_tab, #pics_view_tab {
     min-height: 800px;
@@ -136,9 +149,6 @@ section.jumbo-intro {
 
 
 /* --- Overlays for image upload --- */
-
-
-/* --------------------------------- */
 
 .overlays {
     max-width: 640px;
@@ -157,12 +167,6 @@ section.jumbo-intro {
 
 
 /* --- Video Stream --- */
-
-
-/* -------------------- */
-
-
-/*.imageDisplay_inner form {}*/
 
 section#imageDisplay {
     display: flex;
@@ -198,7 +202,6 @@ section#imageDisplay {
     background-size: contain !important;
     z-index: 999;
     margin: auto;
-    /*border: 1px solid #f00;*/
 }
 
 #videoStream, .user-upload-img img {
@@ -214,7 +217,6 @@ section#imageDisplay {
 }
 
 form#imageUploadForm {
-    /*    border : 3px solid #fff;*/
     padding: 5px 0 10px;
     height: 230px;
 }
@@ -238,7 +240,6 @@ div.imageDisplay_inner .user-upload-img {
 }
 
 .imageDisplay_inner .imageUploadSection.collapsed {
-    /*height    : 0 !important;*/
     max-height: 70px;
     min-height: 70px;
     overflow: hidden;
@@ -313,9 +314,6 @@ div.imageDisplay_inner .user-upload-img {
 
 
 /* ------[ FORMS ]------ */
-
-
-/* --------------------- */
 
 form#createUserForm {
     max-width: 640px;
@@ -429,6 +427,7 @@ progress[value]::before {
     width: auto;
     max-width: 700px;
     margin: auto;
+    margin-top: 80px;
     clear: both;
 }
 

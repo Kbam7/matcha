@@ -36,26 +36,28 @@ if (isset($_SESSION['logged_on_user']) && isset($_POST['confirmed']) && $_POST['
         $client->run('MATCH (img:Image {filename:{filename}}) OPTIONAL MATCH (img)-[r]-() DELETE img, r', ['filename' => $_POST['img'].'.png']);
 
         // Check if deleted image was profile pic
-        if ($user['profile_pic'] === 'tn_'.$_POST['img'].'.png') {
-            // get remaining images and set pp as first one
-            $results = $client->run('MATCH (img:Image)<-[:UPLOADED]-(:User {username:{uname}}) RETURN collect(img) AS imgs, count(img) AS n_imgs', ['uname' => $user['username']]);
-            $record = $results->getRecord();
-            $imgs = $record->get('imgs');
-            $n_imgs = $record->get('n_imgs');
-            if ($n_imgs > 0 && $imgs[0]) {
-                // There are images left, set first one as new pp
-                $results = $client->run('MATCH (u:User {username:{uname}}) SET u.profile_pic = {img} RETURN u AS user', ['uname' => $user['username'], 'img' => $imgs[0]->value('thumbnail')]);
+        if (isset($user['profile_pic']) && !empty($user['profile_pic'])){
+            if ($user['profile_pic'] === 'tn_'.$_POST['img'].'.png') {
+                // get remaining images and set pp as first one
+                $results = $client->run('MATCH (img:Image)<-[:UPLOADED]-(:User {username:{uname}}) RETURN collect(img) AS imgs, count(img) AS n_imgs', ['uname' => $user['username']]);
                 $record = $results->getRecord();
-                $updated_user = $record->get('user')->values();
-                // Update session
-                $_SESSION['logged_on_user'] = $updated_user;
-            } else {
-                // No more pics left
-                $results = $client->run('MATCH (u:User {username:{uname}}) REMOVE u.profile_pic RETURN u AS user', ['uname' => $user['username']]);
-                $record = $results->getRecord();
-                $updated_user = $record->get('user')->values();
-                // Update session
-                $_SESSION['logged_on_user'] = $updated_user;
+                $imgs = $record->get('imgs');
+                $n_imgs = $record->get('n_imgs');
+                if ($n_imgs > 0 && $imgs[0]) {
+                    // There are images left, set first one as new pp
+                    $results = $client->run('MATCH (u:User {username:{uname}}) SET u.profile_pic = {img} RETURN u AS user', ['uname' => $user['username'], 'img' => $imgs[0]->value('thumbnail')]);
+                    $record = $results->getRecord();
+                    $updated_user = $record->get('user')->values();
+                    // Update session
+                    $_SESSION['logged_on_user'] = $updated_user;
+                } else {
+                    // No more pics left
+                    $results = $client->run('MATCH (u:User {username:{uname}}) REMOVE u.profile_pic RETURN u AS user', ['uname' => $user['username']]);
+                    $record = $results->getRecord();
+                    $updated_user = $record->get('user')->values();
+                    // Update session
+                    $_SESSION['logged_on_user'] = $updated_user;
+                }
             }
         }
 

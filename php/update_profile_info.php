@@ -14,9 +14,6 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
     try {
         $user = $_SESSION['logged_on_user'];
 
-        // Initialise to current username
-        $new_uname = $user['username'];
-
         // Set up DB connection
         $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
         $stack = $client->stack();
@@ -43,7 +40,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
             $statusMsg .= '<p class="alert alert-success">User name updated.</p>';
 
             // Update $_SESSION later
-            $new_uname = $_POST['username'];
+            $user['username'] = $_POST['username'];
         }
 
         // EMAIL ADDRESS
@@ -117,7 +114,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         // BIOGRAPHY
         if (isset($_POST['bio']) && strlen($_POST['bio'])) {
             // If the tags have been updated
-            if ($_POST['tags'] !== $user['tags']) {
+            if ($_POST['bio'] !== $user['bio']) {
                 $stack->push('MATCH (u:User {username: {uname}}) SET u.bio = {new_bio};',
                                     ['uname' => $user['username'], 'new_bio' => $_POST['bio']], 's_bio');
                 $statusMsg .= '<p class="alert alert-success">Bio updated.</p>';
@@ -158,12 +155,11 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
 
         // Get updated user info
         $stack->push('MATCH (u:User {username: {uname}}) RETURN ID(u) as uid, u AS user;',
-                        ['uname' => $new_uname], 's_user_update');
+                        ['uname' => $user['username']], 's_user_update');
 
         // Run query stack
         $results = $client->runStack($stack);
 
-        // Update $_SESSION with updated info from the DB
         // Select the `s_user_update` result and get the returned record. i.e the user and uid
         $updates = $results->get('s_user_update')->getRecord();
 
@@ -178,11 +174,18 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         $fields_to_check = array('gender', 'sex_pref', 'latitude', 'longitude', 'bio', 'profile_pic');
         $flag = 1;
         foreach ($fields_to_check as $key) {
-            if (!array_key_exists($key, $user)) {
+            if (!array_key_exists($key, $user) || empty($user[$key])) {
                 $flag = 0;
             }
+            //echo $key.' '.$flag.'\n';
         }
-        $user['profile_complete'] = $flag;
+        //print_r($user);
+
+        // Update profile status
+        $results = $client->run('MATCH (u:User {username: {uname}}) SET u.profile_complete = {value} RETURN u AS user;',
+                        ['uname' => $user['username'], 'value' => $flag]);
+        $updates = $results->getRecord();
+        $user = $updates->get('user')->values();
 
         // Update session
         $_SESSION['logged_on_user'] = $user;

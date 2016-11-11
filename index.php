@@ -32,10 +32,12 @@ if (session_status() == PHP_SESSION_NONE) {
 
         <div class="jumbotron">
             <div class="container">
-                <h1>Hello, world!</h1>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                <h1>Welcome!</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at nisl euismod nisi facilisis bibendum.
+                    Vivamus ultricies quam id nunc ullamcorper, id suscipit purus volutpat.
+                    Donec porttitor massa vitae metus pharetra, vel viverra justo lobortis.</p>
                 <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-            </div>ea below the navbar and watch the active class change. The dropdown sub items will be highlighted as well.
+            </div>
         </div>
     </section> <!-- /.jumbo-intro -->
     <section class="container">

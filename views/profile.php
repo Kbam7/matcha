@@ -3,6 +3,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+include '../php/profile_utils.php';
+
 if (isset($_SESSION['logged_on_user'])) {
     $user = $_SESSION['logged_on_user']; ?>
 <!DOCTYPE html>
@@ -27,7 +29,7 @@ if (isset($_SESSION['logged_on_user'])) {
                     <h4>Hey there <?php echo $user['firstname'] ?>,</h4>
                     <p>Welcome to Matcha! Here you will find everything your heart desires.<br />But first,
                     your profile is not complete, complete your profile to stand a better chance at finding someone you will like.</p>
-                    <a class="btn btn-default" href="/matcha/views/profile.php">Profile Settings</a>
+                    <a class="btn btn-default" href="/matcha/views/profile_settings.php">Profile Settings</a>
                 </div>
     <?php
 
@@ -41,11 +43,11 @@ if (isset($_SESSION['logged_on_user'])) {
             <div class="col-lg-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-offset-0">
                 <div class="card hovercard">
                     <div class="card-background">
-                        <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
+                        <img src="<?php getProfilePictureSrc($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
                         <!-- http://lorempixel.com/850/280/people/9/ -->
                     </div>
                     <div class="useravatar">
-                        <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                        <img src="<?php getProfilePictureSrc($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
                     </div>
                     <div class="card-info">
                         <span class="card-title"><?php echo $user['firstname'].' '.$user['lastname']; ?></span>
@@ -77,14 +79,15 @@ if (isset($_SESSION['logged_on_user'])) {
                   <div class="tab-content">
                     <div class="tab-pane fade in active" id="bio_view_tab">
 
-                        <h3>Bio</h3>
+                    <h3>Bio</h3>
 
-                        <dl class="dl-horizontal">
-                            <dt>Tags</dt>
-                            <dd><?php echo $user['tags'] ?></dd>
-                          <dt>About me</dt>
-                          <dd><?php echo $user['bio'] ?><?php print_r($user); ?></dd>
-                        </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Tags</dt>
+                        <dd id="tags_list"><?php getUsersTags($user); ?></dd>
+                        <hr class="clearfix" />
+                        <dt>About me</dt>
+                        <dd><?php echo $user['bio'] ?></dd>
+                    </dl>
 
                     </div>
                     <div class="tab-pane fade in" id="details_view_tab">

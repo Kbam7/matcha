@@ -71,4 +71,15 @@ Stack trace:
 #3 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User {...', Array, NULL)
 #4 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User {...', Array, NULL)
 #5 /home/kbam7/lampstack-7.0.11-2/apache2/htdocs/matcha/php/delete_image.php(54): GraphAware\Neo4j\Client\Client->run('MATCH (u:User {...', Array)
-#6 {main}
+#6 {main}exception 'GraphAware\Neo4j\Client\Exception\Neo4jException' with message 'Invalid input 'D': expected 'n/N' or 's/S' (line 1, column 112 (offset: 111))
+"MATCH (u:User) WHERE ((u.username={login}) OR (u.email={login})) AND u.password={passwd} AND u.active=1RETURN ID(u) AS id, u AS user, count(u) AS n_users;"
+                                                                                                                ^' in /goinfre/kbamping/MAMP/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Formatter/ResponseFormatter.php:30
+Stack trace:
+#0 /goinfre/kbamping/MAMP/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(79): GraphAware\Neo4j\Client\Formatter\ResponseFormatter->format(Array, Array)
+#1 /goinfre/kbamping/MAMP/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Pipeline.php(37): GraphAware\Neo4j\Client\HttpDriver\Session->flush(Object(GraphAware\Neo4j\Client\HttpDriver\Pipeline))
+#2 /goinfre/kbamping/MAMP/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/HttpDriver/Session.php(47): GraphAware\Neo4j\Client\HttpDriver\Pipeline->run()
+#3 /goinfre/kbamping/MAMP/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Connection/Connection.php(118): GraphAware\Neo4j\Client\HttpDriver\Session->run('MATCH (u:User) ...', Array, NULL)
+#4 /goinfre/kbamping/MAMP/apache2/htdocs/matcha/vendor/graphaware/neo4j-php-client/src/Client.php(64): GraphAware\Neo4j\Client\Connection\Connection->run('MATCH (u:User) ...', Array, NULL)
+#5 /goinfre/kbamping/MAMP/apache2/htdocs/matcha/php/auth.php(24): GraphAware\Neo4j\Client\Client->run('MATCH (u:User) ...', Array)
+#6 /goinfre/kbamping/MAMP/apache2/htdocs/matcha/php/login.php(16): auth('kylebamping7@gm...', 'Ab123456')
+#7 {main}

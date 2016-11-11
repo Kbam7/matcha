@@ -4,6 +4,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+include '../php/profile_utils.php';
+
 if (isset($_SESSION['logged_on_user'])) {
     // get user
     $user = $_SESSION['logged_on_user'];
@@ -26,42 +28,6 @@ if (isset($_SESSION['logged_on_user'])) {
     <title>Matcha | Profile</title>
     <?php include '../include/head.php'; ?>
     <link rel="stylesheet" href="/matcha/assets/css/profile.css" />
-    <style>
-        #tags_list{
-        float:left;
-        border:1px solid #ccc;
-        padding:5px;
-        font-family:Arial;
-        }
-        #tags_list > span{
-        cursor:pointer;
-        display:block;
-        float:left;
-        color:#fff;
-        background:#789;
-        padding:5px;
-        padding-right:25px;
-        margin:4px;
-        }
-        #tags_list > span:hover{
-        opacity:0.7;
-        }
-        #tags_list > span:after{
-        position:absolute;
-        content:"×";
-        border:1px solid;
-        padding:2px 5px;
-        margin-left:3px;
-        font-size:11px;
-        }
-        #tags_list > input{
-        background:#eee;
-        border:0;
-        margin:4px;
-        padding:7px;
-        width:auto;
-        }
-    </style>
   </head>
   <body>
     <header>
@@ -158,6 +124,12 @@ if (isset($_SESSION['logged_on_user'])) {
                                 <label for="edit_username" class="col-sm-4 control-label">User Name :</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="username" id="edit_username" value="<?php echo $user['username'] ?>" maxlength="32" autocomplete="true" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_email" class="col-sm-4 control-label">User Name :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="email" id="edit_email" value="<?php echo $user['username'] ?>" maxlength="32" autocomplete="true" />
                                 </div>
                             </div>
 
@@ -278,14 +250,13 @@ if (isset($_SESSION['logged_on_user'])) {
         // Button effect for profile page
         $(".btn-pref .btn").click(function () {
             $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-            // $(".tab").addClass("active"); // instead of this do the below
             $(this).removeClass("btn-default").addClass("btn-primary");
         });
 
     //
       $("#tags_list input").on({
         focusout : function() {
-          var txt = this.value.replace(/[^a-zA-Z0-9\+\-]/ig,''); // allowed characters
+          var txt = this.value.replace(/[^a-z0-9\+\-]/ig,''); // allowed characters
           if(txt) $("<span/>", {text:txt.toLowerCase(), insertBefore:this});
           this.value = "";
         },
@@ -297,7 +268,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
       // Remove tag on click
       $('#tags_list').on('click', 'span', function() {
-        if(confirm("Remove "+ $(this).text() +"?")) $(this).remove();
+        $(this).remove();
       });
 
       $("#edit_bio").on("keyup", function() {
@@ -318,31 +289,6 @@ if (isset($_SESSION['logged_on_user'])) {
 } else {
     $_SESSION['errors'] = array('Please log in before accessing this website');
     header('Location: ../index.php');
-}
-
-/* ------------------------------------------- */
-/* ----------[FUNCTION DEFINITIONS]----------- */
-/* ------------------------------------------- */
-
-function getProfilePictureSrc($a_user)
-{
-    if (isset($a_user['profile_pic'])) {
-        echo '/matcha/assets/uploads/thumbnails/'.$a_user['profile_pic'];
-    } else {
-        echo '../assets/img/default_pp.png';
-    }
-}
-
-function getUsersTags($a_user)
-{
-    if (isset($a_user['tags'])) {
-        $tags = explode(',', $user['tags']);
-        foreach ($tags as $tag) {
-            echo '<span>#'.$tag.'</span><br />';
-        }
-    } else {
-        echo '<p>No Tags found</p>';
-    }
 }
 
 ?>

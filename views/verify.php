@@ -1,49 +1,45 @@
+<?php
+require_once '../vendor/autoload.php';
+use GraphAware\Neo4j\Client\ClientBuilder;
+?>
 <!doctype html>
 <html>
 <head>
     <title>Verify Account | Camagru</title>
-<?php include '../include/header.php'; ?>
+    <?php include '../include/head.php'; ?>
 </head>
 <body>
     <header>
-        <div class="navbar">
-            <a href="index.php" class="brand"><h1>Camagru - <small>Verify Account</small></h1></a>
-            <ul class="menu pull-right">
-              <li class="divider"></li>
-              <li class="logout-btn">
-                  <?php if (isset($_SESSION['logged_on_user'])): ?>
-                      <a href="php/logout.php" title="Logout of Account">LOGOUT</a>
-                  <?php endif; ?>
-              </li>
-            </ul>
-        </div>
+        <?php include '../include/header.php'; ?>
     </header>
 
     <div id="error-messages"></div>
 <?php
     if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['hash']) && !empty($_GET['hash'])) {
-        include 'config/database.php';
-
-        // Verify data
         $email = $_GET['email']; // Set email variable
         $hash = $_GET['hash']; // Set hash variable
 
         try {
-            $dbname = 'camagru';
-            $conn = new PDO("$DB_DSN;dbname=$dbname", $DB_USER, $DB_PASSWORD);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $client = ClientBuilder::create()
+                        ->addConnection('default', 'http://neo4j:123456@localhost:7474')
+                        ->build();
 
-            $sql = $conn->prepare("SELECT `email`, `hash`, `active` FROM `users` WHERE email=:email AND hash=:hash AND active='0';");
-            $sql->execute(['email' => $email, 'hash' => $hash]);
+            $result = $client->run('MATCH (u:User) WHERE u.email={email} AND u.hash={hash} AND u.active=0 '
+                                    .'RETURN count(u) AS n_users;',
+                                    ['email' => $email, 'hash' => $hash]);
 
-            if ($sql->rowCount() > 0) {
-                $sql = $conn->prepare("UPDATE `users` SET `active`='1' WHERE email=:email AND hash=:hash AND active='0';");
-                $sql->execute(['email' => $email, 'hash' => $hash]);
-                // success
-                $msg = "<p class=\"success\">Your account was successfully activated!</p><p class=\"success\">
-                            <a href='index.php' class=\"btn border border-3 white rounded hover-text-blue text-22\">LOG IN</a></p>";
+            if ($record = $result->getRecord()) {
+                $n_users = $record->get('n_users');
+                if ($n_users === 1) {
+                    $client->run('MATCH (u:User) WHERE u.email={email} AND u.hash={hash} AND u.active=0 SET u.active = 1',
+                                            ['email' => $email, 'hash' => $hash]);
+                    $msg = "<p class=\"alert alert-success\">Your account was successfully activated!</p><p class=\"alert alert-success\"><a href=\"/matcha/index.php\" class=\"btn btn-default\">Log in</a></p>";
+
+                } else {
+                    $msg = '<p class="alert alert-danger">There was an error activating your account!</p>';
+                }
             } else {
-                $msg = '<p class="danger">There was an error activating your account!'.$sql['email'].'</p>';
+                $msg = '<p class="alert alert-danger">Could not find any records from the DB when activating your account!</p>';
             }
         } catch (PDOException $e) {
             $msg = '<b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</p>';
@@ -52,12 +48,14 @@
         $conn = null;
     } else {
         // Invalid approach
-        $msg = '<p class="warning">You got here without the right stuff. Please create an account and then click the link in your activation email.</p>';
+        $msg = '<p class="alert alert-warning">You got here without the right stuff. Please create an account and then click the link in your activation email.</p>';
     }
-    echo "<script type=\"text/javascript\">displayError('".$msg."');</script>";
-?>
 
-<?php include '../include/footer.php'; ?>
+    include '../include/footer.php';
+
+    echo "<script type=\"text/javascript\">displayError('".$msg."');</script>";
+
+    ?>
 
 </body>
 
