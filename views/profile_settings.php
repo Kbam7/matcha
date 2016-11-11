@@ -285,7 +285,7 @@ if (isset($_SESSION['logged_on_user'])) {
     //
       $("#tags_list input").on({
         focusout : function() {
-          var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig,''); // allowed characters
+          var txt = this.value.replace(/[^a-zA-Z0-9\+\-]/ig,''); // allowed characters
           if(txt) $("<span/>", {text:txt.toLowerCase(), insertBefore:this});
           this.value = "";
         },
