@@ -27,8 +27,6 @@ function updateProfile(form) {
     for (var i = 0; i < inputs.length; ++i) {
         var input = inputs[i];
 
-        debugger;
-
         // Check tags for an update
         if (input.name === "tags") {
             // get all child elements (<span>) and get the inner html, then make a CSV with each tag text.
@@ -38,7 +36,9 @@ function updateProfile(form) {
             var tags = document.querySelector('#tags_list').children;
             var string = "";
             for (var j = 0; j < tags.length; ++j) {
+                // Only <span> elements
                 if (tags[j].nodeName === "SPAN") {
+                    // Build string
                     if (string === "") {
                         string = tags[j].innerText;
                     } else {

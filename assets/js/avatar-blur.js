@@ -361,7 +361,6 @@ $(document).ready(function() {
 
 
     $('.card canvas').each(function(index) {
-        debugger;
         var canvas = $(this)[0];
 
         var image = new Image();

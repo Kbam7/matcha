@@ -4,15 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-function displayProfilePicture($a_user)
-{
-    if (isset($a_user['profile_pic'])) {
-        echo '/matcha/assets/uploads/thumbnails/'.$a_user['profile_pic'];
-    } else {
-        echo '../assets/img/default_pp.png';
-    }
-}
-
 if (isset($_SESSION['logged_on_user'])) {
     // get user
     $user = $_SESSION['logged_on_user'];
@@ -85,11 +76,11 @@ if (isset($_SESSION['logged_on_user'])) {
             <div class="col-lg-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-offset-0">
                 <div class="card hovercard">
                     <div class="card-background">
-                        <img src="<?php displayProfilePicture($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
+                        <img src="<?php getProfilePictureSrc($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
                         <!-- http://lorempixel.com/850/280/people/9/ -->
                     </div>
                     <div class="useravatar">
-                        <img src="<?php displayProfilePicture($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
+                        <img src="<?php getProfilePictureSrc($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
                     </div>
                     <div class="card-info">
                         <span class="card-title"><?php echo $user['firstname'].' '.$user['lastname']; ?></span>
@@ -127,9 +118,7 @@ if (isset($_SESSION['logged_on_user'])) {
                           <div class="form-group">
                             <label for="edit_tags" class="col-sm-2 control-label">Tags :</label>
                             <div class="col-sm-10" id="tags_list">
-                                <span>php</span>
-                                <span>c++</span>
-                                <span>jquery</span>
+                                <?php getUsersTags($user); ?>
                                 <input type="text" class="form-control" name="tags_input" id="edit_tags" value="" placeholder="Add a tag" onkeydown="return !(event.keyCode==13)" />
                                 <input type="hidden" id="tags_value" name="tags" />
                             </div>
@@ -138,7 +127,7 @@ if (isset($_SESSION['logged_on_user'])) {
                             <label for="edit_bio" class="col-sm-2 control-label">Bio : </label>
                             <div class="col-sm-10">
                               <textarea class="form-control" name="bio" id="edit_bio" rows="5" maxlength="300"><?php echo $user['bio'] ?></textarea>
-                              <span class="label label-primary">MAX: 300 Characters ( <small><span id="bio_length">x</span> / 300</small> )</span>
+                              <span class="label label-primary">MAX: 300 Characters</span>
                             </div>
                           </div>
                           <div class="form-group">
@@ -284,14 +273,16 @@ if (isset($_SESSION['logged_on_user'])) {
 
     <script type="text/javascript">
 
-    // Button effect for profile page
     $(document).ready(function() {
+
+        // Button effect for profile page
         $(".btn-pref .btn").click(function () {
             $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
             // $(".tab").addClass("active"); // instead of this do the below
             $(this).removeClass("btn-default").addClass("btn-primary");
         });
 
+    //
       $("#tags_list input").on({
         focusout : function() {
           var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig,''); // allowed characters
@@ -303,21 +294,18 @@ if (isset($_SESSION['logged_on_user'])) {
           if(/(188|13)/.test(ev.which)) $(this).focusout();
         }
       });
+
+      // Remove tag on click
       $('#tags_list').on('click', 'span', function() {
         if(confirm("Remove "+ $(this).text() +"?")) $(this).remove();
       });
 
-      // For updating length of biography
-    $( "#edit_bio" ).keyup(function() {
-        $("#bio_length").value = $( "#edit_bio" ).value.length;
-    });
+      $("#edit_bio").on("keyup", function() {
+              $("#bio_length").text($( "#edit_bio" ).text().length);
+      });
 
     });
-/*
-    function updateBioLength(e) {
-        debugger;
-    }
-*/
+
     </script>
 
 
@@ -331,4 +319,30 @@ if (isset($_SESSION['logged_on_user'])) {
     $_SESSION['errors'] = array('Please log in before accessing this website');
     header('Location: ../index.php');
 }
+
+/* ------------------------------------------- */
+/* ----------[FUNCTION DEFINITIONS]----------- */
+/* ------------------------------------------- */
+
+function getProfilePictureSrc($a_user)
+{
+    if (isset($a_user['profile_pic'])) {
+        echo '/matcha/assets/uploads/thumbnails/'.$a_user['profile_pic'];
+    } else {
+        echo '../assets/img/default_pp.png';
+    }
+}
+
+function getUsersTags($a_user)
+{
+    if (isset($a_user['tags'])) {
+        $tags = explode(',', $user['tags']);
+        foreach ($tags as $tag) {
+            echo '<span>#'.$tag.'</span><br />';
+        }
+    } else {
+        echo '<p>No Tags found</p>';
+    }
+}
+
 ?>

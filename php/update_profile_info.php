@@ -70,6 +70,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         }
 
         // SEXUAL PREFERENCE - LOGIC
+            // Set default for $curr
             $curr = [];
             // Check if there is already a value for the users sex_pref
             if (isset($user['sex_pref'])) {
@@ -90,7 +91,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
 
         if (isset($_POST['sex_pref_f']) && !in_array('women', $curr, true)) {
             // Add it to the array
-                    array_push($curr, 'women');
+            array_push($curr, 'women');
             $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
         } elseif (!isset($_POST['sex_pref_f']) && in_array('women', $curr, true)) {
             // remove it from array
@@ -115,16 +116,22 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
 
         // BIOGRAPHY
         if (isset($_POST['bio']) && strlen($_POST['bio'])) {
-            $stack->push('MATCH (u:User {username: {uname}}) SET u.bio = {new_bio};',
-                                ['uname' => $user['username'], 'new_bio' => $_POST['bio']], 's_bio');
-            $statusMsg .= '<p class="alert alert-success">Bio updated.</p>';
+            // If the tags have been updated
+            if ($_POST['tags'] !== $user['tags']) {
+                $stack->push('MATCH (u:User {username: {uname}}) SET u.bio = {new_bio};',
+                                    ['uname' => $user['username'], 'new_bio' => $_POST['bio']], 's_bio');
+                $statusMsg .= '<p class="alert alert-success">Bio updated.</p>';
+            }
         }
 
         // TAGS
-        if (isset($_POST['tags']) && strlen($_POST['tags']) && $_POST['tags'] !== $user['tags']) {
-            $stack->push('MATCH (u:User {username: {uname}}) SET u.tags = {new_tags};',
-                                ['uname' => $user['username'], 'new_tags' => $_POST['tags']], 's_tags');
-            $statusMsg .= '<p class="alert alert-success">Tags updated.</p>';
+        if (isset($_POST['tags']) && strlen($_POST['tags'])) {
+            // If the tags have been updated
+            if ($_POST['tags'] !== $user['tags']) {
+                $stack->push('MATCH (u:User {username: {uname}}) SET u.tags = {new_tags};',
+                                    ['uname' => $user['username'], 'new_tags' => $_POST['tags']], 's_tags');
+                $statusMsg .= '<p class="alert alert-success">Tags updated.</p>';
+            }
         }
 
         // PICTURES
