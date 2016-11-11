@@ -15,25 +15,21 @@ $client = ClientBuilder::create()
     ->addConnection('default', 'http://neo4j:123456@localhost:7474')
     ->build();
 
-    $stack = $client->stack();
+    $result = $client->run('MATCH (u:User {username:{username}})-[:HAS_INTEREST]->(i:Interest {title:{tag}}) RETURN u AS user;',
+                    ['username' => 'mary', 'tag' => 'test_tag']);
+    $record = $result->getRecord();
+    echo '<pre>';
+    print_r($record);
+    if ($record) {
+        $record = $record->get('user')->values();
+    }
 
-    $stack->push('MATCH (img:Image)<-[:UPLOADED]-(u:User {username:{uname}}) RETURN collect(img) AS imgs, count(img) AS n_imgs, u AS user', ['uname' => $user['username']], 'remaining_imgs');
-
-    $results = $client->runStack($stack);
-
-    $record = $results->get('remaining_imgs')->getRecord();
-    $img = $record->get('imgs');
-    $nimg = $record->get('n_imgs');
-    $new_user = $record->get('user')->values();
 echo '<pre>';
-print_r($img);
+print_r($record);
 echo '<br /><br />';
-print_r($img[0]);
-print_r($img[0]->value('thumbnail'));
-echo '<br /><br />';
-echo $nimg;
-echo '<br /><br />';
-print_r($new_user);
+if (empty($record)) {
+    echo 'EMPTY';
+}
 echo '<br /><br />';
 
 /*

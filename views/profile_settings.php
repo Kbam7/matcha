@@ -85,14 +85,16 @@ if (isset($_SESSION['logged_on_user'])) {
                             <label for="edit_tags" class="col-sm-2 control-label">Tags :</label>
                             <div class="col-sm-10" id="tags_list">
                                 <?php getUsersTags($user); ?>
-                                <input type="text" class="form-control" name="tags_input" id="edit_tags" value="" placeholder="Add a tag" onkeydown="return !(event.keyCode==13)" />
+                                <input type="text" class="form-control" name="tags_input" id="edit_tags" value="" placeholder="Add a tag" onkeydown="return !(event.keyCode==13)" autocomplete="on" />
                                 <input type="hidden" id="tags_value" name="tags" />
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="edit_bio" class="col-sm-2 control-label">Bio : </label>
                             <div class="col-sm-10">
-                              <textarea class="form-control" name="bio" id="edit_bio" rows="5" maxlength="300"><?php echo $user['bio'] ?></textarea>
+                              <textarea class="form-control" name="bio" id="edit_bio" rows="5" maxlength="300"><?php if (isset($user['bio'])) {
+        echo $user['bio'];
+    } ?></textarea>
                               <span class="label label-primary">MAX: 300 Characters</span>
                             </div>
                           </div>
@@ -124,12 +126,6 @@ if (isset($_SESSION['logged_on_user'])) {
                                 <label for="edit_username" class="col-sm-4 control-label">User Name :</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="username" id="edit_username" value="<?php echo $user['username'] ?>" maxlength="32" autocomplete="true" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="edit_email" class="col-sm-4 control-label">User Name :</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="email" id="edit_email" value="<?php echo $user['username'] ?>" maxlength="32" autocomplete="true" />
                                 </div>
                             </div>
 
@@ -245,37 +241,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
     <script type="text/javascript">
 
-    $(document).ready(function() {
 
-        // Button effect for profile page
-        $(".btn-pref .btn").click(function () {
-            $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-            $(this).removeClass("btn-default").addClass("btn-primary");
-        });
-
-    //
-      $("#tags_list input").on({
-        focusout : function() {
-          var txt = this.value.replace(/[^a-z0-9\+\-]/ig,''); // allowed characters
-          if(txt) $("<span/>", {text:txt.toLowerCase(), insertBefore:this});
-          this.value = "";
-        },
-        keyup : function(ev) {
-          // if: comma|enter (delimit more keyCodes with | pipe)
-          if(/(188|13)/.test(ev.which)) $(this).focusout();
-        }
-      });
-
-      // Remove tag on click
-      $('#tags_list').on('click', 'span', function() {
-        $(this).remove();
-      });
-
-      $("#edit_bio").on("keyup", function() {
-              $("#bio_length").text($( "#edit_bio" ).text().length);
-      });
-
-    });
 
     </script>
 

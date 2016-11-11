@@ -59,7 +59,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
 
         // GENDER
         if (isset($_POST['gender']) && strlen($_POST['gender'])) {
-            if (isset($user['gender']) && $_POST['gender'] !== $user['gender']) {
+            if (!isset($user['gender']) || $_POST['gender'] !== $user['gender']) {
                 $stack->push('MATCH (u:User {username: {uname}}) SET u.gender = {new_gender};',
                         ['uname' => $user['username'], 'new_gender' => $_POST['gender']], 's_gender');
                 $statusMsg .= '<p class="alert alert-success">Gender updated.</p>';
@@ -92,7 +92,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
             $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
         } elseif (!isset($_POST['sex_pref_f']) && in_array('women', $curr, true)) {
             // remove it from array
-                array_splice($curr, array_search('women', $curr), 1);
+            array_splice($curr, array_search('women', $curr), 1);
             $statusMsg .= '<p class="alert alert-success">Sexual Preference updated.</p>';
         }
 
@@ -114,20 +114,10 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         // BIOGRAPHY
         if (isset($_POST['bio']) && strlen($_POST['bio'])) {
             // If the tags have been updated
-            if ($_POST['bio'] !== $user['bio']) {
+            if (!isset($user['bio']) || $_POST['bio'] !== $user['bio']) {
                 $stack->push('MATCH (u:User {username: {uname}}) SET u.bio = {new_bio};',
                                     ['uname' => $user['username'], 'new_bio' => $_POST['bio']], 's_bio');
                 $statusMsg .= '<p class="alert alert-success">Bio updated.</p>';
-            }
-        }
-
-        // TAGS
-        if (isset($_POST['tags']) && strlen($_POST['tags'])) {
-            // If the tags have been updated
-            if ($_POST['tags'] !== $user['tags']) {
-                $stack->push('MATCH (u:User {username: {uname}}) SET u.tags = {new_tags};',
-                                    ['uname' => $user['username'], 'new_tags' => $_POST['tags']], 's_tags');
-                $statusMsg .= '<p class="alert alert-success">Tags updated.</p>';
             }
         }
 

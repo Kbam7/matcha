@@ -1,20 +1,75 @@
-// Events for update bio form
-var edit_bio_form = document.querySelector("#edit_bio_form");
-if (edit_bio_form) {
-    edit_bio_form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        updateProfile(edit_bio_form);
-    });
-}
+$(document).ready(function() {
 
-// Events for update details form
-var edit_details_form = document.querySelector("#edit_details_form");
-if (edit_details_form) {
-    edit_details_form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        updateProfile(edit_details_form);
+    // Events for update bio form
+    var edit_bio_form = document.querySelector("#edit_bio_form");
+    if (edit_bio_form) {
+        edit_bio_form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            updateProfile(edit_bio_form);
+        });
+    }
+
+    // Events for update details form
+    var edit_details_form = document.querySelector("#edit_details_form");
+    if (edit_details_form) {
+        edit_details_form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            updateProfile(edit_details_form);
+        });
+    }
+
+    // Button effect for profile page
+    $(".btn-pref .btn").click(function() {
+        $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+        $(this).removeClass("btn-default").addClass("btn-primary");
     });
-}
+
+    // Update tags
+    $("#tags_list input").on({
+        focusout: function() {
+            var txt = this.value.replace(/[^a-z0-9]/ig, ''); // allowed characters
+            if (txt) {
+                var input = encodeURIComponent(txt.toLowerCase());
+                var data = "submit=1&add_interest=" + input;
+                ajax_post('../php/update_interests.php', data, function(httpRequest) {
+                    var response = JSON.parse(httpRequest.responseText);
+                    displayError(response.statusMsg);
+                    if (response.status === true) {
+                        var span = document.createElement('SPAN');
+                        span.innerText = input;
+                        document.querySelector("#tags_list").insertBefore(span, document.querySelector("#tags_list input"));
+                    }
+                });
+                this.value = "";
+            }
+        },
+        keyup: function(ev) {
+            // if: comma|enter (delimit more keyCodes with | pipe)
+            if (/(188|13)/.test(ev.which)) $(this).focusout();
+        }
+    });
+
+    // Remove tag on click
+    $('#tags_list').on('click', 'span', function() {
+        var data = "submit=1&remove_interest=" + encodeURIComponent($(this).text());
+        $(this).hide();
+        ajax_post('../php/update_interests.php', data, function(httpRequest) {
+            var response = JSON.parse(httpRequest.responseText);
+            displayError(response.statusMsg);
+            if (response.status === true) {
+                $(this).remove();
+            } else {
+                $(this).show();
+            }
+        });
+    });
+
+    $("#edit_bio").on("keyup", function() {
+        $("#bio_length").text($("#edit_bio").text().length);
+    });
+
+});
+
 
 function updateProfile(form) {
     // Get all input elements in form
@@ -26,29 +81,6 @@ function updateProfile(form) {
     // Go through all inputs
     for (var i = 0; i < inputs.length; ++i) {
         var input = inputs[i];
-
-        // Check tags for an update
-        if (input.name === "tags") {
-            // get all child elements (<span>) and get the inner html, then make a CSV with each tag text.
-            // Compare the CSV with the current `$user['tags']` value
-            // There must be a CSV value with all the users tags saved in the user node and then
-            // create a relationship between the User and the Tag node
-            var tags = document.querySelector('#tags_list').children;
-            var string = "";
-            for (var j = 0; j < tags.length; ++j) {
-                // Only <span> elements
-                if (tags[j].nodeName === "SPAN") {
-                    // Build string
-                    if (string === "") {
-                        string = tags[j].innerText;
-                    } else {
-                        string += ',' + tags[j].innerText;
-                    }
-                }
-            }
-            input.value = string;
-        }
-
         // if input field has a value, encode it and add it to the data string
         if (input.value && input.value.length > 0) {
             // Initial value
@@ -62,7 +94,7 @@ function updateProfile(form) {
                     } else {
                         data += "&" + input.name + "=" + val;
                     }
-                    console.log('found input(' + input.type + ':checked) with value : ' + val);
+                    console.log('found input[' + input.name + '](' + input.type + ':checked) with value : ' + val);
                 }
             } else {
                 if (validate_input(input, input.value, input.type)) {
@@ -73,7 +105,7 @@ function updateProfile(form) {
                         data += "&" + input.name + "=" + val;
                     }
                 }
-                console.log('found input(' + input.type + ') with value : ' + val);
+                console.log('found input[' + input.name + '](' + input.type + ') with value : ' + val);
             }
 
         }

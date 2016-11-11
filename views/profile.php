@@ -145,6 +145,11 @@ if (isset($_SESSION['logged_on_user'])) {
             // $(".tab").addClass("active"); // instead of this do the below
             $(this).removeClass("btn-default").addClass("btn-primary");
         });
+
+        // Cant remove tag on click
+        $('#tags_list').on('click', 'span', function() {
+            displayError('<p class="alert alert-warning">Cannot delete tags on this page.<br />Go to <a href="/matcha/views/profile_settings.php">Profile Settings</a> to make changes.</p>')
+        });
     });
 
     </script>

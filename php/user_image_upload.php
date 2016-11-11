@@ -78,7 +78,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
 
     /* NOTICE */
     /* Currently the user upload image does not receive an overlay if the overlay is selected.  */
-    /* The users image is first scaled to 640x480 and then any overlay present will be used. */
+    /* The users image is first scaled to 640x480 and then any overlay given will be used. */
 
     // Check for overlay
     $overlay = null;
