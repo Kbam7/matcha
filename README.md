@@ -15,6 +15,11 @@
   - Put it in the root directory of Matcha
   - Run `php composer.phar install`
   
+- You will need to install GeoIP
+  - [GeoIP Github Page](https://github.com/maxmind/GeoIP2-php)
+  - [Download GeoIP Database](http://dev.maxmind.com/geoip/geoip2/geolite2/) - Put the database in your `htdocs` directory or whichever directory is your root.
+  - The sample code from the GeoIP Github page should work, so use that for testing.
+  
 ## Config changes: 
 **Neo4j Config file:**
 `neo4j.conf`
