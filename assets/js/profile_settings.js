@@ -149,7 +149,18 @@ function geoFindMe(e) {
     };
 
     function error() {
-        output.innerHTML = "Unable to retrieve your location";
+        output.innerHTML = "Hmm... Having trouble finding you.";
+        $.getJSON('http://ipinfo.io/geo', function(data) {
+            var coords = data.loc.split(',');
+
+            data = "submit=1&latitude=" + coords[0] + "&longitude=" + coords[1];
+
+            // Send data to get processed
+            ajax_post("/matcha/php/update_profile_info.php", data, function(httpRequest) {
+                var response = JSON.parse(httpRequest.responseText);
+                displayError(response.statusMsg, 0);
+            });
+        })
     };
 
     output.innerHTML = "<p>Locating…</p>";

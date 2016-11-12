@@ -46,7 +46,9 @@ if (isset($_SESSION['logged_on_user'])) {
         // EMAIL ADDRESS
         if (isset($_POST['email']) && strlen($_POST['email'])) {
             if ($_POST['email'] !== $user['email']) {
+                // Generate hash
                 $uniqueHash = md5(uniqid());
+                // Set hash and new email in DB
                 $stack->push('MATCH (u:User {username: {uname}}) SET u += {details};',
                                     ['uname' => $user['username'],
                                         'details' => ['hash' => $uniqueHash,
@@ -54,6 +56,7 @@ if (isset($_SESSION['logged_on_user'])) {
                                                         'active' => 0,
                                                     ],
                                     ], 's_email');
+                // Send validation email
                 sendValidationEmail($_POST['email'], $uniqueHash);
                 $statusMsg .= '<div class="alert alert-success">Email Address updated.<br />'
                             .'Check your new email address for the verification link.</div>';
@@ -224,7 +227,7 @@ function sendValidationEmail($newemail, $uniqueHash)
     $user = $_SESSION['logged_on_user'];
 
     // send email to old email
-    $subject = 'Notification | Changed Email'; // Give the email a subject
+    $subject = 'Notification | Changed Email';
     $message = '
 
         Hey '.$user['firstname'].' '.$user['lastname'].',
@@ -236,7 +239,7 @@ function sendValidationEmail($newemail, $uniqueHash)
 
     ';
 
-    $headers = 'From:noreply@matcha.co.za'."\r\n"; // Set from headers
+    $headers = 'From:noreply@matcha.co.za'."\r\n";
     mail($user['email'], $subject, $message, $headers);
 
     // send email to new email
@@ -252,6 +255,6 @@ function sendValidationEmail($newemail, $uniqueHash)
         Please contact site admin if you suspect you have been hacked.
     ';
 
-    $headers = 'From:noreply@matcha.co.za'."\r\n"; // Set from headers
+    $headers = 'From:noreply@matcha.co.za'."\r\n";
     mail($newemail, $subject, $message, $headers);
 }

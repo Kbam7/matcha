@@ -167,12 +167,14 @@ function validate_input(input, value, type) {
 /* ----------------[ ERROR FUNCTIONS ]------------------- */
 
 // Function to display errors
-function displayError(errMsg) {
+function displayError(errMsg, show) {
 
     var errDiv = document.getElementById("error-messages");
     clearTimeout(addClass_timeout);
     clearTimeout(removeError_timeout);
-    if (errDiv) {
+    debugger;
+    show = (show === undefined ? 1 : show);
+    if (errDiv && show) {
         errDiv.innerHTML = errMsg;
         var msgs = errDiv.childNodes;
         for (var msg of msgs) {

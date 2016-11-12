@@ -24,6 +24,9 @@
                     <li>
                         <a href="/matcha/views/create.php">Register</a>
                     </li>
+                    <li>
+                        <a href="/matcha/views/reset_password.php">Forgot Password</a>
+                    </li>
                 </ul> <!-- /Left-Nav -->
 
                 <form class="navbar-form navbar-right animate_label" id="loginForm" method="post" action="/matcha/php/login.php">

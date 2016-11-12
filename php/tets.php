@@ -4,6 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+/*
 include 'debugger.php'; // DEBUG
 require_once '../vendor/autoload.php';
 
@@ -31,7 +32,7 @@ if (empty($record)) {
     echo 'EMPTY';
 }
 echo '<br /><br />';
-
+*/
 /*
     $stack = $client->stack();
 
