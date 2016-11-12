@@ -4,7 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-/*
 include 'debugger.php'; // DEBUG
 require_once '../vendor/autoload.php';
 
@@ -12,15 +11,22 @@ use GraphAware\Neo4j\Client\ClientBuilder;
 
 $user = $_SESSION['logged_on_user'];
 
-$client = ClientBuilder::create()
-    ->addConnection('default', 'http://neo4j:123456@localhost:7474')
-    ->build();
+$client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
 
-    $result = $client->run('MATCH (u:User {username:{username}})-[:HAS_INTEREST]->(i:Interest {title:{tag}}) RETURN u AS user;',
-                    ['username' => 'mary', 'tag' => 'test_tag']);
-    $record = $result->getRecord();
+$results = $client->run('MATCH (u:User {username:{uname}, profile_complete:1, active:1}), (u2:User {profile_complete:1, active:1})'
+                    .' MATCH (u)-[:HAS_INTEREST]->(i:Interest)<-[:HAS_INTEREST]-(u2)'
+                    .' RETURN collect(u2) AS suggestions',
+                    ['uname' => $user['username']]);
+
     echo '<pre>';
-    print_r($record);
+    $profs = [];
+    foreach ($results->getRecords() as $record) {
+        foreach ($record->get('suggestions') as $key) {
+            $profs[] = $key->values();
+        }
+    }
+
+/*
     if ($record) {
         $record = $record->get('user')->values();
     }

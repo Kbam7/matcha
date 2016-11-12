@@ -172,7 +172,6 @@ function displayError(errMsg, show) {
     var errDiv = document.getElementById("error-messages");
     clearTimeout(addClass_timeout);
     clearTimeout(removeError_timeout);
-    debugger;
     show = (show === undefined ? 1 : show);
     if (errDiv && show) {
         errDiv.innerHTML = errMsg;

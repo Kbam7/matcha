@@ -52,10 +52,16 @@ if (isset($_SESSION['logged_on_user'])) {
 
             <?php include '../include/gallery.php'; ?>
 
+            <div id="user_profiles">
+
+            </div>
+
         </div> <!-- /.row -->
     </section> <!-- /.container -->
 
 <?php include '../include/footer.php'; ?>
+
+<script type="text/javascript" src="/matcha/assets/js/dashboard.js"></script>
 
 </body>
 
