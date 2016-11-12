@@ -33,10 +33,11 @@ if (session_status() == PHP_SESSION_NONE) {
         <div class="jumbotron">
             <div class="container">
                 <h1>Welcome!</h1>
+                <hr class="clearfix col-sm-12" />
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at nisl euismod nisi facilisis bibendum.
                     Vivamus ultricies quam id nunc ullamcorper, id suscipit purus volutpat.
                     Donec porttitor massa vitae metus pharetra, vel viverra justo lobortis.</p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">Register Now &raquo;</a></p>
             </div>
         </div>
     </section> <!-- /.jumbo-intro -->

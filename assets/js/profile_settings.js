@@ -38,6 +38,7 @@ $(document).ready(function() {
                         var span = document.createElement('SPAN');
                         span.innerText = input;
                         document.querySelector("#tags_list").insertBefore(span, document.querySelector("#tags_list input"));
+                        console.log(response.user);
                     }
                 });
                 this.value = "";
@@ -58,6 +59,7 @@ $(document).ready(function() {
             displayError(response.statusMsg);
             if (response.status === true) {
                 $(this).remove();
+                console.log(response.user);
             } else {
                 $(this).show();
             }

@@ -127,7 +127,7 @@ function validate_input(input, value, type) {
     var result = true;
 
     if (value === "" && input.required) {
-        displayError("<p class=\"alert alert-info\">'" + input.name + "' cannot be empty.</p>");
+        displayError("<div class=\"alert alert-info\">'" + input.name + "' cannot be empty.</div>");
         return false;
     }
     if (type === "text") {
@@ -135,13 +135,13 @@ function validate_input(input, value, type) {
         if (input.name === "firstname" || input.name === "lastname") {
             result = /^([A-Z][a-z]+([ ]?[a-z]?['-]?[A-Z][a-z]+)*)$/.test(value);
             if (result === false) {
-                displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'John Doe' or 'John-Doe'.<br />Names need to start with a CAPITAL letter.</p>");
+                displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'John Doe' or 'John-Doe'.<br />Names need to start with a CAPITAL letter.</div>");
                 return false;
             }
         } else if (input.name === "username") {
             result = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,24}$/.test(value);
             if (result === false) {
-                displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john1' 'John_Doe' or 'John.Doe3'.<br />MAX: 24 Characters</p>");
+                displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john1' 'John_Doe' or 'John.Doe3'.<br />MAX: 24 Characters</div>");
                 return false;
             }
         }
@@ -149,13 +149,13 @@ function validate_input(input, value, type) {
     } else if (type === "email") {
         result = /^([\w\.]+)@([\w\.]+)\.(\w+)/.test(value);
         if (result === false) {
-            displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john@doe.com'</p>");
+            displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john@doe.com'</div>");
             return false;
         }
     } else if (type === "password") {
         result = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(value);
         if (result === false) {
-            displayError("<p class=\"alert alert-warning\">'" + input.name + "' is invalid. Password must contain at least 8 characters, and consist of atleast 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters.</p>");
+            displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Password must contain at least 8 characters, and consist of atleast 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters.</div>");
             return false;
         }
     }
@@ -176,8 +176,9 @@ function displayError(errMsg) {
         errDiv.innerHTML = errMsg;
         var msgs = errDiv.childNodes;
         for (var msg of msgs) {
-            addClass(msg, "animate");
+            addClass(msg, "animated");
             addClass(msg, "swing");
+            msg.innerHTML = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + msg.innerHTML;
         }
     }
 

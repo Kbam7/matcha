@@ -84,7 +84,7 @@ if (isset($_SESSION['logged_on_user'])) {
                     <dl class="dl-horizontal">
                         <dt>Tags</dt>
                         <dd id="tags_list"><?php getUsersTags($user); ?></dd>
-                        <hr class="clearfix" />
+                        <hr class="col-sm-12 clearfix" />
                         <dt>About me</dt>
                         <dd><?php echo $user['bio'] ?></dd>
                     </dl>
@@ -98,11 +98,18 @@ if (isset($_SESSION['logged_on_user'])) {
                             <dd><?php echo $user['firstname'] ?></dd>
                             <dt>Last Name</dt>
                             <dd><?php echo $user['lastname'] ?></dd>
+                            <dt>Userame</dt>
+                            <dd><?php echo $user['username'] ?></dd>
+
+                            <hr class="col-sm-12 clearfix" />
+
                             <dt>Gender</dt>
                             <dd><?php echo $user['gender'] ?></dd>
                             <dt>Interested in</dt>
                             <dd><?php echo $user['sex_pref'] ?></dd>
-                            <hr />
+
+                            <hr class="col-sm-12 clearfix" />
+
                             <dt><u>Location</u></dt>
                             <dd> </dd>
                             <dt><small>Latitude : </small></dt>

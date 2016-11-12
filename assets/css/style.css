@@ -22,7 +22,7 @@ h1 {
     height        : 100%;
     font-size     : 26px;
     line-height   : 44px;
-    margin        : auto 20px;
+    margin        : 20px auto;
     text-transform: uppercase;
 }
 
@@ -30,6 +30,10 @@ h1 small {
     color         : #0462f9;
     text-transform: capitalize;
     text-shadow   : 0 0 2px #fff, -1px -1px 2px #fff, 1px 1px 2px #fff, 0 0 10px #fff, 0 -2px 2px #fff, 0 1px 5px #fff;
+}
+
+.account-settings-header {
+    margin-top: 70px;
 }
 
 input[type=file] {
@@ -129,6 +133,10 @@ section.jumbo-intro {
     margin    : 4px;
     padding   : 7px;
     width     : auto;
+}
+
+div#details_view_tab {
+    overflow: hidden;
 }
 /* --- User gallery Display --- */
 #pics_settings_tab,
@@ -324,6 +332,18 @@ section.login-form form {
 input[type="submit"] {
     margin-top: 20px;
 }
+
+form#update_account .submit_field {
+    text-align: center;
+}
+
+form#update_account h3 {
+    margin-bottom             : 30px;
+    color                     : #fff;
+    border-bottom             : 4px double #fff;
+    max-width                 : 180px;
+    border-bottom-right-radius: 13px;
+}
 /* Labels */
 label.input_label {
     opacity: 0;
@@ -518,6 +538,45 @@ footer p {
 }
 /* --- @Media Events --- */
 @media screen and (min-width: 420px) {
+    .imageDisplay_inner div,
+    .imageDisplay_inner form {
+        max-width: 90%;
+        margin   : 5px auto 0;
+    }
+}
+@media screen and (min-width: 800px) {
+    .overlays input[type="submit"] {
+        height: 50px;
+    }
+
+    .overlays {
+        max-width: 200px;
+        margin   : 0 0 auto 3%;
+    }
+
+    .overlay_images {
+        flex-flow : column nowrap;
+        max-height: 570px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    section#imageDisplay {
+        display  : flex;
+        flex-flow: row nowrap;
+    }
+
+    form#overlayForm {
+        display  : flex;
+        flex-flow: column nowrap;
+    }
+
+    #newGallery {
+        max-width: 280px;
+    }
+}
+
+en and (min-width:420px) {
     .imageDisplay_inner div,
     .imageDisplay_inner form {
         max-width: 90%;

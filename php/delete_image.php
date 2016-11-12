@@ -21,12 +21,12 @@ if (isset($_SESSION['logged_on_user']) && isset($_POST['confirmed']) && $_POST['
         // Check if files exists and then delete them
         if (file_exists($img)) {
             if (!unlink(dirname(__DIR__).'/assets/uploads/'.$_POST['img'].'.png')) {
-                $statusMsg .= '<p class="alert alert-warning">The image was found but not deleted. Image needs to be manually removed.</p>';
+                $statusMsg .= '<div class="alert alert-warning">The image was found but not deleted. Image needs to be manually removed.</div>';
             }
         }
         if (file_exists($img_tn)) {
             if (!unlink(dirname(__DIR__).'/assets/uploads/thumbnails/tn_'.$_POST['img'].'.png')) {
-                $statusMsg .= '<p class="alert alert-warning">The image thumbnail was found but not deleted. Image needs to be manually removed.</p>';
+                $statusMsg .= '<div class="alert alert-warning">The image thumbnail was found but not deleted. Image needs to be manually removed.</div>';
             }
         }
 
@@ -36,7 +36,7 @@ if (isset($_SESSION['logged_on_user']) && isset($_POST['confirmed']) && $_POST['
         $client->run('MATCH (img:Image {filename:{filename}}) OPTIONAL MATCH (img)-[r]-() DELETE img, r', ['filename' => $_POST['img'].'.png']);
 
         // Check if deleted image was profile pic
-        if (isset($user['profile_pic']) && !empty($user['profile_pic'])){
+        if (isset($user['profile_pic']) && !empty($user['profile_pic'])) {
             if ($user['profile_pic'] === 'tn_'.$_POST['img'].'.png') {
                 // get remaining images and set pp as first one
                 $results = $client->run('MATCH (img:Image)<-[:UPLOADED]-(:User {username:{uname}}) RETURN collect(img) AS imgs, count(img) AS n_imgs', ['uname' => $user['username']]);
@@ -61,7 +61,7 @@ if (isset($_SESSION['logged_on_user']) && isset($_POST['confirmed']) && $_POST['
             }
         }
 
-        $statusMsg .= '<p class="alert alert-success">The image has been removed.</p>';
+        $statusMsg .= '<div class="alert alert-success">The image has been removed.</div>';
 
         // Build response
         $response = array('status' => true, 'statusMsg' => $statusMsg);
@@ -70,11 +70,11 @@ if (isset($_SESSION['logged_on_user']) && isset($_POST['confirmed']) && $_POST['
         error_log($e, 3, dirname(__DIR__).'/log/errors.log');
         // Build response
         $response = array('status' => false,
-                        'statusMsg' => "<p class=\"alert alert-danger\"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> ".dirname(__DIR__).'/log/errors.log'.'</p>', );
+                        'statusMsg' => "<div class=\"alert alert-danger\"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> ".dirname(__DIR__).'/log/errors.log'.'</div>', );
     }
 } else {
     // Build response
-    $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Invalid Request</p>');
+    $response = array('status' => false, 'statusMsg' => '<div class="alert alert-danger">Invalid Request</div>');
 }
 
 // JSON encode `response` and echo the JSON string

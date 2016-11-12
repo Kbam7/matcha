@@ -36,11 +36,18 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
             // n_tags counts how many tags/relationships the user has
             $n_tags = $result->get('s_n_tags')->getRecord()->get('n_tags');
 
-            // If relationship not exists && tags is less than 5
-            if (empty($record) && $n_tags < 5) {
+            // If relationship not exists && tags is less than 30
+            if (empty($record) && $n_tags < 30) {
                 // Create CSV
                 if (isset($user['tags']) && !empty($user['tags'])) {
-                    $csv = $user['tags'].','.$_POST['add_interest'];
+                    // Get array of tags, remove any empty elements
+                    $tmp_tags = array_filter(explode(',', $user['tags']), 'ctype_graph');
+                    // Add now tag
+                    array_push($tmp_tags, $_POST['add_interest']);
+                    // Filter out any duplicates
+                    $tmp_tags = array_unique($tmp_tags, SORT_STRING);
+                    // Build CSV
+                    $csv = implode(',', $tmp_tags);
                 } else {
                     $csv = $_POST['add_interest'];
                 }
@@ -56,17 +63,17 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
                                         ['username' => $user['username'], 'tag' => $_POST['add_interest'], 'time' => time()]);
                 $record = $result->getRecord();
                 if (!empty($record)) {
-                    $statusMsg .= '<p class="alert alert-success">User interests updated</p>';
+                    $statusMsg .= '<div class="alert alert-success">User interests updated</div>';
                 } else {
-                    $statusMsg .= '<p class="alert alert-warning">There was an error. User interests <b>NOT</b> changed.</p>';
+                    $statusMsg .= '<div class="alert alert-warning">There was an error. User interests <b>NOT</b> changed.</div>';
                     $response = array('status' => false, 'statusMsg' => $statusMsg);
                     die(json_encode($response));
                 }
             } else {
-                if ($n_tags >= 5) {
-                    $statusMsg .= '<p class="alert alert-warning">You have reached the <b>maximum of 5</b> interests.</p>';
+                if ($n_tags >= 30) {
+                    $statusMsg .= '<div class="alert alert-warning">You have reached the <b>maximum of 30</b> interests.</div>';
                 } else {
-                    $statusMsg .= '<p class="alert alert-warning">User interest already exists.</p>';
+                    $statusMsg .= '<div class="alert alert-warning">User interest already exists.</div>';
                 }
                 $response = array('status' => false, 'statusMsg' => $statusMsg);
                 die(json_encode($response));
@@ -99,7 +106,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
                 $result = $client->run('MATCH (u:User {username:{username}})-[r:HAS_INTEREST]->(:Interest {title:{tag}}) DELETE r;',
                                 ['username' => $user['username'], 'tag' => $_POST['remove_interest']]);
 
-                $statusMsg .= '<p class="alert alert-success">User interest deleted.</p>';
+                $statusMsg .= '<div class="alert alert-success">User interest deleted.</div>';
             }
         }
 
@@ -127,7 +134,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
         $_SESSION['logged_on_user'] = $user;
 
         // Build response
-        $response = array('status' => true, 'statusMsg' => $statusMsg);
+        $response = array('status' => true, 'statusMsg' => $statusMsg, 'user' => $user);
     } catch (Exception $e) {
 
         // Log error
@@ -135,16 +142,12 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
 
         // Build response
         $response = array('status' => false,
-                        'statusMsg' => "<p class=\"alert alert-danger\"><b><u>Error Message :</u></b><br /> '.$e->getMessage().' <br /><br /> <b><u>For error details, check :</u></b><br /> ".dirname(__DIR__).'/log/errors.log'.'</p>', );
+                        'statusMsg' => "<div class=\"alert alert-danger\"><b><u>Error Message :</u></b><br /> '.$e->getMessage().' <br /><br /> <b><u>For error details, check :</u></b><br /> ".dirname(__DIR__).'/log/errors.log'.'</div>', );
     }
 } else {
     // Build response
-    $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Invalid Request</p>');
+    $response = array('status' => false, 'statusMsg' => '<div class="alert alert-danger">Invalid Request</div>');
 }
 
 // JSON encode `response` and echo the JSON string
 echo json_encode($response);
-
-function countInterests()
-{
-}

@@ -12,7 +12,7 @@ include '../php/image_upload_helpers.php';
 $statusMsg = '';
 
 if (!isset($_SESSION['logged_on_user'])) {
-    $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Please log in to upload an image.</p>');
+    $response = array('status' => false, 'statusMsg' => '<div class="alert alert-danger">Please log in to upload an image.</div>');
     die(json_encode($response));
 } else {
     $user = $_SESSION['logged_on_user'];
@@ -20,7 +20,7 @@ if (!isset($_SESSION['logged_on_user'])) {
 
 if (isset($_POST['submit']) && $_POST['submit'] === '1') {
     if (user_image_count() === 5) {
-        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Maximum amount of images reached. Please delete some images.');
+        $response = array('status' => false, 'statusMsg' => '<div class="alert alert-warning">Maximum amount of images reached. Please delete some images.');
         die(json_encode($response));
     }
 
@@ -40,7 +40,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
     // Check if file returns size
     $img_info = getimagesize($_FILES['userfile']['tmp_name']);
     if ($img_info === false) {
-        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Select a valid image to upload. <br />E.G:   JPG, JPEG, PNG or GIF');
+        $response = array('status' => false, 'statusMsg' => '<div class="alert alert-warning">Select a valid image to upload. <br />E.G:   JPG, JPEG, PNG or GIF');
         die(json_encode($response));
     }
 
@@ -49,30 +49,30 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
     // Check if directory exists already
     if (!file_exists($dir)) {
         if (!mkdir($dir, 0777)) {
-            $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory " '.$dir.' "</p>');
+            $response = array('status' => false, 'statusMsg' => '<div class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory " '.$dir.' "</div>');
             die(json_encode($response));
         }
     }
 
     // Check if file exists already
     if (file_exists($file)) {
-        $response = array('status' => false, 'statusMsg' => "<p class=\"alert alert-warning\">The file you want to upload already exists. '".$file."'</p>");
+        $response = array('status' => false, 'statusMsg' => "<div class=\"alert alert-warning\">The file you want to upload already exists. '".$file."'</div>");
         die(json_encode($response));
     }
 
     // Check file size not bigger than 10mb or 0 bytes
     if ($_FILES['userfile']['size'] > 10000000) {
-        $response = array('status' => false, 'statusMsg' => "<p class=\"alert alert-warning\">Your file is too large. Maximum size of '10mb' allowed.</p>");
+        $response = array('status' => false, 'statusMsg' => "<div class=\"alert alert-warning\">Your file is too large. Maximum size of '10mb' allowed.</div>");
         die(json_encode($response));
     } elseif ($_FILES['userfile']['size'] == 0) {
-        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Your file has no size. Please select a valid image.</p>');
+        $response = array('status' => false, 'statusMsg' => '<div class="alert alert-warning">Your file has no size. Please select a valid image.</div>');
         die(json_encode($response));
     }
 
     // Allow certain file formats
     if ($imageFileType != 'jpg' && $imageFileType != 'png' &&
       $imageFileType != 'jpeg' && $imageFileType != 'gif') {
-        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Only JPG, JPEG, PNG & GIF files are allowed.</p>');
+        $response = array('status' => false, 'statusMsg' => '<div class="alert alert-warning">Only JPG, JPEG, PNG & GIF files are allowed.</div>');
         die(json_encode($response));
     }
 
@@ -90,7 +90,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
             $overlay = null;
         }
     } elseif (isset($_POST['overlay'])) {
-        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Cannot find the selected overlay image. Image not uploaded.</p>');
+        $response = array('status' => false, 'statusMsg' => '<div class="alert alert-warning">Cannot find the selected overlay image. Image not uploaded.</div>');
         die(json_encode($response));
     }
 
@@ -135,15 +135,15 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
             // Update session
             $_SESSION['logged_on_user'] = $updated_user;
 
-            $statusMsg .= '<p class="alert alert-success">New image uploaded.</p>';
+            $statusMsg .= '<div class="alert alert-success">New image uploaded.</div>';
             $response = array('status' => true, 'statusMsg' => $statusMsg, 'image' => $img, 'username' => $user['username']);
         } catch (Exception $e) {
-            $statusMsg .= '<p class="alert alert-danger"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</p>';
+            $statusMsg .= '<div class="alert alert-danger"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</div>';
             $response = array('status' => false, 'statusMsg' => $statusMsg);
             error_log($e, 3, dirname(__DIR__).'/log/errors.log');
         }
     } else {
-        $statusMsg .= '<p class="alert alert-warning">Oops! There was an error resizing and saving the file..</p>';
+        $statusMsg .= '<div class="alert alert-warning">Oops! There was an error resizing and saving the file..</div>';
         $response = array('status' => false, 'statusMsg' => $statusMsg);
     }
     // Destroy overlay image object
@@ -151,6 +151,6 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
         imagedestroy($overlay);
     }
 } else {
-    $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Could not find data sent via POST method</p>');
+    $response = array('status' => false, 'statusMsg' => '<div class="alert alert-danger">Could not find data sent via POST method</div>');
 }
 echo json_encode($response);

@@ -36,7 +36,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
             $subject = 'Signup | Verification'; // Give the email a subject
             $message = '
 
-                Hey '.$fname.''.$lname.',
+                Hey '.$fname.' '.$lname.',
 
                 Thanks for signing up!
                 Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
@@ -45,11 +45,12 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
 
                 Username:   '.$uname.'
                 Email   :   '.$email.'
+                Password:   *your-password*
 
                 ------------------------
 
                 Please click this link to activate your account:
-                http://localhost:8080/matcha/verify.php?email='.$email.'&hash='.$uniqueHash.'
+                http://localhost:8080/matcha/views/verify.php?email='.$email.'&hash='.$uniqueHash.'
 
             ';
 
@@ -57,7 +58,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
     //        $headers .= 'Content-type: text/html' . "\r\n"; // Set from headers
             mail($email, $subject, $message, $headers);
 
-            $statusMsg .= '<p class="alert alert-success">Yay! You have been sent a validation email, please check your email for the verification link.</p>';
+            $statusMsg .= '<div class="alert alert-success">Yay! You have been sent a validation email, please check your email for the verification link.</div>';
             $response = array('status' => true, 'statusMsg' => $statusMsg);
         } else {
             $response = array('status' => false, 'statusMsg' => $statusMsg);
@@ -66,13 +67,13 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
     } catch (Exception $e) {
         error_log($e, 3, dirname(__DIR__).'/log/errors.log');
         $response = array('status' => false,
-                        'statusMsg' => "<p class=\"alert alert-danger\"><b><u>Error Message :</u></b><br /> '.$e->getMessage().' <br /><br /> <b><u>For error details, check :</u></b><br /> ".dirname(__DIR__).'/log/errors.log'.'</p>', );
+                        'statusMsg' => "<div class=\"alert alert-danger\"><b><u>Error Message :</u></b><br /> '.$e->getMessage().' <br /><br /> <b><u>For error details, check :</u></b><br /> ".dirname(__DIR__).'/log/errors.log'.'</div>', );
 
         echo json_encode($response);
     }
     $conn = null;
 } else {
-    $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Invalid data sent via POST method</p>');
+    $response = array('status' => false, 'statusMsg' => '<div class="alert alert-danger">Invalid data sent via POST method</div>');
     echo json_encode($response);
 }
 
@@ -91,12 +92,12 @@ function validNewUser($client, $uname, $email)
     $email_ret = $results->get('check_email')->getRecord()->value('count');
 
     if ($user_ret) {
-        $statusMsg .= '<p class="alert alert-warning">The username "'.$uname.'" is already in use!</p>';
+        $statusMsg .= '<div class="alert alert-warning">The username "'.$uname.'" is already in use!</div>';
         $flag = false;
     }
 
     if ($email_ret) {
-        $statusMsg .= '<p class="alert alert-warning">The email address "'.$email.'" is already in use!</p>';
+        $statusMsg .= '<div class="alert alert-warning">The email address "'.$email.'" is already in use!</div>';
         $flag = false;
     }
 

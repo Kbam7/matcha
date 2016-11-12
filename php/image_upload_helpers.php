@@ -96,7 +96,7 @@ function save_image($overlay, $src, $destination)
     // Check if directory exists already
     if (!file_exists($dir)) {
         if (!mkdir($dir, 0777)) {
-            $statusMsg .= '<p class="alert alert-danger">Unable to create directory for image thumbnails. Cannot save your image.<br />Please make sure you have rights for the directory "'.$dir.'"</p>';
+            $statusMsg .= '<div class="alert alert-danger">Unable to create directory for image thumbnails. Cannot save your image.<br />Please make sure you have rights for the directory "'.$dir.'"</div>';
             $response = array('status' => false, 'statusMsg' => $statusMsg);
 
             return false;
@@ -104,7 +104,7 @@ function save_image($overlay, $src, $destination)
     }
     // Check if file exists already
     if (file_exists($tn_file)) {
-        $statusMsg .= '<p class="alert alert-warning">The file you want to upload already exists. "'.$tn_file.'"</p>';
+        $statusMsg .= '<div class="alert alert-warning">The file you want to upload already exists. "'.$tn_file.'"</div>';
         $response = array('status' => false, 'statusMsg' => $statusMsg);
 
         return false;

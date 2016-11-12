@@ -12,7 +12,7 @@ include '../php/image_upload_helpers.php';
 $statusMsg = '';
 
 if (!isset($_SESSION['logged_on_user'])) {
-    $response = array('status' => false, 'statusMsg' => '<p class="alert alert-danger">Please log in to take photos.</p>');
+    $response = array('status' => false, 'statusMsg' => '<div class="alert alert-danger">Please log in to take photos.</div>');
     die(json_encode($response));
 } else {
     $user = $_SESSION['logged_on_user'];
@@ -21,7 +21,7 @@ if (!isset($_SESSION['logged_on_user'])) {
 // Check for form data
 if (isset($_POST['submit']) && isset($_POST['image'])) {
     if (user_image_count() === 5) {
-        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Maximum amount of images reached. Please delete some images.');
+        $response = array('status' => false, 'statusMsg' => '<div class="alert alert-warning">Maximum amount of images reached. Please delete some images.');
         die(json_encode($response));
     }
 
@@ -31,14 +31,14 @@ if (isset($_POST['submit']) && isset($_POST['image'])) {
 
     if (!file_exists($dir)) {
         if (!mkdir($dir, 0777)) {
-            $statusMsg .= '<p class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory " '.$dir.' "</p>';
+            $statusMsg .= '<div class="alert alert-danger">Unable to create directory for images. Cannot save your image.<br />Please make sure you have rights for the directory " '.$dir.' "</div>';
             $response = array('status' => false, 'statusMsg' => $statusMsg);
             die(json_encode($response));
         }
     }
 
     if (file_exists($file)) {
-        $statusMsg .= "<p class=\"alert alert-warning\">The file you want to upload already exists. '".$file."'</p>";
+        $statusMsg .= "<div class=\"alert alert-warning\">The file you want to upload already exists. '".$file."'</div>";
         $response = array('status' => false, 'statusMsg' => $statusMsg);
         die(json_encode($response));
     }
@@ -75,7 +75,7 @@ if (isset($_POST['submit']) && isset($_POST['image'])) {
             $overlay = null;
         }
     } elseif (isset($_POST['overlay'])) {
-        $response = array('status' => false, 'statusMsg' => '<p class="alert alert-warning">Cannot find the selected overlay image. Image not uploaded.</p>');
+        $response = array('status' => false, 'statusMsg' => '<div class="alert alert-warning">Cannot find the selected overlay image. Image not uploaded.</div>');
         die(json_encode($response));
     }
 
@@ -119,15 +119,15 @@ if (isset($_POST['submit']) && isset($_POST['image'])) {
             // Update session
             $_SESSION['logged_on_user'] = $updated_user;
 
-            $statusMsg .= '<p class="alert alert-success">New image uploaded.</p>';
+            $statusMsg .= '<div class="alert alert-success">New image uploaded.</div>';
             $response = array('status' => true, 'statusMsg' => $statusMsg, 'image' => $img, 'username' => $user['username']);
         } catch (Exception $e) {
-            $statusMsg .= '<p class="alert alert-danger"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</p>';
+            $statusMsg .= '<div class="alert alert-danger"><b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</div>';
             $response = array('status' => false, 'statusMsg' => $statusMsg);
             error_log($e, 3, dirname(__DIR__).'/log/errors.log');
         }
     } else {
-        $statusMsg .= '<p class="alert alert-warning">Oops! There was an error resizing and saving the file..</p>';
+        $statusMsg .= '<div class="alert alert-warning">Oops! There was an error resizing and saving the file..</div>';
         $response = array('status' => false, 'statusMsg' => $statusMsg);
     }
 
@@ -138,7 +138,7 @@ if (isset($_POST['submit']) && isset($_POST['image'])) {
     // remove temp image
     unlink(dirname(__DIR__).'/assets/uploads/tmp_base64img.png');
 } else {
-    $statusMsg .= '<p class="alert alert-danger">The form data was not received. Something weird has happened. . .</p>';
+    $statusMsg .= '<div class="alert alert-danger">The form data was not received. Something weird has happened. . .</div>';
     $response = array('status' => false, 'statusMsg' => $statusMsg);
 }
 
