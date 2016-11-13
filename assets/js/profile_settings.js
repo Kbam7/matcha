@@ -152,6 +152,7 @@ function geoFindMe(e) {
         output.innerHTML = "Hmm... Having trouble finding you.";
         $.getJSON('http://ipinfo.io/geo', function(data) {
             var coords = data.loc.split(',');
+            console.log(data);
 
             data = "submit=1&latitude=" + coords[0] + "&longitude=" + coords[1];
 

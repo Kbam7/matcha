@@ -56,12 +56,18 @@ if (isset($_SESSION['logged_on_user'])) {
 
             </div>
 
+            <div id="profile_source_images">
+
+            </div>
+
         </div> <!-- /.row -->
     </section> <!-- /.container -->
 
 <?php include '../include/footer.php'; ?>
 
 <script type="text/javascript" src="/matcha/assets/js/dashboard.js"></script>
+
+<script type="text/javascript" src="/matcha/assets/js/avatar-blur.js"></script>
 
 </body>
 
