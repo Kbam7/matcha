@@ -45,14 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && isset($_
 // send email function
 function sendVerficationEmail($user, $uniqueHash)
 {
-    $subject = 'Notification | Changed Email';
+    $subject = 'Notification | Changed Password';
     $message = '
         Hey '.$user['firstname'].' '.$user['lastname'].',
 
         We have received a password reset request.
         To set a new password, please follow the link below.
 
-        Click this link to activate your account:
+        Click this link to verify the password reset:
         http://localhost:8080/matcha/views/reset_password.php?email='.$user['email'].'&hash='.$uniqueHash.'
 
         Please contact site admin if you suspect you have been hacked.

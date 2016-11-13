@@ -28,6 +28,10 @@
                     <label class="input_label" for="username">Username: <span class="require">*</span></label>
                     <input type="text" name="username" id="uname" value="" placeholder="Username" maxlength="24" autocomplete="true" required="true" />
                 </div>
+                <div class="col-6 gutter-right-10 form-input">
+                    <label class="input_label" for="user_age">Age: <span class="require">*</span></label>
+                    <input type="text" name="age" id="user_age" value="" placeholder="Age" maxlength="2" autocomplete="true" required="true" />
+                </div>
                 <div class="col-6 gutter-left-10 form-input">
                     <label class="input_label" for="emailaddr">Email Address: <span class="require">*</span></label>
                     <input type="email" name="emailaddr" id="email" value="" placeholder="Email Address" maxlength="64" autocomplete="true" required="true" />

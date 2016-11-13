@@ -132,6 +132,26 @@ if (isset($_POST['submit']) && $_POST['submit'] === '1') {
             // Incase profile pictue is updated
             $updated_user = $record->get('user')->values();
 
+        /*    // Assign 'uid' field to `user` array
+            $user['uid'] = $updates->get('uid');*/
+
+            // Check if users profile is filled out enough
+            // gender, interested, location and one picture
+            $fields_to_check = array('gender', 'sex_pref', 'latitude', 'longitude', 'bio', 'profile_pic');
+            $flag = 1;
+            foreach ($fields_to_check as $key) {
+                if (!array_key_exists($key, $updated_user) || empty($updated_user[$key])) {
+                    $flag = 0;
+                }
+            }
+
+            // Update profile status
+            $results = $client->run('MATCH (u:User {username: {uname}}) SET u.profile_complete = {value} RETURN u AS user;',
+                            ['uname' => $updated_user['username'], 'value' => $flag]);
+            $updates = $results->getRecord();
+            $updated_user = $updates->get('user')->values();
+
+
             // Update session
             $_SESSION['logged_on_user'] = $updated_user;
 

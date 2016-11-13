@@ -144,6 +144,18 @@ function validate_input(input, value, type) {
                 displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john1' 'John_Doe' or 'John.Doe3'.<br />MAX: 24 Characters</div>");
                 return false;
             }
+        } else if (input.name === "age") {
+            result = /^[0-9]{1,2}$/.test(value);
+            if (result === false) {
+                displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Enter only numbers between 18 and 99.</div>");
+                return false;
+            } else {
+                var tmp = parseInt(value, 10);
+                if (tmp < 18 || tmp > 99) {
+                    displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Enter only numbers between 18 and 99.</div>");
+                    return false;
+                }
+            }
         }
 
     } else if (type === "email") {

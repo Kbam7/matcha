@@ -49,6 +49,7 @@ function createUser(form) {
     var fname = encodeURIComponent(document.getElementById("fname").value);
     var lname = encodeURIComponent(document.getElementById("lname").value);
     var uname = encodeURIComponent(document.getElementById("uname").value);
+    var user_age = encodeURIComponent(document.getElementById("user_age").value);
     var email = encodeURIComponent(document.getElementById("email").value);
     var passwd = encodeURIComponent(document.getElementById("passwd").value);
 
@@ -56,6 +57,7 @@ function createUser(form) {
         "&fname=" + fname +
         "&lname=" + lname +
         "&uname=" + uname +
+        "&user_age=" + user_age +
         "&email=" + email +
         "&passwd=" + passwd;
 

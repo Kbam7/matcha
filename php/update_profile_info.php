@@ -43,6 +43,13 @@ if (isset($_SESSION['logged_on_user'])) {
             $user['username'] = $_POST['username'];
         }
 
+        // AGE
+        if (isset($_POST['age']) && strlen($_POST['age']) && ($_POST['age'] !== $user['age'])) {
+            $stack->push('MATCH (u:User {username: {uname}}) SET u.age = {new_age};',
+                                ['uname' => $user['username'], 'new_age' => $_POST['age']], 's_age');
+            $statusMsg .= '<div class="alert alert-success">User age updated.</div>';
+        }
+
         // EMAIL ADDRESS
         if (isset($_POST['email']) && strlen($_POST['email'])) {
             if ($_POST['email'] !== $user['email']) {
@@ -87,7 +94,13 @@ if (isset($_SESSION['logged_on_user'])) {
         }
 
         // SEXUAL PREFERENCE - LOGIC
-        if (isset($_POST['sex_pref_m']) || isset($_POST['sex_pref_f'])) {
+        if (isset($_POST['sex_pref_none']) && $_POST['sex_pref_none'] === 'none') {
+           // No sexual preference found, remove all
+           $stack->push('MATCH (u:User {username: {uname}}) SET u.sex_pref = {new_sex_pref};',
+                                   ['uname' => $user['username'], 'new_sex_pref' => ""], 's_sex_pref');
+           $statusMsg .= '<div class="alert alert-success">Sexual Preference set to \'none\'.</div>';
+
+        } elseif (isset($_POST['sex_pref_m']) || isset($_POST['sex_pref_f'])) {
             // Set default for $curr
             $curr = [];
             // Check if there is already a value for the users sex_pref
@@ -104,7 +117,7 @@ if (isset($_SESSION['logged_on_user'])) {
             } elseif (!isset($_POST['sex_pref_m']) && in_array('men', $curr, true)) {
                 // remove it from array
                 array_splice($curr, array_search('men', $curr), 1);
-                $statusMsg .= '<div class="alert alert-success">Sexual Preference updated.</div>';
+                $statusMsg .= '<div class="alert alert-success">Sexual Preference \'men\' removed.</div>';
             }
 
             if (isset($_POST['sex_pref_f']) && !in_array('women', $curr, true)) {
@@ -114,7 +127,7 @@ if (isset($_SESSION['logged_on_user'])) {
             } elseif (!isset($_POST['sex_pref_f']) && in_array('women', $curr, true)) {
                 // remove it from array
                 array_splice($curr, array_search('women', $curr), 1);
-                $statusMsg .= '<div class="alert alert-success">Sexual Preference updated.</div>';
+                $statusMsg .= '<div class="alert alert-success">Sexual Preference \'women\' removed.</div>';
             }
 
             // Check if we need to implode the array or if we just have one value
@@ -183,15 +196,13 @@ if (isset($_SESSION['logged_on_user'])) {
 
         // Check if users profile is filled out enough
         // gender, interested, location and one picture
-        $fields_to_check = array('gender', 'sex_pref', 'latitude', 'longitude', 'bio', 'profile_pic');
+        $fields_to_check = array('gender', 'sex_pref', 'latitude', 'longitude', 'bio', 'profile_pic', 'age');
         $flag = 1;
         foreach ($fields_to_check as $key) {
             if (!array_key_exists($key, $user) || empty($user[$key])) {
                 $flag = 0;
             }
-            //echo $key.' '.$flag.'\n';
         }
-        //print_r($user);
 
         // Update profile status
         $results = $client->run('MATCH (u:User {username: {uname}}) SET u.profile_complete = {value} RETURN u AS user;',
@@ -233,7 +244,7 @@ function sendValidationEmail($newemail, $uniqueHash)
         Hey '.$user['firstname'].' '.$user['lastname'].',
 
         We have suspended your account for "'.$user['email'].'" due to changing your email address.
-        Check your new email address\' inbox for your activation link.
+        Check your new email inbox for your activation link.
 
         Please contact site admin if you suspect you have been hacked.
 

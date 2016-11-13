@@ -50,8 +50,6 @@ if (isset($_SESSION['logged_on_user'])) {
     <section class="container">
         <div class="row">
 
-            <?php include '../include/gallery.php'; ?>
-
             <div id="user_profiles">
 
             </div>
@@ -66,8 +64,6 @@ if (isset($_SESSION['logged_on_user'])) {
 <?php include '../include/footer.php'; ?>
 
 <script type="text/javascript" src="/matcha/assets/js/dashboard.js"></script>
-
-<script type="text/javascript" src="/matcha/assets/js/avatar-blur.js"></script>
 
 </body>
 

@@ -128,6 +128,12 @@ if (isset($_SESSION['logged_on_user'])) {
                                     <input type="text" class="form-control" name="username" id="edit_username" value="<?php echo $user['username'] ?>" maxlength="32" autocomplete="true" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="edit_age" class="col-sm-4 control-label">Age :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="age" id="edit_age" value="<?php if (isset($user['age'])) echo $user['age'] ?>" maxlength="2" autocomplete="true" />
+                                </div>
+                            </div>
 
                             <hr  />
 
@@ -138,7 +144,7 @@ if (isset($_SESSION['logged_on_user'])) {
                                         <input type="radio" name="gender" id="gender_male" value="male"
 
                                         <?php
-                                            if ($user['gender'] === 'male') {
+                                            if (isset($user['gender']) && $user['gender'] === 'male') {
                                                 echo 'checked="true" ';
                                             } ?>
 
@@ -149,7 +155,7 @@ if (isset($_SESSION['logged_on_user'])) {
                                         <input type="radio" name="gender" id="gender_female" value="female"
 
                                             <?php
-                                                if ($user['gender'] === 'female') {
+                                                if (isset($user['gender']) && $user['gender'] === 'female') {
                                                     echo 'checked="true" ';
                                                 } ?>
 
@@ -180,6 +186,15 @@ if (isset($_SESSION['logged_on_user'])) {
                                         />
                                         Women
                                     </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="no_interest" name="sex_pref_none" value="none"
+                                            <?php
+                                                if ($sp === -1) {
+                                                    echo 'checked="true" ';
+                                                } ?>
+                                        />
+                                        None
+                                    </label>
 
                                 </div>
                             </div>
@@ -191,11 +206,11 @@ if (isset($_SESSION['logged_on_user'])) {
                                 <div class="col-sm-6">
                                     <div class="col-sm-10">
                                         <label for="edit_latitude" class="col-sm-4 control-label">Latitude</label>
-                                        <input type="text" class="form-control" name="latitude" id="edit_latitude" placeholder="<?php echo $user['latitude'] ?>" autocomplete="true" />
+                                        <input type="text" class="form-control" name="latitude" id="edit_latitude" placeholder="<?php if (isset($user['latitude'])) echo $user['latitude'] ?>" autocomplete="true" />
                                     </div>
                                     <div class="col-sm-10">
                                         <label for="edit_longitude" class="col-sm-4 control-label">Longitude</label>
-                                        <input type="text" class="form-control" name="longitude" id="edit_longitude" placeholder="<?php echo $user['longitude'] ?>" autocomplete="true" />
+                                        <input type="text" class="form-control" name="longitude" id="edit_longitude" placeholder="<?php if (isset($user['longitude'])) echo $user['longitude'] ?>" autocomplete="true" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12" style="text-align: center; margin-top: 20px;">
@@ -237,6 +252,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
     <?php include '../include/footer.php'; ?>
 
+    <script type="text/javascript" src="/matcha/assets/js/avatar-blur.js"></script>
     <script type="text/javascript" src="/matcha/assets/js/profile_settings.js"></script>
 
     <script type="text/javascript">

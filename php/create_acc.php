@@ -10,11 +10,12 @@ use GraphAware\Neo4j\Client\ClientBuilder;
 
 $statusMsg = '';
 
-if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['uname'] && $_POST['email'] && $_POST['passwd']) {
+if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['uname'] && $_POST['user_age'] && $_POST['email'] && $_POST['passwd']) {
     try {
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
         $uname = $_POST['uname'];
+        $age = $_POST['user_age'];
         $email = $_POST['email'];
         $passwd = hash('whirlpool', $_POST['passwd']);
 
@@ -29,7 +30,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                                 'firstname' => $fname, 'lastname' => $lname,
                                 'username' => $uname, 'password' => $passwd,
                                 'email' => $email, 'profile_complete' => 0,
-                                'fame' => 0, ]]
+                                'fame' => 0, 'age' => $age]]
             );
 
             // send email to user

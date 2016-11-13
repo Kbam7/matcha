@@ -143,6 +143,8 @@ if (isset($_SESSION['logged_on_user'])) {
 
     <?php include '../include/footer.php'; ?>
 
+    <script type="text/javascript" src="/matcha/assets/js/avatar-blur.js"></script>
+
     <script type="text/javascript">
 
     // Button effect for profile page
