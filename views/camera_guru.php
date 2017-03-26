@@ -51,6 +51,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
             </form> <!-- /#overlayForm -->
         </aside> <!-- /.overlays -->
+
         <div class="col-sm-7 imageDisplay_inner">
             <div class="col-md-12">
                 <div class="user-upload-img"></div>
@@ -61,9 +62,12 @@ if (isset($_SESSION['logged_on_user'])) {
 
                 <canvas id="canvas"></canvas>
             </div>
+
             <hr class="clearfix" />
+
             <div class="col-md-12 imageUploadSection collapsed">
                 <h3>Upload an Image</h3>
+
                 <form id="imageUploadForm" method="post" enctype="multipart/form-data">
                     <progress class="during-upload" id="progress" max="100" value="0">
                     </progress>
@@ -89,8 +93,10 @@ if (isset($_SESSION['logged_on_user'])) {
                         <i class="fa fa-ban" aria-hidden="true" title="Cancel Upload" ></i>
                     </button>
                 </form> <!-- /#imageUploadForm -->
+
             </div>
             <hr class="clearfix" />
+            
         </div> <!-- /.imageDisplay_inner -->
         <aside id="newGallery" class="col-md-8">
             <h3>Your Uploads</h3>

@@ -180,18 +180,16 @@ function validate_input(input, value, type) {
 
 // Function to display errors
 function displayError(errMsg, show) {
-
     var errDiv = document.getElementById("error-messages");
     clearTimeout(addClass_timeout);
     clearTimeout(removeError_timeout);
     show = (show === undefined ? 1 : show);
     if (errDiv && show) {
-        errDiv.innerHTML = errMsg;
+        errDiv.innerHTML += errMsg;
         var msgs = errDiv.childNodes;
         for (var msg of msgs) {
             addClass(msg, "animated");
             addClass(msg, "swing");
-            msg.innerHTML = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + msg.innerHTML;
         }
     }
 
@@ -212,7 +210,7 @@ function observeErrors(errorDiv) {
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             var newNodes = mutation.addedNodes;
-            //        console.log(newNodes);
+            //console.log(newNodes);
             addClass_timeout = setTimeout(function() {
                 for (let i = 0; i < newNodes.length; ++i) {
                     addClass(newNodes[i], "scale-out");
@@ -223,7 +221,7 @@ function observeErrors(errorDiv) {
                         errorDiv.removeChild(errorDiv.children[0]);
                     }
                 }, 2000);
-            }, 30000);
+            }, 15000);
         })
     });
 

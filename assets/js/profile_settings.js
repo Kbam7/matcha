@@ -87,7 +87,7 @@ function updateProfile(form) {
         if (input.value && input.value.length > 0) {
             // Initial value
             var val = "";
-            // If its type checkbox or radio and its :checked then get the value. Else ignore it
+            // If its type checkbox or radio and its :checked then get the value.
             if (input.type === 'radio' || input.type === 'checkbox') {
                 if (input.checked) {
                     val = encodeURIComponent(input.value);
@@ -98,7 +98,7 @@ function updateProfile(form) {
                     }
                     console.log('found input[' + input.name + '](' + input.type + ':checked) with value : ' + val);
                 }
-            } else {
+            } else { // not radio or checkbox, validate input
                 if (validate_input(input, input.value, input.type)) {
                     val = encodeURIComponent(input.value);
                     if (data === "") {

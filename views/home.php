@@ -26,7 +26,7 @@ if (isset($_SESSION['logged_on_user'])) {
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <h4>Hey there <?php echo $user['firstname'] ?>,</h4>
                     <p>Welcome to Matcha! Here you will find everything your heart desires.<br />But first,
-                    your profile is not complete, complete your profile to stand a better chance at finding someone you will like.</p>
+                    your profile is not complete. Complete your profile to stand a better chance at finding someone you will like.</p>
                     <a class="btn btn-default" href="/matcha/views/profile_settings.php">Profile Settings</a>
                 </div>
     <?php

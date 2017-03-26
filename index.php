@@ -14,6 +14,12 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php include './include/header.php'; ?>
     </header>
     <section class="jumbo-intro">
+
+        <!--
+            **
+            ** Error display logic. Only some files use this.
+            ** The rest use the error div (else)
+         -->
         <?php if (isset($_SESSION['errors'])): ?>
         <div id="error-messages">
             <?php foreach ($_SESSION['errors'] as $error): ?>

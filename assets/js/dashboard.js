@@ -62,28 +62,6 @@ function displayUserProfiles() {
             user_profiles.forEach(function(profile) {
                 // Display the actual profile card
                 displayProfile(profile, main_profiles_div);
-                /*
-                //  Get base64 data string to display image
-                var tmp_img = document.createElement('IMG');
-                tmp_img.setAttribute('src', '/matcha/assets/uploads/thumbnails/' + profile.profile_pic);
-
-                var tmp_canvas = document.createElement('CANVAS');
-                tmp_canvas.setAttribute('width', 320);
-                tmp_canvas.setAttribute('height', 240);
-
-                var context = tmp_canvas.getContext('2d');
-                context.drawImage(tmp_img, 0, 0, 320, 240);
-
-                // Base64 data string
-                var data = tmp_canvas.toDataURL('image/png');
-                // Create source image element
-                var img_src = document.createElement('IMG');
-                img_src.className = "src-image";
-                img_src.src = data;
-                // append source-image element to image source-div
-                profile_source_images.appendChild(img_src);
-                */
-
             });
         }
     });
@@ -123,6 +101,8 @@ function displayProfile(profile, parent) {
     avatar_img.setAttribute('alt', profile.username + "'s Profile picture");
 
     // Set up
+    if (profile.age === undefined)
+        profile.age = "?";
     title.innerHTML = profile.firstname + ' ' + profile.lastname + ', <small><b>' + profile.age + '</b></small>';
     profile_card_buttons.innerHTML = '<div class="btn-group" role="group">' +
         '<button type="button" id="' + profile.username + '" class="btn btn-success like_btn">Like</button>' +
@@ -130,7 +110,7 @@ function displayProfile(profile, parent) {
         '</div><div class="btn-group" role="group">' +
         '<a href="/matcha/views/view_user.php?view_user=' + profile.username + '" class="btn btn-info">View Profile</a></div>';
 
-    // split and display tags
+    // split and display profile tags
     var tags_text = profile.tags.split(',');
     tags_text.forEach(function(tag) {
         let label = document.createElement('SPAN');

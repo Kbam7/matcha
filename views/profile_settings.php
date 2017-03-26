@@ -11,16 +11,22 @@ if (isset($_SESSION['logged_on_user'])) {
     $user = $_SESSION['logged_on_user'];
 
     // get current sex_pref in order to preselect the checkbox
-    $tmp = explode(',', $user['sex_pref']);
+    $sp_arr = explode(',', $user['sex_pref']);
 
-    // Sexual Preference  |  -1:none, 0:female, 1:male, 2:both
+    // ** Sexual Preference  |  -1:none, 0:women, 1:men, 2:both
+
+    // Set Default 
     $sp = -1;
 
-    if (in_array('men', $tmp, true)) {
+    if (in_array('men', $sp_arr, true)) {
+        // interested in men
         $sp = 1;
     }
-    if (in_array('women', $tmp, true)) {
-        $sp = ($sp > 0 ? 2 : 0);
+    if (in_array('women', $sp_arr, true)) {
+        if ($sp > 0)// if interested in men and women, set to both
+            $sp = 2;
+        else
+            $sp = 0; // else set to women
     } ?>
 <!DOCTYPE html>
 <html>
