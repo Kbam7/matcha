@@ -1,21 +1,12 @@
 $(document).ready(function() {
     var user_profiles = document.querySelector("#user_profiles");
     if (user_profiles) {
-        /*
-                // found div, display 9 users
-                ajax_post('/matcha/php/fetchUsers.php', data, function(httpRequest) {
-                    var response = JSON.parse(httpRequest.responseText);
-                    displayError(response.statusMsg, 0);
-
-                });
-
-                user_profiles.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    updateProfile(edit_bio_form);
-                });
-        */
+        // found div, display 9 users
         displayUserProfiles();
+
         /*
+        //display more users when at bottom of screen
+
                         setInterval(function() {
                             var totalHeight, currentScroll, visibleHeight;
 
@@ -55,9 +46,9 @@ function displayUserProfiles() {
         var response = JSON.parse(httpRequest.responseText);
         var user_profiles = response.users;
         var main_profiles_div = document.querySelector('#user_profiles');
-        var profile_source_images = document.querySelector('#profile_source_images');
+        //var profile_source_images = document.querySelector('#profile_source_images');
 
-        displayError(response.statusMsg, 0);
+        displayError(response.statusMsg, 1);
         if (response.status === true) {
             user_profiles.forEach(function(profile) {
                 // Display the actual profile card

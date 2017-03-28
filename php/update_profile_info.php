@@ -58,10 +58,11 @@ if (isset($_SESSION['logged_on_user'])) {
                 // Set hash and new email in DB
                 $stack->push('MATCH (u:User {username: {uname}}) SET u += {details};',
                                     ['uname' => $user['username'],
-                                        'details' => ['hash' => $uniqueHash,
-                                                        'email' => $_POST['email'],
-                                                        'active' => 0,
-                                                    ],
+                                    'details' => [
+                                                    'hash' => $uniqueHash,
+                                                    'email' => $_POST['email'],
+                                                    'active' => 0,
+                                                ],
                                     ], 's_email');
                 // Send validation email
                 sendValidationEmail($_POST['email'], $uniqueHash);
@@ -195,7 +196,7 @@ if (isset($_SESSION['logged_on_user'])) {
         $user['uid'] = $updates->get('uid');
 
         // Check if users profile is filled out enough
-        // gender, interested, location and one picture
+        // gender, sex pref, location and one picture
         $fields_to_check = array('gender', 'sex_pref', 'latitude', 'longitude', 'bio', 'profile_pic', 'age');
         $flag = 1;
         foreach ($fields_to_check as $key) {

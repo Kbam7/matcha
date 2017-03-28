@@ -35,7 +35,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
 
     <div id="error-messages"></div>
-
+<!--
     <section class="jumbo-intro">
         <div class="jumbotron">
             <div class="container">
@@ -46,7 +46,8 @@ if (isset($_SESSION['logged_on_user'])) {
                 <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
             </div>
         </div>
-    </section> <!-- /.jumbo-intro -->
+    </section> -->  <!-- /.jumbo-intro -->
+
     <section class="container">
         <div class="row">
 
