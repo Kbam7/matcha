@@ -21,7 +21,7 @@ if (session_status() == PHP_SESSION_NONE) {
             ** The rest use the error div (else)
          -->
         <?php if (isset($_SESSION['errors'])): ?>
-        <div id="error-messages">
+        <div id="alert-messages">
             <?php foreach ($_SESSION['errors'] as $error): ?>
                 <div class="alert alert-warning">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -33,7 +33,7 @@ if (session_status() == PHP_SESSION_NONE) {
             ?>
         </div>
         <?php else: ?>
-            <div id="error-messages"></div>
+            <div id="alert-messages"></div>
         <?php endif; ?>
 
         <div class="jumbotron">

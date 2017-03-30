@@ -21,7 +21,7 @@ window.onload = function() {
     }
 
     // Select Error div for observation
-    var errorDiv = document.getElementById("error-messages");
+    var errorDiv = document.getElementById("alert-messages");
     if (errorDiv) {
         observeErrors(errorDiv);
     }
@@ -107,7 +107,7 @@ function setupDeleteImageEvents(deleteButtons) {
             var data = 'confirmed=1&img=' + img;
             ajax_post('/matcha/php/delete_image.php', data, function(httpRequest) {
                 var response = JSON.parse(httpRequest.responseText);
-                displayError(response.statusMsg);
+                displayAlertMessage(response.statusMsg);
                 if (response.status === true) {
                     // remove image from DOM
                     document.querySelector('#img_' + img).remove();
@@ -127,7 +127,7 @@ function validate_input(input, value, type) {
     var result = true;
 
     if (value === "" && input.required) {
-        displayError("<div class=\"alert alert-info\">'" + input.name + "' cannot be empty.</div>");
+        displayAlertMessage("<div class=\"alert alert-info\">'" + input.name + "' cannot be empty.</div>");
         return false;
     }
     if (type === "text") {
@@ -135,24 +135,24 @@ function validate_input(input, value, type) {
         if (input.name === "firstname" || input.name === "lastname") {
             result = /^([A-Z][a-z]+([ ]?[a-z]?['-]?[A-Z][a-z]+)*)$/.test(value);
             if (result === false) {
-                displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'John Doe' or 'John-Doe'.<br />Names need to start with a CAPITAL letter.</div>");
+                displayAlertMessage("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'John Doe' or 'John-Doe'.<br />Names need to start with a CAPITAL letter.</div>");
                 return false;
             }
         } else if (input.name === "username") {
             result = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,24}$/.test(value);
             if (result === false) {
-                displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john1' 'John_Doe' or 'John.Doe3'.<br />MAX: 24 Characters</div>");
+                displayAlertMessage("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john1' 'John_Doe' or 'John.Doe3'.<br />MAX: 24 Characters</div>");
                 return false;
             }
         } else if (input.name === "age") {
             result = /^[0-9]{1,2}$/.test(value);
             if (result === false) {
-                displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Enter only numbers between 18 and 99.</div>");
+                displayAlertMessage("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Enter only numbers between 18 and 99.</div>");
                 return false;
             } else {
                 var tmp = parseInt(value, 10);
                 if (tmp < 18 || tmp > 99) {
-                    displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Enter only numbers between 18 and 99.</div>");
+                    displayAlertMessage("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Enter only numbers between 18 and 99.</div>");
                     return false;
                 }
             }
@@ -161,13 +161,13 @@ function validate_input(input, value, type) {
     } else if (type === "email") {
         result = /^([\w\.]+)@([\w\.]+)\.(\w+)/.test(value);
         if (result === false) {
-            displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john@doe.com'</div>");
+            displayAlertMessage("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Please try format is as follows: 'john@doe.com'</div>");
             return false;
         }
     } else if (type === "password") {
         result = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(value);
         if (result === false) {
-            displayError("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Password must contain at least 8 characters, and consist of atleast 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters.</div>");
+            displayAlertMessage("<div class=\"alert alert-warning\">'" + input.name + "' is invalid. Password must contain at least 8 characters, and consist of atleast 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters.</div>");
             return false;
         }
     }
@@ -179,8 +179,8 @@ function validate_input(input, value, type) {
 /* ----------------[ ERROR FUNCTIONS ]------------------- */
 
 // Function to display errors
-function displayError(errMsg, show) {
-    var errDiv = document.getElementById("error-messages");
+function displayAlertMessage(errMsg, show) {
+    var errDiv = document.getElementById("alert-messages");
     clearTimeout(addClass_timeout);
     clearTimeout(removeError_timeout);
     show = (show === undefined ? 1 : show);
@@ -221,7 +221,7 @@ function observeErrors(errorDiv) {
                         errorDiv.removeChild(errorDiv.children[0]);
                     }
                 }, 2000);
-            }, 15000);
+            }, 10000);
         })
     });
 

@@ -74,7 +74,7 @@ function sendVerficationEmail($user, $uniqueHash)
         <?php include '../include/header.php'; ?>
     </header>
 
-    <div id="error-messages"></div>
+    <div id="alert-messages"></div>
 
     <section class="row account-management-page">
         <section class="col-sm-8 col-sm-offset-2">
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['email']) && !empty($_GE
 <script type="text/javascript" src="/matcha/assets/js/account_settings.js"></script>
 
 <script type="text/javascript">
-    var errorDiv = document.getElementById("error-messages");
+    var errorDiv = document.getElementById("alert-messages");
     var resetForm = document.querySelector('#resetPassword_email');
     if (resetForm) {
         // Get all input elements
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['email']) && !empty($_GE
 
             ajax_post('/matcha/views/reset_password.php', data, function (httpRequest) {
                 var response = JSON.parse(httpRequest.responseText);
-                displayError(response.statusMsg);
+                displayAlertMessage(response.statusMsg);
                 if (response.status === true) {
                     resetForm.innerHTML = response.statusMsg;
                 }
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['email']) && !empty($_GE
                         // Check if passwords do not match
                         if ((this.name === "password" && this.value !== new_pwdForm.elements.namedItem("passwd2").value) ||
                             (this.name === "password2" && this.value !== new_pwdForm.elements.namedItem("passwd").value)) {
-                            displayError("<div class=\"alert alert-warning\">Your passwords do not match</div>");
+                            displayAlertMessage("<div class=\"alert alert-warning\">Your passwords do not match</div>");
                         } else {
                             // passwords match, remove any error messages
                             while (errorDiv.children.length) {
@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['email']) && !empty($_GE
 
             ajax_post('/matcha/views/reset_password.php', data, function (httpRequest) {
                 var response = JSON.parse(httpRequest.responseText);
-                displayError(response.statusMsg);
+                displayAlertMessage(response.statusMsg);
                 if (response.status === true) {
                     new_pwdForm.innerHTML = response.statusMsg;
                 }

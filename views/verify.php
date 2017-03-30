@@ -14,7 +14,7 @@ use GraphAware\Neo4j\Client\ClientBuilder;
         <?php include '../include/header.php'; ?>
     </header>
 
-    <div id="error-messages"></div>
+    <div id="alert-messages"></div>
 <?php
     if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['hash']) && !empty($_GET['hash'])) {
         $email = $_GET['email']; // Set email variable
@@ -52,7 +52,7 @@ use GraphAware\Neo4j\Client\ClientBuilder;
 
     include '../include/footer.php';
 
-    echo "<script type=\"text/javascript\">displayError('".$msg."');</script>";
+    echo "<script type=\"text/javascript\">DisplayAlertMessage('".$msg."');</script>";
 
     ?>
 

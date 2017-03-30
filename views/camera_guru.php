@@ -17,7 +17,7 @@ if (isset($_SESSION['logged_on_user'])) {
         <?php include '../include/header.php'; ?>
     </header>
 
-    <div id="error-messages"></div>
+    <div id="alert-messages"></div>
 
     <section class="col-md-12" id="imageDisplay">
         <aside class="col-sm-5 overlays">

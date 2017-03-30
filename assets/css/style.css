@@ -454,7 +454,7 @@ progress[value]::before {
 
 /* ------[ ERRORS ]------ */
 
-#error-messages {
+#alert-messages {
     position: fixed;
     right: 5px;
     z-index: 9;
@@ -465,7 +465,7 @@ progress[value]::before {
     clear: both;
 }
 
-#error-messages p {
+#alert-messages p {
     padding: 10px 60px;
     text-align: center;
     font-weight: 600;

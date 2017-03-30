@@ -48,7 +48,7 @@ function displayUserProfiles() {
         var main_profiles_div = document.querySelector('#user_profiles');
         //var profile_source_images = document.querySelector('#profile_source_images');
 
-        displayError(response.statusMsg, 1);
+        displayAlertMessage(response.statusMsg, 1);
         if (response.status === true) {
             user_profiles.forEach(function(profile) {
                 // Display the actual profile card

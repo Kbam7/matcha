@@ -34,7 +34,7 @@ if (isset($_SESSION['logged_on_user'])) {
         } ?>
 
 
-    <div id="error-messages"></div>
+    <div id="alert-messages"></div>
 <!--
     <section class="jumbo-intro">
         <div class="jumbotron">
@@ -55,10 +55,10 @@ if (isset($_SESSION['logged_on_user'])) {
 
             </div>
 
-            <div id="profile_source_images">
+<!--            <div id="profile_source_images">
 
             </div>
-
+-->
         </div> <!-- /.row -->
     </section> <!-- /.container -->
 
@@ -79,7 +79,7 @@ if (isset($_SESSION['logged_on_user'])) {
             var data = 'like=' + btn.id;
             ajax_post('/matcha/php/dashboard_utils.php', data, function(httpRequest) {
                 var response = JSON.parse(httpRequest.responseText);
-                displayError(response.statusMsg);
+                displayAlertMessage(response.statusMsg);
                 if (response.status === true) {
                     btn.innerText = btn.innerText === "Like" ? "Unlike" : "Like";
                 }

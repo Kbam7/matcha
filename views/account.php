@@ -18,7 +18,7 @@ if (isset($_SESSION['logged_on_user'])) {
             <h1 class="account-settings-header">Matcha - <small>Manage Account</small></h1>
         </header>
 
-        <div id="error-messages"></div>
+        <div id="alert-messages"></div>
 
         <section class="row account-management-page">
             <section class="col-sm-8 col-sm-offset-2">

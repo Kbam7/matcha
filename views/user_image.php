@@ -32,7 +32,7 @@ if (isset($_SESSION['logged_on_user'])) {
         <?php include '../include/header.php'; ?>
     </header>
 
-    <div id="error-messages"></div>
+    <div id="alert-messages"></div>
 
     <section class="jumbo-intro" id="userImage">
         <div class="jumbotron">

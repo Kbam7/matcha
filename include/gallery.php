@@ -1,4 +1,4 @@
-<?php
+<?php/*
     echo
     '
         <section class="full-gallery-outer">
@@ -54,4 +54,4 @@
             </div>
 
         </section> <!-- /.gallery-outer -->
-    ';
+    ';*/

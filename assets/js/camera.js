@@ -61,7 +61,7 @@ function activateUsersCamera() {
     }
 
     function streamError(e) {
-        displayError("<p class=\"warning\">There was an error accessing your webcam. " + e + "</p>");
+        displayAlertMessage("<p class=\"warning\">There was an error accessing your webcam. " + e + "</p>");
     }
 
 }
@@ -110,7 +110,7 @@ function ajax_upload_webcam_image(imgData) {
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(data);
     } catch (e) {
-        displayError("<p class=\"danger\">httpRequest.send error : " + e + "</p>");
+        displayAlertMessage("<p class=\"danger\">httpRequest.send error : " + e + "</p>");
     }
 
     function uploadProgress(event) {
@@ -136,7 +136,7 @@ function ajax_upload_webcam_image(imgData) {
         httpRequest.onreadystatechange = function() {
             if (httpRequest.readyState == 4 && httpRequest.status == 200) {
                 var response = JSON.parse(httpRequest.responseText);
-                displayError(response.statusMsg);
+                displayAlertMessage(response.statusMsg);
                 if (response.status === true) {
                     var data = 'displayGallery=1&username=' + response.username;
                     ajax_post('/matcha/php/displayUserGallery.php', data, function(httpResponse) {
@@ -170,11 +170,11 @@ function ajax_upload_webcam_image(imgData) {
     }
 
     function uploadAborted(event) {
-        displayError("<p class=\"info\">User aborted file upload or the connection was lost. ERROR : " + event.message + "</p>");
+        displayAlertMessage("<p class=\"info\">User aborted file upload or the connection was lost. ERROR : " + event.message + "</p>");
     }
 
     function uploadError(event) {
-        displayError("<p class=\"danger\">An error has occured. ERROR : " + event.message + "</p>");
+        displayAlertMessage("<p class=\"danger\">An error has occured. ERROR : " + event.message + "</p>");
     }
 
     function cancelUpload() {

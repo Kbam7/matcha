@@ -76,7 +76,7 @@ function ajax_user_upload_image(uploadForm) {
         httpRequest.open("POST", "/matcha/php/user_image_upload.php", true);
         httpRequest.send(formdata);
     } catch (e) {
-        displayError("<p class=\"alert alert-danger\">ajax send error : " + e);
+        displayAlertMessage("<p class=\"alert alert-danger\">ajax send error : " + e);
     }
 
     // Event : Progress update for the image
@@ -108,7 +108,7 @@ function ajax_user_upload_image(uploadForm) {
         httpRequest.onreadystatechange = function() {
             if (httpRequest.readyState == 4 && httpRequest.status == 200) {
                 var response = JSON.parse(httpRequest.responseText);
-                displayError(response.statusMsg);
+                displayAlertMessage(response.statusMsg);
                 if (response.status === true) {
                     var data = 'displayGallery=1&username=' + response.username;
                     ajax_post('/matcha/php/displayUserGallery.php', data, function(httpResponse) {
@@ -141,11 +141,11 @@ function ajax_user_upload_image(uploadForm) {
     }
 
     function uploadAborted(event) {
-        displayError("<p class=\"alert alert-warning\">User aborted file upload or the connection was lost. ERROR : " + event.message + "</p>");
+        displayAlertMessage("<p class=\"alert alert-warning\">User aborted file upload or the connection was lost. ERROR : " + event.message + "</p>");
     }
 
     function uploadError(event) {
-        displayError("<p class=\"alert alert-danger\">An error has occured. ERROR : " + event.message + "</p>");
+        displayAlertMessage("<p class=\"alert alert-danger\">An error has occured. ERROR : " + event.message + "</p>");
     }
 
     function cancelUpload() {

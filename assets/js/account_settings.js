@@ -6,7 +6,7 @@ $(document).ready(function() {
 
         // Get all input elements
         var inputs = update_account_form.elements;
-        var errorDiv = document.getElementById("error-messages");
+        var errorDiv = document.getElementById("alert-messages");
 
         // Add 'blur' event listener for error messages
         for (var i = 0; i < inputs.length; ++i) {
@@ -19,7 +19,7 @@ $(document).ready(function() {
                         // Check if passwords do not match
                         if ((this.name === "password" && this.value !== update_account_form.elements.namedItem("passwd2").value) ||
                             (this.name === "password2" && this.value !== update_account_form.elements.namedItem("passwd").value)) {
-                            displayError("<div class=\"alert alert-warning\">Your passwords do not match</div>");
+                            displayAlertMessage("<div class=\"alert alert-warning\">Your passwords do not match</div>");
                         } else {
                             // passwords match, remove any error messages
                             while (errorDiv.children.length) {
@@ -94,7 +94,7 @@ function updateAccountSettings(form) {
     // Send data to get processed
     ajax_post("/matcha/php/update_profile_info.php", data, function(httpRequest) {
         var response = JSON.parse(httpRequest.responseText);
-        displayError(response.statusMsg);
+        displayAlertMessage(response.statusMsg);
         console.log(response.user);
     });
 

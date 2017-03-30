@@ -10,7 +10,7 @@
         <h1>Matcha - <small>Create Account</small></h1>
     </header>
 
-    <div id="error-messages"></div>
+    <div id="alert-messages"></div>
 
     <section class="row account-management-page">
         <section class="col-12">

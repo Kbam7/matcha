@@ -33,7 +33,7 @@ if (isset($_SESSION['logged_on_user'])) {
         <?php include '../include/header.php'; ?>
     </header>
 
-    <div id="error-messages"></div>
+    <div id="alert-messages"></div>
 
     <section class="container">
         <div class="row">
@@ -155,7 +155,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
         // Cant remove tag on click
         $('#tags_list').on('click', 'span', function() {
-            displayError('<p class="alert alert-warning">Cannot delete tags on this page.<br />Go to <a href="/matcha/views/profile_settings.php">Profile Settings</a> to make changes.</p>')
+            displayAlertMessage('<p class="alert alert-warning">Cannot delete tags on this page.<br />Go to <a href="/matcha/views/profile_settings.php">Profile Settings</a> to make changes.</p>')
         });
     });
 

@@ -33,7 +33,7 @@ $(document).ready(function() {
                 var data = "submit=1&add_interest=" + input;
                 ajax_post('../php/update_interests.php', data, function(httpRequest) {
                     var response = JSON.parse(httpRequest.responseText);
-                    displayError(response.statusMsg);
+                    displayAlertMessage(response.statusMsg);
                     if (response.status === true) {
                         var span = document.createElement('SPAN');
                         span.innerText = input;
@@ -56,7 +56,7 @@ $(document).ready(function() {
         $(this).hide();
         ajax_post('../php/update_interests.php', data, function(httpRequest) {
             var response = JSON.parse(httpRequest.responseText);
-            displayError(response.statusMsg);
+            displayAlertMessage(response.statusMsg);
             if (response.status === true) {
                 $(this).remove();
                 console.log(response.user);
@@ -115,7 +115,7 @@ function updateProfile(form) {
     // Send data to get processed
     ajax_post("/matcha/php/update_profile_info.php", data, function(httpRequest) {
         var response = JSON.parse(httpRequest.responseText);
-        displayError(response.statusMsg);
+        displayAlertMessage(response.statusMsg);
         console.log(response.user);
     });
 
@@ -159,7 +159,7 @@ function geoFindMe(e) {
             // Send data to get processed
             ajax_post("/matcha/php/update_profile_info.php", data, function(httpRequest) {
                 var response = JSON.parse(httpRequest.responseText);
-                displayError(response.statusMsg, 0);
+                displayAlertMessage(response.statusMsg, 0);
             });
         })
     };

@@ -3,7 +3,7 @@ var createUserForm = document.querySelector("#createUserForm");
 if (createUserForm) {
     // Get all input elements
     var inputs = createUserForm.elements;
-    var errorDiv = document.getElementById("error-messages");
+    var errorDiv = document.getElementById("alert-messages");
 
     // Add 'blur' event listener for error messages
     for (var i = 0; i < inputs.length; ++i) {
@@ -16,7 +16,7 @@ if (createUserForm) {
                     // Check if passwords do not match
                     if ((this.name === "password" && this.value !== createUserForm.elements.namedItem("passwd2").value) ||
                         (this.name === "password2" && this.value !== createUserForm.elements.namedItem("passwd").value)) {
-                        displayError("<p class=\"alert alert-warning\">Your passwords do not match</p>");
+                        displayAlertMessage("<p class=\"alert alert-warning\">Your passwords do not match</p>");
                     } else {
                         // passwords match, remove any error messages
                         while (errorDiv.children.length) {
@@ -64,17 +64,17 @@ function createUser(form) {
     //    validate_input(form);
 
     ajax_post("/matcha/php/create_acc.php", data, function(httpRequest) {
-        //        displayError(httpRequest.responseText);
+        //        displayAlertMessage(httpRequest.responseText);
         var response = JSON.parse(httpRequest.responseText);
 
         if (response.status === true) {
-            displayError(response.statusMsg + " <p class=\"alert alert-info\">Redirecting to login page . . .</p>");
+            displayAlertMessage(response.statusMsg + " <p class=\"alert alert-info\">Redirecting to login page . . .</p>");
             console.log(response.record);
             setTimeout(function() {
                 window.location = "/matcha/index.php";
             }, 5000);
         } else {
-            displayError(response.statusMsg);
+            displayAlertMessage(response.statusMsg);
         }
     });
 }
