@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var user_profiles = document.querySelector("#user_profiles");
     if (user_profiles) {
-        // found div, display 9 users
+        //observeNewUserProfile(user_profiles);
         displayUserProfiles();
 
         /*
@@ -96,8 +96,8 @@ function displayProfile(profile, parent) {
         profile.age = "?";
     title.innerHTML = profile.firstname + ' ' + profile.lastname + ', <small><b>' + profile.age + '</b></small>';
     profile_card_buttons.innerHTML = '<div class="btn-group" role="group">' +
-        '<button type="button" id="' + profile.username + '" class="btn btn-success like_btn">Like</button>' +
-        '<button type="button" id="' + profile.username + '" class="btn btn-danger block_btn">Block</button>' +
+        '<button type="button" id="like_' + profile.username + '" class="btn btn-success like_btn" onClick="updateLike(\'' + profile.username + '\')">Like</button>' +
+        '<button type="button" id="block_' + profile.username + '" class="btn btn-danger block_btn">Block</button>' +
         '</div><div class="btn-group" role="group">' +
         '<a href="/matcha/views/view_user.php?view_user=' + profile.username + '" class="btn btn-info">View Profile</a></div>';
 
@@ -126,32 +126,54 @@ function displayProfile(profile, parent) {
     outer_div.appendChild(card_div);
     // Append profile card to DOM
     parent.appendChild(outer_div);
-
-
-    /*
-    <div class="col-md-4 col-sm-6">
-        <div class="card">
-            <div class="header-bg" width="250" height="70" id="header-blur">
-                <h4>Name Surname, <small>age</small></h4>
-                <div class="content tags">
-                    <span class="label label-default"></span>
-                    <span class="label label-default"></span>
-                    <span class="label label-default"></span>
-                </div>
-            </div>
-            <div class="content">
-                <p>Web Developer <br>
-                   More description here</p>
-                <p><button type="button" class="btn btn-default">Contact</button></p>
-            </div>
-            <div class="avatar">
-                <img src="" alt="" />
-            </div>
-            <div class="profile_card_buttons">
-                <button type="button" class="btn btn-success">Like</button>
-                <button type="button" class="btn btn-danger">Block</button>
-            </div>
-        </div>
-    </div>
-    */
 }
+
+function updateLike(user) {
+    var like_btn = document.querySelector('#like_' + user);
+    if (like_btn) {
+        debugger;
+        var data = 'like=' + user;
+        ajax_post('/matcha/php/dashboard_utils.php', data, function(httpRequest) {
+            var response = JSON.parse(httpRequest.responseText);
+            displayAlertMessage(response.statusMsg);
+            if (response.status === true) {
+                btn.innerText = btn.innerText === "Like" ? "Unlike" : "Like";
+            }
+        });
+    }
+}
+/*/
+function observeNewUserProfile(user_profiles) {
+
+    // Vendor specific aliases for 'MutationObserver'
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+    // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            var newNodes = mutation.addedNodes;
+            console.log(newNodes);
+            debugger;
+            // add something to new elements
+            for (let i = 0; i < newNodes.length; ++i) {
+                addClass(newNodes[i], "scale-out");
+                //    newNodes[i].className += " scale-out";
+            }
+        //  remove profile from DOM if blocked 
+            while (user_profiles.children.length) {
+                user_profiles.removeChild(user_profiles.children[0]);
+            }
+        })
+    });
+
+    // configuration of the observer:
+    var config = {
+        attributes: true,
+        childList: true,
+        characterData: true
+    };
+
+    // pass in the target element, as well as the observer options
+    observer.observe(user_profiles, config);
+}
+*/

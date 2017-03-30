@@ -60,6 +60,10 @@ section.jumbo-intro {
 
 /* --- Dashboard User Gallery Items --- */
 
+#user_profiles {
+    margin-top: 60px;
+}
+
 .src-image {
     display: none;
 }

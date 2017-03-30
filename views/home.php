@@ -66,29 +66,6 @@ if (isset($_SESSION['logged_on_user'])) {
 
 <script type="text/javascript" src="/matcha/assets/js/dashboard.js"></script>
 
-
-<script type="text/javascript">
-    // Event listeners for buttons
-    var like_btn = document.querySelector('.like_btn');
-    var block_btn = document.querySelector('.block_btn');
-
-    if (like_btn) {
-        like_btn.addEventListener('click', function() {
-            debugger;
-            var btn = this;
-            var data = 'like=' + btn.id;
-            ajax_post('/matcha/php/dashboard_utils.php', data, function(httpRequest) {
-                var response = JSON.parse(httpRequest.responseText);
-                displayAlertMessage(response.statusMsg);
-                if (response.status === true) {
-                    btn.innerText = btn.innerText === "Like" ? "Unlike" : "Like";
-                }
-            });
-        });
-    }
-</script>
-
-
 </body>
 
 </html>
