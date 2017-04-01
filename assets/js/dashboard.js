@@ -96,10 +96,11 @@ function displayProfile(profile, parent) {
         profile.age = "?";
     title.innerHTML = profile.firstname + ' ' + profile.lastname + ', <small><b>' + profile.age + '</b></small>';
     profile_card_buttons.innerHTML = '<div class="btn-group" role="group">' +
-        '<button type="button" id="like_' + profile.username + '" class="btn btn-success like_btn" onClick="updateLike(\'' + profile.username + '\')">Like</button>' +
+        '<button type="button" id="like_' + profile.username + '" class="btn btn-success like_btn" onClick="updateLike(this.id, \'' + profile.username + '\')">Like</button>' +
         '<button type="button" id="block_' + profile.username + '" class="btn btn-danger block_btn">Block</button>' +
         '</div><div class="btn-group" role="group">' +
-        '<a href="/matcha/views/view_user.php?view_user=' + profile.username + '" class="btn btn-info">View Profile</a></div>';
+        '<a href="/matcha/views/view_user.php?view_user=' + profile.username + '" class="btn btn-info">View Profile</a>' +
+        '</div>';
 
     // split and display profile tags
     var tags_text = profile.tags.split(',');
@@ -128,19 +129,45 @@ function displayProfile(profile, parent) {
     parent.appendChild(outer_div);
 }
 
-function updateLike(user) {
-    var like_btn = document.querySelector('#like_' + user);
-    if (like_btn) {
-        debugger;
-        var data = 'like=' + user;
+function updateLike(button_id, username) {
+    if (button_id.match(/^like_/)) {
+        console.log("like_" + username);
+
+        var data = 'submit=1&like_user=' + username;
         ajax_post('/matcha/php/dashboard_utils.php', data, function(httpRequest) {
             var response = JSON.parse(httpRequest.responseText);
             displayAlertMessage(response.statusMsg);
             if (response.status === true) {
-                btn.innerText = btn.innerText === "Like" ? "Unlike" : "Like";
+
+                var like_btn = document.querySelector('#like_' + username);
+                var par = like_btn.parentElement;
+
+                // Hide like button
+                like_btn.style.display = "none";
+                // Display unlike button
+                par.innerHTML = '<button type="button" id="unlike_' + username + '" class="btn btn-success unlike_btn" onClick="updateLike(this.id, \'' + username + '\')">Unlike</button>' + par.innerHTML;
+            }
+        });
+    } else if (button_id.match(/^unlike_/)) {
+        console.log("unlike_" + username);
+
+        var data = 'submit=1&unlike_user=' + username;
+        ajax_post('/matcha/php/dashboard_utils.php', data, function(httpRequest) {
+            var response = JSON.parse(httpRequest.responseText);
+            displayAlertMessage(response.statusMsg);
+            if (response.status === true) {
+
+                var unlike_btn = document.querySelector("#unlike_" + username);
+                var par = unlike_btn.parentElement;
+
+                // Hide unlike button
+                unlike_btn.style.display = "none";
+                // Display like button
+                par.innerHTML = '<button type="button" id="like_' + username + '" class="btn btn-success like_btn" onClick="updateLike(this.id, \'' + username + '\')">Like</button>' + par.innerHTML;
             }
         });
     }
+
 }
 /*/
 function observeNewUserProfile(user_profiles) {
