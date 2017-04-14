@@ -5,13 +5,14 @@ if (createUserForm) {
     var inputs = createUserForm.elements;
     var errorDiv = document.getElementById("alert-messages");
 
-    // Add 'blur' event listener for error messages
+    // Add 'blur' event listener for password match
     for (var i = 0; i < inputs.length; ++i) {
         var item = inputs[i];
         // dont add for submit button
         if (item.type !== "submit") {
             // is item a `password`
             if (item.type === "password") {
+                // on blur
                 item.addEventListener('blur', function(e) {
                     // Check if passwords do not match
                     if ((this.name === "password" && this.value !== createUserForm.elements.namedItem("passwd2").value) ||
@@ -22,7 +23,7 @@ if (createUserForm) {
                         while (errorDiv.children.length) {
                             errorDiv.removeChild(errorDiv.children[0]);
                         }
-                        // and then validate
+                        // and then validate input
                         validate_input(this, this.value, this.type);
                     }
                 });

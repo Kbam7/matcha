@@ -31,11 +31,11 @@
 
                 <form class="navbar-form navbar-right animate_label" id="loginForm" method="post" action="/matcha/php/login.php">
                     <div class="form-input form-group">
-                        <label class="input_label sr-only" for="login">Username:</label>
+                        <label class="sr-only" for="login">Username:</label>
                         <input type="text" class="form-control" name="login" id="user-login" placeholder="Username" maxlength="24" title="Username" required="true" /> <!--  pattern="^[a-zA-Z]\B[a-zA-Z0-9]{4,18}[a-zA-Z0-9]\b$"   pattern="(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_]{3,24}$"   -->
                     </div>
                     <div class="form-input form-group">
-                        <label class="input_label sr-only" for="passwd">Password:</label>
+                        <label class="sr-only" for="passwd">Password:</label>
                         <input type="password" class="form-control" name="passwd" id="user-passwd" placeholder="Password" title="Password" required="true" /> <!--     pattern="^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"    -->
                     </div>
                     <div class="form-input form-group">
