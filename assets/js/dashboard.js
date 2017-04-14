@@ -58,7 +58,7 @@ function displayUserProfiles() {
     });
 }
 
-function displayProfile(profile, parent) {
+function displayProfile(profile, parent_div) {
     console.log(profile);
 
     // Create all elements
@@ -67,7 +67,7 @@ function displayProfile(profile, parent) {
     var inner_top = document.createElement('DIV');
     var avatar = document.createElement('DIV');
     var avatar_img = document.createElement('IMG');
-    var content = document.createElement('DIV');
+    var fame_div = document.createElement('DIV');
     var user_tags = document.createElement('DIV');
     var title = document.createElement('H4');
     var profile_card_buttons = document.createElement('DIV');
@@ -78,7 +78,7 @@ function displayProfile(profile, parent) {
     inner_top.className = "header-bg";
     avatar.className = "avatar";
     avatar_img.className = "pull-left";
-    content.className = "content";
+    fame_div.className = "content";
     user_tags.className = "content tags";
     profile_card_buttons.className = 'profile_card_buttons';
 
@@ -94,7 +94,11 @@ function displayProfile(profile, parent) {
     // Set up
     if (profile.age === undefined)
         profile.age = "?";
+
+    // Title of profile. EG: Kyle Bamping, 23
     title.innerHTML = profile.firstname + ' ' + profile.lastname + ', <small><b>' + profile.age + '</b></small>';
+
+    // Need logic to setup button display
     profile_card_buttons.innerHTML = '<div class="btn-group" role="group">' +
         '<button type="button" id="like_' + profile.username + '" class="btn btn-success like_btn" onClick="updateLike(this.id, \'' + profile.username + '\')">Like</button>' +
         '<button type="button" id="block_' + profile.username + '" class="btn btn-danger block_btn">Block</button>' +
@@ -111,7 +115,7 @@ function displayProfile(profile, parent) {
         user_tags.appendChild(label);
     });
 
-    content.innerHTML = '<dl class="dl-horizontal"><dt>Fame </dt><dd>' + profile.fame + '</dd></dl>';
+    fame_div.innerHTML = '<dl class="dl-horizontal"><dt>Fame </dt><dd>' + profile.fame + '</dd></dl>';
 
     // Build avatar
     avatar.appendChild(avatar_img);
@@ -120,13 +124,13 @@ function displayProfile(profile, parent) {
     inner_top.appendChild(user_tags);
     // Build card
     card_div.appendChild(inner_top);
-    card_div.appendChild(content);
+    card_div.appendChild(fame_div);
     card_div.appendChild(avatar);
     card_div.appendChild(profile_card_buttons);
     // Build outer
     outer_div.appendChild(card_div);
     // Append profile card to DOM
-    parent.appendChild(outer_div);
+    parent_div.appendChild(outer_div);
 }
 
 function updateLike(button_id, username) {

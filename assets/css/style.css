@@ -47,7 +47,8 @@ input[type=file] {
     margin: auto;
 }
 
-input[type=file]:focus, input[type=file]:hover {
+input[type=file]:focus,
+input[type=file]:hover {
     border: 4px solid transparent !important;
 }
 
@@ -165,7 +166,8 @@ div#details_view_tab {
 
 /* --- User gallery Display --- */
 
-#pics_settings_tab, #pics_view_tab {
+#pics_settings_tab,
+#pics_view_tab {
     min-height: 800px;
 }
 
@@ -183,7 +185,8 @@ div#details_view_tab {
     transition: all 0.2s linear;
 }
 
-.overlays:focus, .overlays:hover {
+.overlays:focus,
+.overlays:hover {
     box-shadow: 0 0 5px #fff, inset 0 0 5px #fff;
 }
 
@@ -208,7 +211,8 @@ section#imageDisplay {
     text-align: center;
 }
 
-.imageDisplay_inner div, .imageDisplay_inner form {
+.imageDisplay_inner div,
+.imageDisplay_inner form {
     text-align: left;
     max-width: 98%;
     margin: auto;
@@ -227,7 +231,8 @@ section#imageDisplay {
     margin: auto;
 }
 
-#videoStream, .user-upload-img img {
+#videoStream,
+.user-upload-img img {
     width: 100%;
     max-width: 640px;
     height: auto;
@@ -352,11 +357,13 @@ form#createUserForm {
     text-align: center;
 }
 
-section.col-4.options, section.login-form {
+section.col-4.options,
+section.login-form {
     margin: 20px auto 30px;
 }
 
-section.col-4.options .create-account, section.login-form form {
+section.col-4.options .create-account,
+section.login-form form {
     width: 80%;
     max-width: 380px;
     margin: auto;
@@ -431,7 +438,8 @@ label.overlay_label img {
     transition: all 0.4s ease;
 }
 
-label.overlay_label img:focus, label.overlay_label img:hover {
+label.overlay_label img:focus,
+label.overlay_label img:hover {
     border-top: 3px solid rgba(255, 255, 255, 0.42);
     border-bottom: 3px solid rgba(255, 255, 255, 0.42);
     box-shadow: 0 16px 20px -15px #333;
@@ -461,7 +469,7 @@ progress[value]::before {
 #alert-messages {
     position: fixed;
     right: 5px;
-    z-index: 9;
+    z-index: 99999;
     top: 0;
     width: auto;
     max-width: 700px;
@@ -594,7 +602,8 @@ footer p {
 /* --- @Media Events --- */
 
 @media screen and (min-width: 420px) {
-    .imageDisplay_inner div, .imageDisplay_inner form {
+    .imageDisplay_inner div,
+    .imageDisplay_inner form {
         max-width: 90%;
         margin: 5px auto 0;
     }
@@ -628,7 +637,8 @@ footer p {
 }
 
 @media screeen and (min-width:420px) {
-    .imageDisplay_inner div, .imageDisplay_inner form {
+    .imageDisplay_inner div,
+    .imageDisplay_inner form {
         max-width: 90%;
         margin: 5px auto 0;
     }
