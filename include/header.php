@@ -57,7 +57,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/matcha/views/home.php">Dashboard</a>
+                        <a href="/matcha/views/dashboard.php">Dashboard</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

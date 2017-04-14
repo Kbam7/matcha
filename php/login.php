@@ -16,7 +16,7 @@ if ($login === '' || $login === null || $passwd === '' || $passwd === null) {
 } elseif ($user = auth($login, $passwd)) {
     $_SESSION['logged_on_user'] = $user;
     session_regenerate_id(true);
-    header('Location: ../views/home.php');
+    header('Location: ../views/dashboard.php');
 } else {
     unset($_SESSION['logged_on_user']);
     header('Location: ../index.php');
