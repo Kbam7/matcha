@@ -11,9 +11,12 @@ use GraphAware\Neo4j\Client\ClientBuilder;
 
 $user = $_SESSION['logged_on_user'];
 
+print_r($_SERVER);
+
+/*
 $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
 
-$results = $client->run('MATCH (u:User {username: "kbam7"})-[rel_int:HAS_INTEREST]->(i:Interest)<-[rel_int2:HAS_INTEREST]-(u2:User) ' 
+$results = $client->run('MATCH (u:User {username: "kbam7"})-[rel_int:HAS_INTEREST]->(i:Interest)<-[rel_int2:HAS_INTEREST]-(u2:User) '
                         .'WHERE NOT EXISTS((u)-[:BLOCKED]-(u2)) AND NOT EXISTS((u)-[:LIKES]-(u2)) '
                         .'OPTIONAL MATCH (u)-[r]-(u2) '
                         .'RETURN DISTINCT u2 as user, r as rel, i as interest, rel_int, rel_int2',
@@ -72,7 +75,7 @@ $results = $client->run('MATCH (u:User {username: "kbam7"})-[rel_int:HAS_INTERES
         $response = array('status' => false, 'statusMsg' => $statusMsg);
         echo $statusMsg;
     }
-
+*/
 /*
     if ($record) {
         $record = $record->get('user')->values();

@@ -30,7 +30,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                                 'firstname' => $fname, 'lastname' => $lname,
                                 'username' => $uname, 'password' => $passwd,
                                 'email' => $email, 'profile_complete' => 0,
-                                'fame' => 0, 'age' => $age]]
+                                'fame' => 0, 'age' => $age, ]]
             );
 
             // send email to user
@@ -40,7 +40,9 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                 Hey '.$fname.' '.$lname.',
 
                 Thanks for signing up!
-                Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+                Your account has been created, you can login with the
+                following credentials after you have activated your
+                account by visiting the url below.
 
                 ------------------------
 

@@ -17,6 +17,7 @@ if (createUserForm) {
                     // Check if passwords do not match
                     if ((this.name === "password" && this.value !== createUserForm.elements.namedItem("passwd2").value) ||
                         (this.name === "password2" && this.value !== createUserForm.elements.namedItem("passwd").value)) {
+                        createUserForm.elements.namedItem("passwd2").value = "";
                         displayAlertMessage("<p class=\"alert alert-warning\">Your passwords do not match</p>");
                     } else {
                         // passwords match, remove any error messages
