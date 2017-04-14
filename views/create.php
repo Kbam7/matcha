@@ -26,6 +26,8 @@
                     </div>
                 </div>
 
+                <hr />
+
                 <div class="form-group row">
                     <div class="col-sm-6 form-input">
                         <label class="col-md-2 col-form-label" for="username">Username:</label>
@@ -44,7 +46,7 @@
                     </div>
                 </div>
 
-                <hr  />
+                <hr />
 
                 <div class="form-group row">
                     <div class="col-sm-6 form-input">
@@ -56,7 +58,7 @@
                         <input class="form-control" type="password" name="password2" id="passwd2" value="" placeholder="Confirm Password" autocomplete="true" required="true" />
                     </div>
                 </div>
-                <div class="col-sm-6 form-input">
+                <div class="col-sm-2 col-sm-offset-5 form-input">
                     <input class="form-control" type="submit" name="submit" value="OK" />
                 </div>
             </form>
