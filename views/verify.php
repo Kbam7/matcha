@@ -43,7 +43,7 @@ use GraphAware\Neo4j\Client\ClientBuilder;
                     $record = $result->getRecord();
                     $user = $record->get('u')->values();
 
-                    if ($auth($user['username'], $user['password'], true)) {
+                    if (auth($user['username'], $user['password'], true)) {
                         $_SESSION['logged_on_user'] = $user;
                         session_regenerate_id(true);
                         header('Location: ../views/dashboard.php');

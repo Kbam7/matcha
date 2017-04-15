@@ -1,7 +1,12 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
+include '../php/auth.php';
+
+// Neo4j
 require_once '../vendor/autoload.php';
-
 use GraphAware\Neo4j\Client\ClientBuilder;
 
 // Set up DB connection
@@ -16,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && isset($_
     if (!empty($record)) {
         $user = $record->get('u')->values();
         // hash updated send email, return success and info mesage
-        sendVerficationEmail($user, $uniqueHash);
+        sendPwdResetEmail($user, $uniqueHash);
 
         $statusMsg = '<div class="alert alert-info">Email sent to the email address provided. Check for a link in your inbox.</div>';
         $response = array('status' => true, 'statusMsg' => $statusMsg);
@@ -25,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && isset($_
         $statusMsg = '<div class="alert alert-info">The email address provided is not registered.</div>';
         $response = array('status' => false, 'statusMsg' => $statusMsg);
     }
+    // Echo response and kill page
     die(json_encode($response));
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && !empty($_POST['password'])
                 && isset($_POST['password2']) && !empty($_POST['password2']) && isset($_POST['emailAddress']) && !empty($_POST['emailAddress'])) {
@@ -34,16 +40,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && isset($_
         $response = array('status' => false, 'statusMsg' => $statusMsg);
     } else {
         // Set new password
-        $client->run('MATCH (u:User {email: {email}}) SET u.password = {new_pwd};',
+        $result = $client->run('MATCH (u:User {email: {email}}) SET u.password = {new_pwd} RETURN u;',
                                     ['email' => $_POST['emailAddress'], 'new_pwd' => hash('whirlpool', $_POST['password'])]);
-        $statusMsg = '<div class="alert alert-success">User password is updated. <a href="/matcha/index.php" class="btn btn-default">Log in</a></div>';
-        $response = array('status' => true, 'statusMsg' => $statusMsg);
+        $record = $result->getRecord();
+        $user = $record->get('u')->values();
+
+        if (auth($user['username'], $user['password'], true)) {
+            $_SESSION['logged_on_user'] = $user;
+            session_regenerate_id(true);
+            $statusMsg = '<div class="alert alert-success">User password is updated.</div>';
+            $response = array('status' => true, 'statusMsg' => $statusMsg);
+        }
     }
     die(json_encode($response));
 }
 
-// send email function
-function sendVerficationEmail($user, $uniqueHash)
+// send email
+function sendPwdResetEmail($user, $uniqueHash)
 {
     $subject = 'Notification | Changed Password';
     $message = '
@@ -133,8 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['email']) && !empty($_GE
 
 <?php include '../include/footer.php'; ?>
 
-<script type="text/javascript" src="/matcha/assets/js/account_settings.js"></script>
-
 <script type="text/javascript">
     var errorDiv = document.getElementById("alert-messages");
     var resetForm = document.querySelector('#resetPassword_email');
@@ -217,6 +228,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['email']) && !empty($_GE
                 displayAlertMessage(response.statusMsg);
                 if (response.status === true) {
                     new_pwdForm.innerHTML = response.statusMsg;
+                    // setTimeout to navigate to dashboard.php
+                    setTimeout(function() {
+                        window.location = "/matcha/views/dashboard.php";
+                    }, 5000);
                 }
             });
         });
