@@ -64,7 +64,7 @@
                         Chat <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/matcha/views/profile.php">Chatroom</a></li>
+                            <li><a href="/matcha/views/view_profile.php">Chatroom</a></li>
                             <li><a href="/matcha/views/profile_settings.php">Inbox <span class="badge">42</span></a></li>
                             <li role="separator" class="divider"></li>
                             <li>If i make a private chat, dispay it here</li>
@@ -75,7 +75,7 @@
                         Profile <span class="caret"></span>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="/matcha/views/profile.php">View Profile</a></li>
+                        <li><a href="/matcha/views/view_profile.php">View Profile</a></li>
                         <li><a href="/matcha/views/profile_settings.php">Edit Profile</a></li>
                       </ul>
                     </li>
