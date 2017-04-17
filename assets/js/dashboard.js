@@ -134,6 +134,7 @@ function displayProfile(profile, parent_div) {
 }
 
 function updateLike(button_id, username) {
+    // If btn ID starts with 'like_'
     if (button_id.match(/^like_/)) {
         console.log("like_" + username);
 
@@ -152,6 +153,7 @@ function updateLike(button_id, username) {
                 par.innerHTML = '<button type="button" id="unlike_' + username + '" class="btn btn-success unlike_btn" onClick="updateLike(this.id, \'' + username + '\')">Unlike</button>' + par.innerHTML;
             }
         });
+        // If btn ID starts with 'unlike_'
     } else if (button_id.match(/^unlike_/)) {
         console.log("unlike_" + username);
 
