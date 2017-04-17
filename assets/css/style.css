@@ -18,6 +18,20 @@ header {
     margin-bottom: 50px;
 }
 
+#global-navbar .navbar-right li.notifications {
+    font-size: 30px;
+}
+
+#global-navbar .navbar-right li.profile a img {
+    height       : 45px;
+    padding-right: 5px;
+    border-radius: 25px;
+}
+
+#global-navbar .navbar-right li.profile a.dropdown-toggle {
+    padding: 10px 5px 0;
+}
+
 h1 {
     height        : 100%;
     font-size     : 26px;
