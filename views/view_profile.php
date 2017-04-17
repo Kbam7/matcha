@@ -135,15 +135,19 @@ if (isset($_SESSION['logged_on_user'])) {
 
                     </div>
                     <div class="tab-pane fade in" id="pics_view_tab">
+
+                    <?php if ($_SESSION['logged_on_user']['uid'] === $user['uid']) {
+            ?>
                         <a href="/matcha/views/camera_guru.php" class="btn btn-default btn-md pull-right">
                             <span class="fa fa-plus-square-o fa-2x"></span>
                             <span class="hidden-xs"><small> New Image</small></span>
                         </a>
+                    <?php
+        } ?>
+
                         <h3><?php echo $user['firstname'] ?>'s Photos</h3>
                         <aside id="profile_gallery" class="col-md-12">
-                            <h3>Your Uploads</h3>
-                    <!-- include gallery -->
-                    <?php include '../php/displayUserGallery.php';
+    <?php include '../php/displayUserGallery.php';
     displayUserGallery($user['username']); ?>
                             <div class="clearfix"></div>
                         </aside>

@@ -25,7 +25,7 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
             $uniqueHash = md5(uniqid());
 
             // Create the new user
-            $result = $client->run('CREATE (n:User) SET n += {details}',
+            $result = $client->run('CREATE (n:User) SET n += {details} RETURN id(n) AS uid',
                 ['details' => ['active' => 0, 'hash' => $uniqueHash,
                                 'firstname' => $fname, 'lastname' => $lname,
                                 'username' => $uname, 'password' => $passwd,
@@ -33,8 +33,15 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
                                 'fame' => 0, 'age' => $age, ]]
             );
 
+            $record = $result->getRecord();
+            $new_uid = $record->get('uid');
+
+            $client->run('MATCH (u:User {username: {username}}) SET u.uid={new_uid}',
+                ['username' => $uname, 'new_uid' => $new_uid]
+            );
+
             // send email to user
-            $subject = 'Signup | Verification'; // Give the email a subject
+            $subject = 'Signup | Verification';
             $message = '
 
                 Hey '.$fname.' '.$lname.',
