@@ -1,6 +1,8 @@
 # Matcha
 
 ## MatchaMap:
+The MatchaMap is a diagram which maps the flow of Matcha. From login to logout.
+Open the file in [draw.io](http://draw.io)
 
 ## Prerequisite:
 - Neo4j needs to be installed: 
