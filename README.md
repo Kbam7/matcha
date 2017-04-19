@@ -1,5 +1,7 @@
 # Matcha
 
+## MatchaMap:
+
 ## Prerequisite:
 - Neo4j needs to be installed: 
   - **Mac**: `brew install neo4j`
@@ -18,9 +20,9 @@
 ## Config changes: 
 **Neo4j Config file:**
 `neo4j.conf`
-> Uncomment line 9, change the location if needed. 
+- Uncomment line 9, change the location if needed. 
 
-> **EG :** dbms.directories.data=/nfs/zfs-student-6/users/kbamping/goinfre/matcha_db
+> **EXAMPLE :** dbms.directories.data=/nfs/zfs-student-6/users/kbamping/goinfre/matcha_db
 
 **Location :**
   - **Mac**: ~/.brew/Cellar/neo4j/3.0.6/libexec/conf/neo4j.conf
