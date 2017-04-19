@@ -18,6 +18,20 @@ header {
     margin-bottom: 50px;
 }
 
+#global-navbar .navbar-right li.notifications {
+    font-size: 30px;
+}
+
+#global-navbar .navbar-right li.profile a img {
+    height       : 45px;
+    padding-right: 5px;
+    border-radius: 25px;
+}
+
+#global-navbar .navbar-right li.profile a.dropdown-toggle {
+    padding: 10px 5px 0;
+}
+
 h1 {
     height        : 100%;
     font-size     : 26px;
@@ -324,6 +338,12 @@ form#createUserForm {
     margin   : auto;
 }
 
+#createUserForm hr {
+    margin    : 40px auto 30px;
+    max-width : 85%;
+    border-top: 1px solid #2473f1;
+}
+
 .create-account {
     text-align: center;
 }
@@ -361,6 +381,10 @@ form#update_account h3 {
     border-bottom-right-radius: 13px;
 }
 /* Labels */
+label.col-form-label {
+    color: #fff;
+}
+
 .overlay_images .form-input {
     margin: 3px auto 0;
 }

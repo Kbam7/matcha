@@ -7,26 +7,30 @@ if (session_status() == PHP_SESSION_NONE) {
 include '../php/profile_utils.php';
 
 if (isset($_SESSION['logged_on_user'])) {
+    // Set Default
+    $sp = -1;
+
     // get user
     $user = $_SESSION['logged_on_user'];
 
-    // get current sex_pref in order to preselect the checkbox
-    $sp_arr = explode(',', $user['sex_pref']);
+    if (isset($user['sex_pref'])) {
+        // get current sex_pref in order to preselect the checkbox
+        $sp_arr = explode(',', $user['sex_pref']);
 
-    // ** Sexual Preference  |  -1:none, 0:women, 1:men, 2:both
+        // ** Sexual Preference  |  -1:none, 0:women, 1:men, 2:both
 
-    // Set Default 
-    $sp = -1;
-
-    if (in_array('men', $sp_arr, true)) {
-        // interested in men
-        $sp = 1;
-    }
-    if (in_array('women', $sp_arr, true)) {
-        if ($sp > 0)// if interested in men and women, set to both
-            $sp = 2;
-        else
-            $sp = 0; // else set to women
+        if (in_array('men', $sp_arr, true)) {
+            // interested in men
+            $sp = 1;
+        }
+        if (in_array('women', $sp_arr, true)) {
+            if ($sp > 0) {
+                // if interested in men and women, set to both
+                $sp = 2;
+            } else {
+                $sp = 0;
+            } // else set to women
+        }
     } ?>
 <!DOCTYPE html>
 <html>
@@ -45,7 +49,7 @@ if (isset($_SESSION['logged_on_user'])) {
     <section class="container">
         <div class="row">
 
-            <div class="col-lg-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-offset-0">
+            <div class="col-lg-8">
                 <div class="card hovercard">
                     <div class="card-background">
                         <img src="<?php getProfilePictureSrc($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
@@ -137,7 +141,9 @@ if (isset($_SESSION['logged_on_user'])) {
                             <div class="form-group">
                                 <label for="edit_age" class="col-sm-4 control-label">Age :</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="age" id="edit_age" value="<?php if (isset($user['age'])) echo $user['age'] ?>" maxlength="2" autocomplete="true" />
+                                    <input type="text" class="form-control" name="age" id="edit_age" value="<?php if (isset($user['age'])) {
+        echo $user['age'];
+    } ?>" maxlength="2" autocomplete="true" />
                                 </div>
                             </div>
 
@@ -212,11 +218,15 @@ if (isset($_SESSION['logged_on_user'])) {
                                 <div class="col-sm-6">
                                     <div class="col-sm-10">
                                         <label for="edit_latitude" class="col-sm-4 control-label">Latitude</label>
-                                        <input type="text" class="form-control" name="latitude" id="edit_latitude" placeholder="<?php if (isset($user['latitude'])) echo $user['latitude'] ?>" autocomplete="true" />
+                                        <input type="text" class="form-control" name="latitude" id="edit_latitude" placeholder="<?php if (isset($user['latitude'])) {
+                                                    echo $user['latitude'];
+                                                } ?>" autocomplete="true" />
                                     </div>
                                     <div class="col-sm-10">
                                         <label for="edit_longitude" class="col-sm-4 control-label">Longitude</label>
-                                        <input type="text" class="form-control" name="longitude" id="edit_longitude" placeholder="<?php if (isset($user['longitude'])) echo $user['longitude'] ?>" autocomplete="true" />
+                                        <input type="text" class="form-control" name="longitude" id="edit_longitude" placeholder="<?php if (isset($user['longitude'])) {
+                                                    echo $user['longitude'];
+                                                } ?>" autocomplete="true" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12" style="text-align: center; margin-top: 20px;">

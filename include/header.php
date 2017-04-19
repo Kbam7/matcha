@@ -1,8 +1,3 @@
-<?php
-
-    echo
-    '
-
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -17,10 +12,9 @@
 
             <div class="collapse navbar-collapse" id="global-navbar">
                 <ul class="nav navbar-nav">
-    ';
+<?php
     if (!isset($_SESSION['logged_on_user'])) {
-        echo
-        '
+        ?>
                     <li>
                         <a href="/matcha/views/create.php">Register</a>
                     </li>
@@ -42,10 +36,13 @@
                         <input type="submit" name="submit" value="OK" />
                     </div>
                 </form>
-        ';
+<?php
+
     } elseif (isset($_SESSION['logged_on_user'])) {
-        echo
-        '
+        ?>
+                    <li>
+                        <a href="/matcha/views/dashboard.php">Dashboard</a>
+                    </li>
                 </ul> <!-- /Left-Nav -->
 
                 <form class="navbar-form navbar-left">
@@ -56,51 +53,42 @@
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/matcha/views/dashboard.php">Dashboard</a>
-                    </li>
-                    <li class="dropdown">
+                    <li class="dropdown profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Chat <span class="caret"></span>
+                            <img src="/matcha/assets/uploads/thumbnails/<?php echo $_SESSION['logged_on_user']['profile_pic']?>" />
+                            <?php echo $_SESSION['logged_on_user']['username']?> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/matcha/views/profile.php">Chatroom</a></li>
-                            <li><a href="/matcha/views/profile_settings.php">Inbox <span class="badge">42</span></a></li>
+                            <li><a href="/matcha/views/view_profile.php">View Profile</a></li>
+                            <li><a href="/matcha/views/profile_settings.php">Edit Profile</a></li>
+                            <li><a href="/matcha/views/account.php">Account Settings</a></li>
+                            <li><a href="/matcha/views/account.php#reportUser">Report a User</a></li>
                             <li role="separator" class="divider"></li>
-                            <li>If i make a private chat, dispay it here</li>
+                            <li class="logout-btn">
+                                <a href="/matcha/php/logout.php" title="Logout of Account">LOGOUT</a>
+                            </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Profile <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a href="/matcha/views/profile.php">View Profile</a></li>
-                        <li><a href="/matcha/views/profile_settings.php">Edit Profile</a></li>
-                      </ul>
+                    <li class="dropdown notifications">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="fa fa-bell"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/matcha/views/profile_settings.php">Inbox <span class="badge">2</span></a></li>
+                            <li><a href="/matcha/views/view_profile.php">Notifications  <span class="badge">42</span></a></li>
+                            <li><a href="/matcha/views/view_profile.php">Recent Views</a></li>
+                            <li><a href="/matcha/views/view_profile.php">Chatroom</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>If i make a private chat, dispay it here!</li>
+                        </ul>
                     </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Settings <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a href="/matcha/views/account.php">Account Settings</a></li>
-                        <li><a href="/matcha/views/account.php#reportUser">Report a User</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="logout-btn">
-                            <a href="/matcha/php/logout.php" title="Logout of Account">LOGOUT</a>
-                        </li>
 
-                      </ul>
-                    </li>
                 </ul>  <!-- /Right-Nav -->
+<?php
 
-        ';
     }
-    echo
-    '
+?>
+
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
-    ';

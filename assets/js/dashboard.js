@@ -103,7 +103,7 @@ function displayProfile(profile, parent_div) {
         '<button type="button" id="like_' + profile.username + '" class="btn btn-success like_btn" onClick="updateLike(this.id, \'' + profile.username + '\')">Like</button>' +
         '<button type="button" id="block_' + profile.username + '" class="btn btn-danger block_btn">Block</button>' +
         '</div><div class="btn-group" role="group">' +
-        '<a href="/matcha/views/view_user.php?view_user=' + profile.username + '" class="btn btn-info">View Profile</a>' +
+        '<a href="/matcha/views/view_profile.php?view_user=' + profile.username + '" class="btn btn-info">View Profile</a>' +
         '</div>';
 
     // split and display profile tags
@@ -134,6 +134,7 @@ function displayProfile(profile, parent_div) {
 }
 
 function updateLike(button_id, username) {
+    // If btn ID starts with 'like_'
     if (button_id.match(/^like_/)) {
         console.log("like_" + username);
 
@@ -152,6 +153,7 @@ function updateLike(button_id, username) {
                 par.innerHTML = '<button type="button" id="unlike_' + username + '" class="btn btn-success unlike_btn" onClick="updateLike(this.id, \'' + username + '\')">Unlike</button>' + par.innerHTML;
             }
         });
+        // If btn ID starts with 'unlike_'
     } else if (button_id.match(/^unlike_/)) {
         console.log("unlike_" + username);
 
@@ -190,7 +192,7 @@ function observeNewUserProfile(user_profiles) {
                 addClass(newNodes[i], "scale-out");
                 //    newNodes[i].className += " scale-out";
             }
-        //  remove profile from DOM if blocked 
+        //  remove profile from DOM if blocked
             while (user_profiles.children.length) {
                 user_profiles.removeChild(user_profiles.children[0]);
             }

@@ -7,9 +7,11 @@ if (session_status() == PHP_SESSION_NONE) {
 require_once '../vendor/autoload.php';
 use GraphAware\Neo4j\Client\ClientBuilder;
 
-function auth($login, $passwd)
+function auth($login, $passwd, $is_hashed)
 {
-    $passwd = hash('whirlpool', $passwd);
+    if (!$is_hashed) {
+        $passwd = hash('whirlpool', $passwd);
+    }
     try {
         $client = ClientBuilder::create()
                     ->addConnection('default', 'http://neo4j:123456@localhost:7474')

@@ -25,22 +25,31 @@ if ($_POST['submit'] === '1' && $_POST['fname'] && $_POST['lname'] && $_POST['un
             $uniqueHash = md5(uniqid());
 
             // Create the new user
-            $result = $client->run('CREATE (n:User) SET n += {details}',
+            $result = $client->run('CREATE (n:User) SET n += {details} RETURN id(n) AS uid',
                 ['details' => ['active' => 0, 'hash' => $uniqueHash,
                                 'firstname' => $fname, 'lastname' => $lname,
                                 'username' => $uname, 'password' => $passwd,
                                 'email' => $email, 'profile_complete' => 0,
-                                'fame' => 0, 'age' => $age]]
+                                'fame' => 0, 'age' => $age, ]]
+            );
+
+            $record = $result->getRecord();
+            $new_uid = $record->get('uid');
+
+            $client->run('MATCH (u:User {username: {username}}) SET u.uid={new_uid}',
+                ['username' => $uname, 'new_uid' => $new_uid]
             );
 
             // send email to user
-            $subject = 'Signup | Verification'; // Give the email a subject
+            $subject = 'Signup | Verification';
             $message = '
 
                 Hey '.$fname.' '.$lname.',
 
                 Thanks for signing up!
-                Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+                Your account has been created, you can login with the
+                following credentials after you have activated your
+                account by visiting the url below.
 
                 ------------------------
 

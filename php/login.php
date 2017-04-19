@@ -13,7 +13,7 @@ if ($login === '' || $login === null || $passwd === '' || $passwd === null) {
     $_SESSION['errors'] = array('No login or password entered.');
     unset($_SESSION['logged_on_user']);
     header('Location: ../index.php');
-} elseif ($user = auth($login, $passwd)) {
+} elseif ($user = auth($login, $passwd, false)) {
     $_SESSION['logged_on_user'] = $user;
     session_regenerate_id(true);
     header('Location: ../views/dashboard.php');

@@ -1,4 +1,10 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+include '../php/auth.php';
+
 require_once '../vendor/autoload.php';
 use GraphAware\Neo4j\Client\ClientBuilder;
 
@@ -32,14 +38,23 @@ use GraphAware\Neo4j\Client\ClientBuilder;
             if ($record = $result->getRecord()) {
                 $n_users = $record->get('n_users');
                 if ($n_users === 1) {
-                    $client->run('MATCH (u:User) WHERE u.email={email} AND u.hash={hash} AND u.active=0 SET u.active = 1',
+                    $result = $client->run('MATCH (u:User) WHERE u.email={email} AND u.hash={hash} AND u.active=0 SET u.active = 1 RETURN u',
                                             ['email' => $email, 'hash' => $hash]);
-                    $msg = '<div class="alert alert-success">Your account was successfully activated!</div><div class="alert alert-success"><a href="/matcha/index.php" class="btn btn-default">Log in</a></div>';
+                    $record = $result->getRecord();
+                    $user = $record->get('u')->values();
+
+                    if (auth($user['username'], $user['password'], true)) {
+                        $_SESSION['logged_on_user'] = $user;
+                        session_regenerate_id(true);
+                        header('Location: ../views/dashboard.php');
+                    } else {
+                        $msg = '<div class="alert alert-danger">Your account was successfully activated but <br />an error occurred when trying to login. <br />Please try again.</div>';
+                    }
                 } else {
-                    $msg = '<div class="alert alert-danger">There was an error activating your account!</div>';
+                    $msg = '<div class="alert alert-danger">There was an error activating your account! '.$n_users.'</div>';
                 }
             } else {
-                $msg = '<div class="alert alert-danger">Could not find any records from the DB when activating your account!</div>';
+                $msg = '<div class="alert alert-danger">Could not find your account. Make sure you have created an account and followed your activation link.</div>';
             }
         } catch (Exception $e) {
             $msg = '<b><u>Error Message :</u></b><br /> '.$e.' <br /><br /> <b><u>For error details, check :</u></b><br /> '.dirname(__DIR__).'/log/errors.log</div>';
@@ -52,7 +67,7 @@ use GraphAware\Neo4j\Client\ClientBuilder;
 
     include '../include/footer.php';
 
-    echo "<script type=\"text/javascript\">DisplayAlertMessage('".$msg."');</script>";
+    echo "<script type=\"text/javascript\">displayAlertMessage('".$msg."', true);</script>";
 
     ?>
 

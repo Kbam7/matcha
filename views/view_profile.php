@@ -3,14 +3,29 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once '../vendor/autoload.php';
+use GraphAware\Neo4j\Client\ClientBuilder;
+
 include '../php/profile_utils.php';
 
 if (isset($_SESSION['logged_on_user'])) {
-    $user = $_SESSION['logged_on_user']; ?>
+    // Get requested user
+    if (isset($_GET['view_user']) && !empty($_GET['view_user'])) {
+        $user = $_GET['view_user'];
+
+        $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
+
+        $results = $client->run('MATCH (u:User {username:{uname}}) RETURN u AS user;',
+                            ['uname' => $user]);
+        $user = $results->getRecord()->get('user')->values();
+    } else {
+        // Use current user
+        $user = $_SESSION['logged_on_user'];
+    } ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Matcha | Profile</title>
+    <title>Matcha | View Profile</title>
     <?php include '../include/head.php'; ?>
     <link rel="stylesheet" href="/matcha/assets/css/profile.css" />
   </head>
@@ -20,7 +35,7 @@ if (isset($_SESSION['logged_on_user'])) {
     </header>
 
     <?php
-        if ($user['profile_complete'] === 0) {
+        if ($user['profile_complete'] === 0 && (!isset($_GET['view_user']) || empty($_GET['view_user']))) {
             // incomplete profile
             // display message with link to complete profile
     ?>
@@ -40,7 +55,7 @@ if (isset($_SESSION['logged_on_user'])) {
     <section class="container">
         <div class="row">
 
-            <div class="col-lg-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-offset-0">
+            <div class="col-lg-8">
                 <div class="card hovercard">
                     <div class="card-background">
                         <img src="<?php getProfilePictureSrc($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
@@ -120,15 +135,20 @@ if (isset($_SESSION['logged_on_user'])) {
 
                     </div>
                     <div class="tab-pane fade in" id="pics_view_tab">
+
+                    <?php if ($_SESSION['logged_on_user']['uid'] === $user['uid']) {
+            ?>
                         <a href="/matcha/views/camera_guru.php" class="btn btn-default btn-md pull-right">
                             <span class="fa fa-plus-square-o fa-2x"></span>
                             <span class="hidden-xs"><small> New Image</small></span>
                         </a>
+                    <?php
+
+        } ?>
+
                         <h3><?php echo $user['firstname'] ?>'s Photos</h3>
                         <aside id="profile_gallery" class="col-md-12">
-                            <h3>Your Uploads</h3>
-                    <!-- include gallery -->
-                    <?php include '../php/displayUserGallery.php';
+    <?php include '../php/displayUserGallery.php';
     displayUserGallery($user['username']); ?>
                             <div class="clearfix"></div>
                         </aside>
