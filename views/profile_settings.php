@@ -49,7 +49,7 @@ if (isset($_SESSION['logged_on_user'])) {
     <section class="container">
         <div class="row">
 
-            <div class="col-lg-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-offset-0">
+            <div class="col-lg-8">
                 <div class="card hovercard">
                     <div class="card-background">
                         <img src="<?php getProfilePictureSrc($user); ?>" alt="<?php echo $user['username'] ?>'s Profile Picture" />
