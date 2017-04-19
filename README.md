@@ -1,7 +1,7 @@
 # Matcha
 
 ## MatchaMap:
-The MatchaMap is a diagram which maps the flow of Matcha. From login to logout.
+The MatchaMap is a diagram which maps the flow of Matcha.
 Open the file in [draw.io](http://draw.io)
 
 ## Prerequisite:
