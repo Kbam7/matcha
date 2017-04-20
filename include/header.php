@@ -16,7 +16,7 @@
     if (!isset($_SESSION['logged_on_user'])) {
         ?>
                     <li>
-                        <a href="/matcha/views/create.php">Register</a>
+                        <a href="/matcha/views/create_account.php">Register</a>
                     </li>
                     <li>
                         <a href="/matcha/views/reset_password.php">Forgot Password</a>
@@ -61,8 +61,8 @@
                         <ul class="dropdown-menu">
                             <li><a href="/matcha/views/view_profile.php">View Profile</a></li>
                             <li><a href="/matcha/views/profile_settings.php">Edit Profile</a></li>
-                            <li><a href="/matcha/views/account.php">Account Settings</a></li>
-                            <li><a href="/matcha/views/account.php#reportUser">Report a User</a></li>
+                            <li><a href="/matcha/views/account_settings.php">Account Settings</a></li>
+                            <li><a href="/matcha/views/account_settings.php#reportUser">Report a User</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="logout-btn">
                                 <a href="/matcha/php/logout.php" title="Logout of Account">LOGOUT</a>

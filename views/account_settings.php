@@ -15,7 +15,7 @@ if (isset($_SESSION['logged_on_user'])) {
     <body>
         <header>
             <?php include '../include/header.php'; ?>
-            <h1 class="account-settings-header">Matcha - <small>Manage Account</small></h1>
+            <h1 class="account-settings-header sr-only">Matcha - <small>Manage Account</small></h1>
         </header>
 
         <div id="alert-messages"></div>

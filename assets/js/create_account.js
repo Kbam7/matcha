@@ -65,7 +65,7 @@ function createUser(form) {
 
     //    validate_input(form);
 
-    ajax_post("/matcha/php/create_acc.php", data, function(httpRequest) {
+    ajax_post("/matcha/php/create_account.php", data, function(httpRequest) {
         //        displayAlertMessage(httpRequest.responseText);
         var response = JSON.parse(httpRequest.responseText);
 

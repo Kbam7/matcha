@@ -67,7 +67,7 @@
 
 <?php include '../include/footer.php'; ?>
 
-<script type="text/javascript" src="/matcha/assets/js/create_acc.js"></script>
+<script type="text/javascript" src="/matcha/assets/js/create_account.js"></script>
 
 </body>
 
