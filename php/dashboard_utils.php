@@ -56,10 +56,11 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
                 } else {
                     if ($blocked) {
                         $statusMsg .= '<div class="alert alert-warning">One of the users have been blocked. Cannot like.</div>';
+                        $response = array('status' => false, 'statusMsg' => $statusMsg);
                     } else {
                         $statusMsg .= '<div class="alert alert-warning">You already like this user</div>';
+                        $response = array('status' => true, 'statusMsg' => $statusMsg);
                     }
-                    $response = array('status' => false, 'statusMsg' => $statusMsg);
                     die(json_encode($response));
                 }
             }
@@ -79,15 +80,15 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
                 $blocked = $result->get('blocked')->getRecord();
                 $rel_exists = $result->get('rel_exists')->getRecord();
 
-                // If relationship exists, and nobody is blocked
+                // If relationship exists
                 if (!empty($rel_exists)) {
                     // delete relationship
-                    $stack->push('MATCH (u:User {username:{user1}})-[r:LIKES]->(u2:User {username:{user2}}) '
-                                            .'DELETE r;', ['user1' => $user['username'], 'user2' => $_POST['unlike_user']]);
+                    $stack->push('MATCH (u:User {username:{user1}})-[r:LIKES]->(u2:User {username:{user2}}) DELETE r;',
+                                            ['user1' => $user['username'], 'user2' => $_POST['unlike_user']]);
 
                     // Check if relationship still exists
-                    $stack->push('MATCH (u:User {username:{user1}})-[r:LIKES]->(u2:User {username:{user2}}) '
-                                            .'RETURN r;', ['user1' => $user['username'], 'user2' => $_POST['unlike_user']], 'rel');
+                    $stack->push('MATCH (u:User {username:{user1}})-[r:LIKES]->(u2:User {username:{user2}}) RETURN r;',
+                                            ['user1' => $user['username'], 'user2' => $_POST['unlike_user']], 'rel');
 
                     $result = $client->runStack($stack);
                     $record = $result->get('rel')->getRecord();
@@ -101,7 +102,7 @@ if (isset($_SESSION['logged_on_user']) && $_POST['submit'] === '1') {
                     }
                 } else {
                     $statusMsg .= '<div class="alert alert-warning">You have already unliked '.$_POST['unlike_user'].'</div>';
-                    $response = array('status' => false, 'statusMsg' => $statusMsg);
+                    $response = array('status' => true, 'statusMsg' => $statusMsg);
                     die(json_encode($response));
                 }
             }

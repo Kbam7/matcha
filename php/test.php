@@ -11,22 +11,50 @@ use GraphAware\Neo4j\Client\ClientBuilder;
 
 $user = $_SESSION['logged_on_user'];
 
-print_r($_SERVER);
+//print_r($_SERVER);
+foreach ($user as $key => $value) {
+    echo $key.' => '.$value;
+    echo '<br />';
+}
+
+$client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
+
+$results = $client->run('MATCH (u:User {username:{u}})-[r:LIKES]->(u2:User {username:{u2}}) '
+                        .'RETURN u, u2, r', ['u' => 'kbam7', 'u2' => 'user4']);
+
+$record = $results->getRecord();
+
+    print_r($record->get('r')->values());
+    echo '<br />';
+    print_r($record->get('r')->values()['time']);
+    echo '<br />';
+/*    foreach ($item->values() as $key => $value) {
+        echo $key.' => '.$value;
+        echo '<br />';
+    }*/
+/*
+    if (!empty($record)) {
+        print_r($record);
+        // Check origin of :VIEWED relationship
+        // loop through records found
+        // if viewer.uid === r->startNodeIdentity(), you have already viewed this persons profile so update timestamp for relationship
+    } else {
+        // No :VIEWED relstionship exists
+    }*/
 
 /*
 $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
 
-$results = $client->run('MATCH (u:User {username: "kbam7"})-[rel_int:HAS_INTEREST]->(i:Interest)<-[rel_int2:HAS_INTEREST]-(u2:User) '
-                        .'WHERE NOT EXISTS((u)-[:BLOCKED]-(u2)) AND NOT EXISTS((u)-[:LIKES]-(u2)) '
+$results = $client->run('MATCH (u:User {username: "kbam7"})-[rel_int:HAS_INTEREST]->(i:Interest)<-[rel_int2:HAS_INTEREST]-(u2:User {username: "user4"}) '
+                        .'WHERE NOT EXISTS((u)-[:BLOCKED]-(u2)) AND EXISTS((u)-[:LIKES]-(u2)) '
                         .'OPTIONAL MATCH (u)-[r]-(u2) '
                         .'RETURN DISTINCT u2 as user, r as rel, i as interest, rel_int, rel_int2',
                         ['uname' => $user['username']]);
 
     $profs = [];
     $records = $results->getRecords();
-    if (!empty($records)){
+    if (!empty($records)) {
         foreach ($records as $record) {
-
             $user_prof = $record->get('user');
             $user_rel = $record->get('rel');
             $interest = $record->get('interest');
@@ -35,7 +63,7 @@ $results = $client->run('MATCH (u:User {username: "kbam7"})-[rel_int:HAS_INTERES
 
             echo '<u>user_prof</u><br>';
             print_r($user_prof);
-            if (!empty($user_rel)){
+            if (!empty($user_rel)) {
                 echo '<br><br><u>user_rel</u><br>';
                 print_r($user_rel);
                 echo '<br><br><u>user_rel type</u><br>';
@@ -57,7 +85,6 @@ $results = $client->run('MATCH (u:User {username: "kbam7"})-[rel_int:HAS_INTERES
             echo '<br><br><u>rel_int2</u><br>';
             print_r($rel_int2);
             echo '<br><br>';
-
 
             if (!empty($user_prof)) {
                 $profs[] = $user_prof->values();

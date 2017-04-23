@@ -10,6 +10,9 @@ if (isset($_SESSION['logged_on_user'])) {
     if (isset($_GET['view_user']) && !empty($_GET['view_user'])) {
         // Get requested user
         $user = getUserProfile($_GET['view_user']);
+
+        // Update :VIEWED relationship
+        // updateProfileViews($_SESSION['logged_on_user']['username'], $user['username']);
     } else {
         // Use current user
         $user = $_SESSION['logged_on_user'];
