@@ -40,9 +40,9 @@ $(document).ready(function() {
 
 // Function that will get and display user profiles from the DB
 function displayUserProfiles() {
-    var data = "count=9";
+    var data = "submit=1&getDashboardUsers=1&count=9";
     // Send data to get processed
-    ajax_post("/matcha/php/displayUserProfiles.php", data, function(httpRequest) {
+    ajax_post("/matcha/php/dashboard_utils.php", data, function(httpRequest) {
         var response = JSON.parse(httpRequest.responseText);
         var user_profiles = response.users;
         var main_profiles_div = document.querySelector('#user_profiles');

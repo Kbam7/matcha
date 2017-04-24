@@ -14,6 +14,7 @@ if (isset($_SESSION['logged_on_user'])) {
     $user = $_SESSION['logged_on_user'];
 
     if (isset($user['sex_pref'])) {
+
         // get current sex_pref in order to preselect the checkbox
         $sp_arr = explode(',', $user['sex_pref']);
 
@@ -94,7 +95,7 @@ if (isset($_SESSION['logged_on_user'])) {
                           <div class="form-group">
                             <label for="edit_tags" class="col-sm-2 control-label">Tags :</label>
                             <div class="col-sm-10" id="tags_list">
-                                <?php getUsersTags($user); ?>
+                                <?php displayUsersTags($user); ?>
                                 <input type="text" class="form-control" name="tags_input" id="edit_tags" value="" placeholder="Add a tag" onkeydown="return !(event.keyCode==13)" autocomplete="on" />
                                 <input type="hidden" id="tags_value" name="tags" />
                             </div>
@@ -251,10 +252,8 @@ if (isset($_SESSION['logged_on_user'])) {
                         </a>
                         <h3><?php echo $user['firstname'] ?>'s Photos</h3>
                         <aside id="profile_settings_gallery" class="col-md-12">
-                            <h3>Your Uploads</h3>
-<!-- include gallery -->
-<?php include '../php/displayUserGallery.php';
-    displayUserGallery($user['username']); ?>
+                            <!-- display gallery -->
+                            <?php displayUserGallery($user['username']); ?>
                             <div class="clearfix"></div>
                         </aside>
                     </div>

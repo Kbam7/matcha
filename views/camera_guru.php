@@ -5,7 +5,10 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (isset($_SESSION['logged_on_user'])) {
+    include '../php/profile_utils.php';
+
     $user = $_SESSION['logged_on_user']; ?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -96,13 +99,12 @@ if (isset($_SESSION['logged_on_user'])) {
 
             </div>
             <hr class="clearfix" />
-            
+
         </div> <!-- /.imageDisplay_inner -->
         <aside id="newGallery" class="col-md-8">
             <h3>Your Uploads</h3>
-            <!-- include gallery -->
-<?php include '../php/displayUserGallery.php';
-    displayCamagruUserGallery($user['username']); ?>
+            <!-- display gallery -->
+            <?php displayCamagruUserGallery($user['username']); ?>
         </aside>
     </section> <!-- /#imageDisplay_inner -->
 

@@ -3,21 +3,16 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../vendor/autoload.php';
-use GraphAware\Neo4j\Client\ClientBuilder;
-
 include '../php/profile_utils.php';
 
 if (isset($_SESSION['logged_on_user'])) {
-    // Get requested user
+    // Find a user to display
     if (isset($_GET['view_user']) && !empty($_GET['view_user'])) {
-        $user = $_GET['view_user'];
+        // Get requested user
+        $user = getUserProfile($_GET['view_user']);
 
-        $client = ClientBuilder::create()->addConnection('default', 'http://neo4j:123456@localhost:7474')->build();
-
-        $results = $client->run('MATCH (u:User {username:{uname}}) RETURN u AS user;',
-                            ['uname' => $user]);
-        $user = $results->getRecord()->get('user')->values();
+        // Update :VIEWED relationship
+        // updateProfileViews($_SESSION['logged_on_user']['username'], $user['username']);
     } else {
         // Use current user
         $user = $_SESSION['logged_on_user'];
@@ -98,7 +93,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
                     <dl class="dl-horizontal">
                         <dt>Tags</dt>
-                        <dd id="tags_list"><?php getUsersTags($user); ?></dd>
+                        <dd id="tags_list"><?php displayUsersTags($user); ?></dd>
                         <hr class="col-sm-12 clearfix" />
                         <dt>About me</dt>
                         <dd><?php echo $user['bio'] ?></dd>
@@ -148,8 +143,7 @@ if (isset($_SESSION['logged_on_user'])) {
 
                         <h3><?php echo $user['firstname'] ?>'s Photos</h3>
                         <aside id="profile_gallery" class="col-md-12">
-    <?php include '../php/displayUserGallery.php';
-    displayUserGallery($user['username']); ?>
+                            <?php displayUserGallery($user['username']); ?>
                             <div class="clearfix"></div>
                         </aside>
                     </div>
